@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="3">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0sp"
+        android:layout_marginTop="50sp"
+        android:layout_marginHorizontal="20sp"
+        android:layout_marginBottom="20sp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        tools:ignore="Suspicious0dp"
+        android:layout_gravity="bottom">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20sp"
+            android:paddingStart="20sp"
+            android:paddingEnd="0sp"
+            android:text="@string/welcome_conference_infinity"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            android:textColor="@color/light_gray" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20sp"
+            android:paddingStart="20sp"
+            android:paddingEnd="0sp"
+            android:shadowColor="@color/black"
+            android:shadowDx="3"
+            android:shadowDy="10"
+            android:shadowRadius="6"
+            android:text="All Done !"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textColor="@color/dark_gray"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0sp"
+        android:layout_marginStart="40sp"
+        android:layout_marginEnd="40sp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_register_done"
+            android:layout_margin="20sp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0sp"
+        android:layout_margin="40sp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="bottom">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20sp"
+            android:layout_marginEnd="20sp"
+            android:layout_marginBottom="30sp"
+            android:text="You will be accepted our Terms of Service after you continue."
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            android:textColor="@color/light_gray" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/done_next_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@drawable/custom_register_finish_btn"
+            android:padding="10sp"
+            android:text="Meet Conference Infinity" />
+
+    </LinearLayout>
+
+</LinearLayout>

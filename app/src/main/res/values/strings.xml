@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Conference_Infinity</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="preference">Preference</string>
+    <string name="history_conference">History Conference</string>
+    <string name="logout">Logout</string>
+    <string name="about">About</string>
+    <string name="account_management">Account Management</string>
+    <string name="account_fragment">Account Fragment</string>
+    <string name="user_name">User Name</string>
+    <string name="user_nickname">User Nickname</string>
+    <string name="BackButton">Back Page</string>
+    <string name="density">Density</string>
+    <string name="prefer_language">Prefer Language</string>
+    <string name="theme">Theme</string>
+    <string name="enter_your_email">Enter your Email</string>
+    <string name="email_sample">xxx@gmail.com</string>
+    <string name="next">Next</string>
+    <string name="let_s_start">Let\'s Start</string>
+    <string name="welcome_conference_infinity">Welcome Conference Infinity</string>
+    <string name="login">Login</string>
+    <string name="login_by_mail">Login by Mail</string>
+</resources>

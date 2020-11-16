@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".AccountFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profile_image"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_gravity="center"
+        android:layout_weight="2"
+        android:paddingStart="28dp"
+        android:paddingEnd="0dp"
+        android:visibility="gone"
+        app:civ_border_color="@color/dark_gray"
+        app:civ_border_width="2dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/user_name"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/user_nickname"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+    <Button
+        android:id="@+id/preference_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30sp"
+        android:layout_marginVertical="10sp"
+        android:background="@color/white"
+        android:text="@string/preference"
+        android:textAllCaps="false"
+        android:textColor="@color/dark_gray"
+        app:icon="@drawable/ic_preference"
+        app:iconPadding="20sp" />
+
+    <Button
+        android:id="@+id/account_management_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30sp"
+        android:layout_marginVertical="10sp"
+        android:background="@color/white"
+        android:text="@string/account_management"
+        android:textAllCaps="false"
+        android:textColor="@color/dark_gray"
+        app:icon="@drawable/ic_account_management"
+        app:iconPadding="20sp" />
+
+    <Button
+        android:id="@+id/history_conference_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30sp"
+        android:layout_marginVertical="10sp"
+        android:background="@color/white"
+        android:text="@string/history_conference"
+        android:textAllCaps="false"
+        android:textColor="@color/dark_gray"
+        app:icon="@drawable/ic_history_conference"
+        app:iconPadding="20sp" />
+
+    <Button
+        android:id="@+id/logout_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30sp"
+        android:layout_marginVertical="10sp"
+        android:background="@color/white"
+        android:text="@string/logout"
+        android:textAllCaps="false"
+        android:textColor="@color/dark_gray"
+        app:icon="@drawable/ic_logout"
+        app:iconPadding="20sp" />
+
+    <Button
+        android:id="@+id/about_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30sp"
+        android:layout_marginVertical="10sp"
+        android:background="@color/white"
+        android:text="@string/about"
+        android:textAllCaps="false"
+        android:textColor="@color/dark_gray"
+        app:icon="@drawable/ic_about"
+        app:iconPadding="20sp" />
+
+</LinearLayout>
