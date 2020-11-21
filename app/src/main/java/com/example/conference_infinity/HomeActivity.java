@@ -6,6 +6,9 @@ import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomnavigation.LabelVisibilityMode;
@@ -15,6 +18,7 @@ import java.util.Deque;
 
 public class HomeActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
+
     Deque<Integer> integerDeque = new ArrayDeque<>(4);
     boolean flag = true;
 
@@ -26,6 +30,8 @@ public class HomeActivity extends AppCompatActivity {
         // Connect to xml
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_UNLABELED);
+
+
 
         // Add home Fragment in Deque
         integerDeque.push(R.id.home_nav);

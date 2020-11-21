@@ -21,4 +21,10 @@
     <string name="welcome_conference_infinity">Welcome Conference Infinity</string>
     <string name="login">Login</string>
     <string name="login_by_mail">Login by Mail</string>
+
+
+    <string name="Category">Category</string>
+    <string name="Bookmark_Topics">Bookmark Topics</string>
+    <string name="All_Topics">All Topics</string>
+
 </resources>

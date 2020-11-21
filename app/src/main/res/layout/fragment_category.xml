@@ -1,17 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CategoryFragment">
+    tools:context=".CategoryFragment"
+    android:orientation="vertical">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Category Fragment"
-        android:textSize="40sp"
-        android:layout_centerInParent="true"
-        />
+        android:paddingVertical="20dp"
+        android:paddingHorizontal="30dp">
 
-</RelativeLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/Category_Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Category"
+                android:textSize="40dp"/>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <SearchView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scrollbarSize="40dp"
+                android:layout_alignParentEnd="true"/>
+
+        </RelativeLayout>
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:paddingVertical="20dp"
+        android:paddingHorizontal="30dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bottom_border">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/light_gray"
+                android:text="@string/Bookmark_Topics"/>
+
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/Category_Bookmark_List"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </ListView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:paddingHorizontal="30dp"
+        android:paddingVertical="20dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bottom_border">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/light_gray"
+                android:text="@string/All_Topics"/>
+
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/Category_List"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </ListView>
+
+    </LinearLayout>
+
+</LinearLayout>
