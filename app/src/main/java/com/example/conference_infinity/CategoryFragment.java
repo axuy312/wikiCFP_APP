@@ -12,9 +12,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.conference_infinity.listview.MyListAdapter;
 
@@ -76,7 +78,14 @@ public class CategoryFragment extends Fragment {
         }
 
         //Category_Fragment
+        String[] testData = new String[]{"1","23","424224","sasa","32324v","rrr","aaa","sa","ad","sa","daa", "ss"};
         Category_List = view.findViewById(R.id.Category_List);
-        Category_List.setAdapter(new MyListAdapter(getActivity()));
+        Category_List.setAdapter(new MyListAdapter(getActivity(), testData));
+        Category_List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getActivity(), "pos: "+String.valueOf(position), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }

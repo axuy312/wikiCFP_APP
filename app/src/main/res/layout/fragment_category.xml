@@ -96,7 +96,8 @@
         <ListView
             android:id="@+id/Category_List"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:listSelector="@color/teal_200">
         </ListView>
 
     </LinearLayout>
