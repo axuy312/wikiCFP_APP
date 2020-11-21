@@ -1,4 +1,4 @@
-# Conference Infinity
+# Branch axuy312
 This is a final project of Embedded System course.
 
 
