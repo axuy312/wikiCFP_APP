@@ -64,7 +64,7 @@
             android:layout_marginStart="20sp"
             android:layout_marginEnd="20sp"
             android:layout_marginBottom="10sp"
-            android:text="Select Preference Language"
+            android:text="@string/select_preference_language"
             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
             android:textColor="@color/light_gray" />
 
@@ -80,7 +80,7 @@
             android:paddingTop="5sp"
             android:paddingEnd="12sp"
             android:paddingBottom="5sp"
-            android:text="Traditional Chinese"
+            android:text="@string/traditional_chinese"
             android:textAllCaps="false"
             android:textColor="@color/dark_gray"
             android:textSize="14sp" />
@@ -101,7 +101,7 @@
             android:paddingTop="5sp"
             android:paddingEnd="12sp"
             android:paddingBottom="5sp"
-            android:text="English (US)"
+            android:text="@string/english_us"
             android:textAllCaps="false"
             android:textColor="@color/dark_gray"
             android:textSize="14sp" />

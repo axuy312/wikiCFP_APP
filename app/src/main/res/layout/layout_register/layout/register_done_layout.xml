@@ -38,7 +38,7 @@
             android:shadowDx="3"
             android:shadowDy="10"
             android:shadowRadius="6"
-            android:text="All Done !"
+            android:text="@string/all_done"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:textColor="@color/dark_gray"
             android:textStyle="bold" />
@@ -57,7 +57,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_register_done"
-            android:layout_margin="20sp"/>
+            android:layout_margin="20sp"
+            android:contentDescription="@string/welcome_pic" />
 
     </LinearLayout>
 
@@ -75,7 +76,7 @@
             android:layout_marginStart="20sp"
             android:layout_marginEnd="20sp"
             android:layout_marginBottom="30sp"
-            android:text="You will be accepted our Terms of Service after you continue."
+            android:text="@string/you_will_be_accepted_our_terms_of_service_after_you_continue"
             android:gravity="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
             android:textColor="@color/light_gray" />
@@ -87,7 +88,7 @@
             android:layout_gravity="bottom"
             android:background="@drawable/custom_register_finish_btn"
             android:padding="10sp"
-            android:text="Meet Conference Infinity" />
+            android:text="@string/meet_conference_infinity" />
 
     </LinearLayout>
 
