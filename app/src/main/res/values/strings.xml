@@ -56,4 +56,6 @@
     <string name="Bookmark_Topics">Bookmark Topics</string>
     <string name="All_Topics">All Topics</string>
 
+    <string name="Paper_Deadline">Paper Deadline : </string>
+
 </resources>

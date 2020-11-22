@@ -4,30 +4,111 @@
     android:layout_height="wrap_content"
     android:paddingHorizontal="15dp"
     android:paddingVertical="10dp"
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/category_item_icon"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:scaleType="centerInside"
-        android:background="@color/teal_200"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/category_item_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:scaleType="centerInside"
+            android:background="@color/teal_200"/>
+
+        <TextView
+            android:id="@+id/category_item_title"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_weight="1"
+            android:paddingLeft="20dp"
+            android:textSize="10dp"
+            android:text="test"
+            android:singleLine="false"
+            android:maxLines="2"
+            android:gravity="center_vertical"/>
+
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/category_item_title"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_weight="1"
-        android:paddingLeft="20dp"
+        android:id="@+id/conference_item_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="5dp"
         android:textSize="20dp"
+        android:text="test"
         android:singleLine="false"
         android:maxLines="2"
         android:gravity="center_vertical"/>
 
-    <ImageView
-        android:id="@+id/category_item_tag"
-        android:layout_width="20dp"
-        android:layout_height="50dp"
-        android:scaleType="centerInside"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="5dp"
+            android:textSize="10dp"
+            android:text="@string/Paper_Deadline"
+            android:gravity="center_vertical"/>
+
+        <TextView
+            android:id="@+id/conference_item_deadline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="5dp"
+            android:textSize="10dp"
+            android:text="2020/11/02"
+            android:singleLine="false"
+            android:maxLines="2"
+            android:gravity="center_vertical"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/tag"
+            android:background="@color/teal_200"/>
+
+        <TextView
+            android:id="@+id/comment_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:paddingVertical="5dp"
+            android:textSize="10dp"
+            android:text="1234"
+            android:gravity="center_vertical"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/bell"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/tag"
+                android:background="@color/teal_200"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

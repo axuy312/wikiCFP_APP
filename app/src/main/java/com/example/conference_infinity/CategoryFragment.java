@@ -1,5 +1,6 @@
 package com.example.conference_infinity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -37,7 +38,6 @@ public class CategoryFragment extends Fragment {
 
     //
     String[] Category_List_Data;
-    String[] Conference_List_Data;
     //
 
     // TODO: Rename parameter arguments, choose names that match
@@ -93,7 +93,10 @@ public class CategoryFragment extends Fragment {
         Category_List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getActivity(), "pos: "+String.valueOf(position), Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getActivity(), ConferencesActivity.class);
+                intent.putExtra("title", Category_List_Data[position]);
+                startActivity(intent);
+                //getActivity().finish();
             }
         });
 

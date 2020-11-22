@@ -10,20 +10,25 @@ import android.widget.TextView;
 
 import com.example.conference_infinity.R;
 
+import java.util.Dictionary;
+import java.util.HashMap;
+
 public class MyListAdapter_Conference extends BaseAdapter {
 
     private Context mContext;
     private LayoutInflater mLayoutInflater;
 
-    private String[] titles;
+    private HashMap<String, String>[] datas;
+    private String title;
     private int data_len = 0;
 
-    public MyListAdapter_Conference(Context context, String[] strings){
+    public MyListAdapter_Conference(Context context, HashMap[] dictionaries, String t){
         this.mContext = context;
         this.mLayoutInflater = LayoutInflater.from(context);
-        if(strings != null){
-            titles = strings.clone();
-            data_len = titles.length;
+        title = t;
+        if(dictionaries != null){
+            datas = dictionaries.clone();
+            data_len = datas.length;
         }
     }
 
@@ -43,27 +48,31 @@ public class MyListAdapter_Conference extends BaseAdapter {
     }
 
     static class ViewHolder{
-        public ImageView icon, tag;
-        public TextView title;
+        public ImageView category_item_icon;
+        public TextView category_item_title, conference_item_title, conference_item_deadline, comment_number;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
         if (convertView == null){
-            convertView = mLayoutInflater.inflate(R.layout.category_list_item, null);
+            convertView = mLayoutInflater.inflate(R.layout.conference_list_item, null);
             holder = new ViewHolder();
-            holder.icon = convertView.findViewById(R.id.category_item_icon);
-            holder.title = convertView.findViewById(R.id.category_item_title);
-            holder.tag = convertView.findViewById(R.id.category_item_tag);
+            holder.category_item_icon = convertView.findViewById(R.id.category_item_icon);
+            holder.category_item_title = convertView.findViewById(R.id.category_item_title);
+            holder.conference_item_title = convertView.findViewById(R.id.conference_item_title);
+            holder.conference_item_deadline = convertView.findViewById(R.id.conference_item_deadline);
+            holder.comment_number = convertView.findViewById(R.id.comment_number);
             convertView.setTag(holder);
         }
         else {
             holder = (ViewHolder)convertView.getTag();
         }
-        holder.title.setText(titles[position]);
-        holder.icon.setImageResource(R.drawable.img);
-        holder.tag.setImageResource(R.drawable.tag);
+        holder.category_item_icon.setImageResource(R.drawable.img);
+        holder.category_item_title.setText(title);
+        holder.conference_item_title.setText(datas[position].get("title").toString());
+        holder.conference_item_deadline.setText("2020/11/02");
+        holder.comment_number.setText(String.valueOf(position));
         return convertView;
     }
 }
