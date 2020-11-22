@@ -46,9 +46,16 @@
     <string name="email_address">Email Address</string>
     <string name="password">Password</string>
     <string name="welcome">Welcome</string>
+    <string name="sign_in">Sign in</string>
+    <string name="power_by_wikicfp">Power by WikiCFP</string>
+    <string name="seperate_line">Separate Line</string>
+    <string name="or">OR</string>
+    <string name="don_t_have_an_account_signup">Don\'t have an account? SIGNUP</string>
 
     <string name="Category">Category</string>
     <string name="Bookmark_Topics">Bookmark Topics</string>
     <string name="All_Topics">All Topics</string>
+
+    <string name="Paper_Deadline">Paper Deadline : </string>
 
 </resources>
