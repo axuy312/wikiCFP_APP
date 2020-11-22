@@ -16,8 +16,8 @@
         tools:ignore="Suspicious0dp">
 
         <at.markushi.ui.CircleButton
-            android:id="@+id/nickname_back_btn"
-            android:layout_width="80dp"
+            android:id="@+id/density_back_btn"
+            android:layout_width="80sp"
             android:layout_height="80sp"
             android:src="@drawable/ic_back"
             app:cb_color="@color/light_selected_gray"
@@ -40,10 +40,10 @@
             android:paddingStart="20sp"
             android:paddingEnd="0sp"
             android:shadowColor="@color/black"
-            android:shadowDx="0"
+            android:shadowDx="3"
             android:shadowDy="10"
             android:shadowRadius="6"
-            android:text="@string/let_s_start"
+            android:text="@string/article_density"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:textColor="@color/dark_gray"
             android:textStyle="bold" />
@@ -64,25 +64,10 @@
             android:layout_marginStart="20sp"
             android:layout_marginEnd="20sp"
             android:layout_marginBottom="10sp"
-            android:text="Enter Your Name (This will be display on our forum)"
+            android:text="@string/select_your_preference_article_density"
             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
             android:textColor="@color/light_gray" />
 
-
-        <EditText
-            android:id="@+id/input_nickname"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/custom_edittext"
-            android:drawableStart="@drawable/ic_nickname"
-            android:drawablePadding="12sp"
-            android:hint="Name"
-            android:inputType="textWebEmailAddress"
-            android:paddingStart="12sp"
-            android:paddingTop="5sp"
-            android:paddingEnd="12sp"
-            android:paddingBottom="5sp"
-            android:textSize="14sp" />
 
     </LinearLayout>
 
@@ -93,7 +78,7 @@
         android:layout_weight="1">
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/nickname_next_btn"
+            android:id="@+id/density_next_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"

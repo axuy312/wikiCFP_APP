@@ -21,7 +21,31 @@
     <string name="welcome_conference_infinity">Welcome Conference Infinity</string>
     <string name="login">Login</string>
     <string name="login_by_mail">Login by Mail</string>
-
+    <string name="nickname">NickName</string>
+    <string name="enter_your_name_this_will_be_display_on_our_forum">Enter Your Name (This will be display on our forum)</string>
+    <string name="phone_login">Phone Login</string>
+    <string name="register">Register</string>
+    <string name="select_your_preference_article_density">Select your preference Article Density</string>
+    <string name="article_density">Article Density</string>
+    <string name="all_done">All Done !</string>
+    <string name="welcome_pic">Welcome Pic</string>
+    <string name="you_will_be_accepted_our_terms_of_service_after_you_continue">You will be accepted our Terms of Service after you continue.</string>
+    <string name="meet_conference_infinity">Meet Conference Infinity</string>
+    <string name="select_preference_language">Select Preference Language</string>
+    <string name="traditional_chinese">Traditional Chinese</string>
+    <string name="english_us">English (US)</string>
+    <string name="_6_to_24_characters">(6 to 24 characters)</string>
+    <string name="enter_your_password">Enter your Password</string>
+    <string name="select_preference_theme">Select Preference Theme</string>
+    <string name="light">Light</string>
+    <string name="dark">Dark</string>
+    <string name="select_following_topics">Select Following Topics</string>
+    <string name="topics">Topics</string>
+    <string name="conference_infinity">Conference Infinity</string>
+    <string name="topics_icon">Topics Icon</string>
+    <string name="email_address">Email Address</string>
+    <string name="password">Password</string>
+    <string name="welcome">Welcome</string>
 
     <string name="Category">Category</string>
     <string name="Bookmark_Topics">Bookmark Topics</string>

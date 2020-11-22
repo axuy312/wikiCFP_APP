@@ -24,7 +24,8 @@
             android:contentDescription="@string/BackButton"
             android:paddingStart="24sp"
             android:paddingEnd="24sp"
-            android:src="@drawable/ic_back" />
+            android:src="@drawable/ic_back"
+            tools:ignore="NestedWeights" />
 
         <TextView
             android:layout_width="wrap_content"
