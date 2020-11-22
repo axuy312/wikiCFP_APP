@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.example.conference_infinity.R;
 
-public class MyListAdapter extends BaseAdapter {
+public class MyListAdapter_Category extends BaseAdapter {
 
     private Context mContext;
     private LayoutInflater mLayoutInflater;
@@ -19,7 +19,7 @@ public class MyListAdapter extends BaseAdapter {
     private String[] titles;
     private int data_len = 0;
 
-    public MyListAdapter(Context context, String[] strings){
+    public MyListAdapter_Category(Context context, String[] strings){
         this.mContext = context;
         this.mLayoutInflater = LayoutInflater.from(context);
         if(strings != null){
