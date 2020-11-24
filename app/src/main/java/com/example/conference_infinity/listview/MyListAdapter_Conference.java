@@ -70,8 +70,8 @@ public class MyListAdapter_Conference extends BaseAdapter {
         }
         holder.category_item_icon.setImageResource(R.drawable.img);
         holder.category_item_title.setText(title);
-        holder.conference_item_title.setText(datas[position].get("title").toString());
-        holder.conference_item_deadline.setText("2020/11/02");
+        holder.conference_item_title.setText(datas[position].get("Topic").toString());
+        holder.conference_item_deadline.setText(datas[position].get("Deadline").toString());
         holder.comment_number.setText(String.valueOf(position));
         return convertView;
     }

@@ -22,6 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Arrays;
 import java.util.Dictionary;
 import java.util.HashMap;
+import java.util.Map;
 
 public class ConferencesActivity extends AppCompatActivity {
 
@@ -73,9 +74,11 @@ public class ConferencesActivity extends AppCompatActivity {
                 else {
                     HashMap[] listData = {};
                     for (DataSnapshot data : dataSnapshot.getChildren()){
+                        Map<String, Object> values = (Map<String, Object>)data.getValue();
                         listData = Arrays.copyOf(listData, listData.length + 1);
                         listData[listData.length - 1] = new HashMap<String,String>();
-                        listData[listData.length - 1].put("title",data.getKey());
+                        listData[listData.length - 1].put("Topic",values.get("Topic"));
+                        listData[listData.length - 1].put("Deadline",values.get("Deadline"));
                     }
                     UpdateConferenceData(listData);
                     Conference_List.setAdapter(new MyListAdapter_Conference(ConferencesActivity.this, Conference_List_Data, title));
