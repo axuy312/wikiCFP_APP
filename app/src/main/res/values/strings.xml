@@ -57,5 +57,12 @@
     <string name="All_Topics">All Topics</string>
 
     <string name="Paper_Deadline">Paper Deadline : </string>
+    <string name="add">Join Conference</string>
+    <string name="translate">Translate</string>
+    <string name="comments">Comments</string>
+    <string name="share">Share</string>
+    <string name="conference_name">Conference Name</string>
+    <string name="conference_date">Conference Date</string>
+    <string name="conference_location">Conference Location</string>
 
 </resources>

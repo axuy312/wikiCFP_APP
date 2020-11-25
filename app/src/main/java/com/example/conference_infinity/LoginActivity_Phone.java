@@ -29,7 +29,7 @@ public class LoginActivity_Phone extends AppCompatActivity {
         login_mail_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity_Phone.this, LoginActivity.class);
+                Intent intent = new Intent(LoginActivity_Phone.this, ArticleActivity.class);
                 startActivity(intent);
                 finish();
             }
