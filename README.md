@@ -1,7 +1,7 @@
-# Branch axuy312
+# Branch
 This is a final project of Embedded System course.
 
-2020-11-25 adsf pull
+2020-11-26 00:10 axuy312
 
 <h2> Info </h2>
 
