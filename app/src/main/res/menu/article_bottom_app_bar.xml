@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/bottom_bar_translate"
+        android:icon="@drawable/ic_translate"
+        android:title="@string/translate"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/bottom_bar_chat"
+        android:icon="@drawable/ic_comments"
+        android:title="@string/comments"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/bottom_bar_time"
+        android:icon="@drawable/ic_article_conference_date"
+        android:title="@string/conference_date"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/bottom_bar_share"
+        android:icon="@drawable/ic_share"
+        android:title="@string/share"
+        app:showAsAction="ifRoom" />
+</menu>
