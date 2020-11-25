@@ -53,10 +53,10 @@ public class ConferencesActivity extends AppCompatActivity {
         Conference_List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                /*Intent intent = new Intent(this, ConferencesActivity.class);
-                intent.putExtra("title", Category_List_Data[position]);
+                Intent intent = new Intent(ConferencesActivity.this, ArticleActivity.class);
+                //intent.putExtra("title", Category_List_Data[position]);
                 startActivity(intent);
-                getActivity().finish();*/
+                //getActivity().finish();
             }
         });
 

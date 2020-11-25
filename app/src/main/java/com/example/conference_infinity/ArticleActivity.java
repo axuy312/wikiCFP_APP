@@ -62,7 +62,7 @@ public class ArticleActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         //return super.onCreateOptionsMenu(menu);
 
-        getMenuInflater().inflate(R.menu.conferences_class_menu, menu);
+        getMenuInflater().inflate(R.menu.article_bottom_app_bar, menu);
 
         return true;
     }
