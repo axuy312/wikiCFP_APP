@@ -1,6 +1,8 @@
 package com.example.conference_infinity.register;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,6 +26,7 @@ import at.markushi.ui.CircleButton;
 public class Register_Password extends Fragment {
 
     private static final String TAG = "Fragment Password";
+    private EditText password;
 
     @Nullable
     @Override
@@ -34,7 +37,7 @@ public class Register_Password extends Fragment {
         // Connect the button in xml, must add "view.findView" in Fragment
         CircleButton back_btn = view.findViewById(R.id.password_back_btn);
         Button next_btn = view.findViewById(R.id.password_next_btn);
-        EditText password = view.findViewById(R.id.input_password);
+        password = view.findViewById(R.id.input_password);
 
         Log.d(TAG, "onCreateView: Started.");
 
@@ -52,13 +55,22 @@ public class Register_Password extends Fragment {
             @Override
             public void onClick(View v) {
                 //Toast.makeText(getActivity(), "Going to language", Toast.LENGTH_SHORT).show();
-                // navigate to the other fragment method
-                ((RegisterActivity) getActivity()).setViewPager(new States().getFragmentNum(States.STATE_LANGUAGE));
+                if (!password.getText().toString().isEmpty()) {
+                    saveData();
+                    // navigate to the other fragment method
+                    ((RegisterActivity) getActivity()).setViewPager(new States().getFragmentNum(States.STATE_LANGUAGE));
 
-
+                }
             }
         });
 
         return view;
+    }
+
+    private void saveData() {
+        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("UserRegister", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("Password", password.getText().toString());
+        editor.apply();
     }
 }

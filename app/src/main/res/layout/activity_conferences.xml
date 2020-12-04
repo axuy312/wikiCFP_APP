@@ -78,7 +78,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:scaleType="centerInside"
-                android:src="@drawable/tag"/>
+                android:src="@drawable/ic_bookmark_off"/>
 
         </LinearLayout>
 

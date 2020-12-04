@@ -102,7 +102,7 @@ public class CategoryFragment extends Fragment {
 
         //Update List
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("Category");
+        DatabaseReference myRef = database.getReference("CategorysPreview");
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

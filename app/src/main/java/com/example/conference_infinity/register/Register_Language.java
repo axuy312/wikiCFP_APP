@@ -1,6 +1,8 @@
 package com.example.conference_infinity.register;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +25,7 @@ import at.markushi.ui.CircleButton;
 public class Register_Language extends Fragment {
 
     private static final String TAG = "Fragment Language";
+    private Button Language_ZH,Language_EN;
 
     @Nullable
     @Override
@@ -33,6 +36,8 @@ public class Register_Language extends Fragment {
         // Connect the button in xml, must add "view.findView" in Fragment
         CircleButton back_btn = view.findViewById(R.id.language_back_btn);
         Button next_btn = view.findViewById(R.id.language_next_btn);
+        Language_EN = view.findViewById(R.id.input_language_en_us);
+        Language_ZH = view.findViewById(R.id.input_language_zh_tw);
 
         Log.d(TAG, "onCreateView: Started.");
 
@@ -56,5 +61,12 @@ public class Register_Language extends Fragment {
         });
 
         return view;
+    }
+
+    private void loadData()
+    {
+        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("UserRegister", Context.MODE_PRIVATE);
+
+        //sharedPreferences.getInt("Language",)
     }
 }

@@ -145,7 +145,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            app:backgroundTint="@android:color/holo_blue_light"
+            app:backgroundTint="@color/white_gray"
             app:fabAlignmentMode="end"
             app:fabAnimationMode="slide"
             app:fabCradleMargin="10sp"
@@ -163,7 +163,7 @@
             android:layout_height="wrap_content"
             android:contentDescription="@string/add"
             android:src="@drawable/ic_add"
-            app:backgroundTint="@android:color/holo_red_light"
+            app:backgroundTint="@android:color/white"
             app:fabSize="normal"
             app:layout_anchor="@id/bottomAppBar" />
 

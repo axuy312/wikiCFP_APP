@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
@@ -19,6 +20,7 @@ public class ArticleActivity extends AppCompatActivity {
 
     private FloatingActionButton floatingActionButton;
     private BottomAppBar bottomAppBar;
+    private Button back_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +29,7 @@ public class ArticleActivity extends AppCompatActivity {
 
         floatingActionButton = findViewById(R.id.fab);
         bottomAppBar = findViewById(R.id.bottomAppBar);
+        back_btn = findViewById(R.id.article_back_btn);
 
         /* main line for getting menu in bottom app bar */
         setSupportActionBar(bottomAppBar);
@@ -54,6 +57,13 @@ public class ArticleActivity extends AppCompatActivity {
 
                 BottomSheetDialogFragment bottomSheetDialogFragment = new BottomDialogFragment();
                 bottomSheetDialogFragment.show(getSupportFragmentManager(), bottomSheetDialogFragment.getClass().getSimpleName());
+            }
+        });
+
+        back_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }
