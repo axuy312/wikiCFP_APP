@@ -1,7 +1,7 @@
 package com.example.conference_infinity.register;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,14 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.conference_infinity.HomeActivity;
 import com.example.conference_infinity.R;
 import com.example.conference_infinity.RegisterActivity;
 
@@ -104,17 +101,18 @@ public class Register_Language extends Fragment {
         editor.apply();
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private void setLanguage()
     {
         if(lang_index == 0)
         {
-            Language_EN.setCompoundDrawables(getResources().getDrawable(R.drawable.ic_en_us), null, getResources().getDrawable(R.drawable.ic_done), null);
-            Language_ZH.setCompoundDrawables(getResources().getDrawable(R.drawable.ic_zh_tw), null, null, null);
+            Language_EN.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_en_us), null, getResources().getDrawable(R.drawable.ic_done), null);
+            Language_ZH.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_zh_tw), null, null, null);
         }
         else if(lang_index == 1)
         {
-            Language_EN.setCompoundDrawables(getResources().getDrawable(R.drawable.ic_en_us), null, null, null);
-            Language_ZH.setCompoundDrawables(getResources().getDrawable(R.drawable.ic_zh_tw), null, getResources().getDrawable(R.drawable.ic_done), null);
+            Language_EN.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_en_us), null, null, null);
+            Language_ZH.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_zh_tw), null, getResources().getDrawable(R.drawable.ic_done), null);
         }
     }
 }

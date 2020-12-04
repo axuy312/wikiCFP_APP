@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Conference_Infinity">
-        <activity android:name=".ArticleActivity"></activity>
+        <activity android:name=".ArticleActivity" />
         <activity android:name=".ConferencesActivity" />
         <activity android:name=".LoginActivity_Phone" />
         <activity android:name=".PreferenceActivity" />
