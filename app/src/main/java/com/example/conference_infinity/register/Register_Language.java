@@ -25,7 +25,8 @@ import at.markushi.ui.CircleButton;
 public class Register_Language extends Fragment {
 
     private static final String TAG = "Fragment Language";
-    private Button Language_ZH,Language_EN;
+    private Button Language_ZH, Language_EN;
+    private int lang_index = 0;
 
     @Nullable
     @Override
@@ -38,6 +39,8 @@ public class Register_Language extends Fragment {
         Button next_btn = view.findViewById(R.id.language_next_btn);
         Language_EN = view.findViewById(R.id.input_language_en_us);
         Language_ZH = view.findViewById(R.id.input_language_zh_tw);
+
+        loadData();
 
         Log.d(TAG, "onCreateView: Started.");
 
@@ -60,13 +63,58 @@ public class Register_Language extends Fragment {
             }
         });
 
+        Language_EN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lang_index = 0;
+                saveData();
+                setLanguage();
+                //((RegisterActivity) getActivity()).setViewPager(new States().getFragmentNum(States.STATE_THEME));
+            }
+        });
+
+        Language_ZH.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lang_index = 1;
+                saveData();
+                setLanguage();
+                //((RegisterActivity) getActivity()).setViewPager(new States().getFragmentNum(States.STATE_THEME));
+            }
+        });
+
         return view;
     }
 
-    private void loadData()
-    {
+    private void loadData() {
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("UserRegister", Context.MODE_PRIVATE);
 
-        //sharedPreferences.getInt("Language",)
+        lang_index = sharedPreferences.getInt("Language", -1);
+
+        if(lang_index!=-1)
+        {
+            setLanguage();
+        }
+    }
+
+    private void saveData() {
+        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("UserRegister", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("Language", lang_index);
+        editor.apply();
+    }
+
+    private void setLanguage()
+    {
+        if(lang_index == 0)
+        {
+            Language_EN.setCompoundDrawables(getResources().getDrawable(R.drawable.ic_en_us), null, getResources().getDrawable(R.drawable.ic_done), null);
+            Language_ZH.setCompoundDrawables(getResources().getDrawable(R.drawable.ic_zh_tw), null, null, null);
+        }
+        else if(lang_index == 1)
+        {
+            Language_EN.setCompoundDrawables(getResources().getDrawable(R.drawable.ic_en_us), null, null, null);
+            Language_ZH.setCompoundDrawables(getResources().getDrawable(R.drawable.ic_zh_tw), null, getResources().getDrawable(R.drawable.ic_done), null);
+        }
     }
 }

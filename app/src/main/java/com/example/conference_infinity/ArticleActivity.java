@@ -20,7 +20,7 @@ public class ArticleActivity extends AppCompatActivity {
 
     private FloatingActionButton floatingActionButton;
     private BottomAppBar bottomAppBar;
-    private Button back_btn;
+    private at.markushi.ui.CircleButton back_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
