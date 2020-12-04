@@ -1,8 +1,7 @@
 # Branch
 This is a final project of Embedded System course.
 
-2020-11-26 00:10 axuy312
-2020-12-04 11:16 adsf
+2020-12-5 1:57 axuy312
 
 <h2> Info </h2>
 
