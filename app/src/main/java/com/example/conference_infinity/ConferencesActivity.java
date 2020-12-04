@@ -54,7 +54,11 @@ public class ConferencesActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(ConferencesActivity.this, ArticleActivity.class);
-                //intent.putExtra("title", Category_List_Data[position]);
+                intent.putExtra("Topic", Conference_List_Data[position].get("Topic"));
+                intent.putExtra("Deadline", Conference_List_Data[position].get("Deadline"));
+                intent.putExtra("Link", Conference_List_Data[position].get("Link"));
+                intent.putExtra("When", Conference_List_Data[position].get("When"));
+                intent.putExtra("Where", Conference_List_Data[position].get("Where"));
                 startActivity(intent);
                 //getActivity().finish();
             }
@@ -79,6 +83,9 @@ public class ConferencesActivity extends AppCompatActivity {
                         listData[listData.length - 1] = new HashMap<String,String>();
                         listData[listData.length - 1].put("Topic",values.get("Topic"));
                         listData[listData.length - 1].put("Deadline",values.get("Deadline"));
+                        listData[listData.length - 1].put("Link",values.get("Link"));
+                        listData[listData.length - 1].put("When",values.get("When"));
+                        listData[listData.length - 1].put("Where",values.get("Where"));
                     }
                     UpdateConferenceData(listData);
                     Conference_List.setAdapter(new MyListAdapter_Conference(ConferencesActivity.this, Conference_List_Data, title));
