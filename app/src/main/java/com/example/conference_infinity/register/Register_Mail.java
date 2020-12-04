@@ -1,8 +1,11 @@
 package com.example.conference_infinity.register;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,17 +26,18 @@ import at.markushi.ui.CircleButton;
 public class Register_Mail extends Fragment {
 
     private static final String TAG = "Fragment Mail";
+    private EditText mail;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // Create xml Layout (Same as Activity "OnCreate()")
-        View view = inflater.inflate(R.layout.register_mail_layout,container,false);
+        View view = inflater.inflate(R.layout.register_mail_layout, container, false);
 
         // Connect the button in xml, must add "view.findView" in Fragment
         CircleButton back_btn = view.findViewById(R.id.mail_back_btn);
         Button next_btn = view.findViewById(R.id.mail_next_btn);
-        EditText mail = view.findViewById(R.id.input_mail);
+        mail = view.findViewById(R.id.input_mail);
 
         Log.d(TAG, "onCreateView: Started.");
 
@@ -51,12 +55,34 @@ public class Register_Mail extends Fragment {
         next_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "Going to nickname", Toast.LENGTH_SHORT).show();
-                // navigate to the other fragment method
-                ((RegisterActivity)getActivity()).setViewPager(1);
+
+                if (!mail.getText().toString().isEmpty()) {
+                    // Check Email invalid
+                    if (Patterns.EMAIL_ADDRESS.matcher(mail.getText().toString()).matches()) {
+                        // Save input data
+                        saveData();
+                        //Toast.makeText(getActivity(), "Going to nickname", Toast.LENGTH_SHORT).show();
+                        // navigate to the other fragment method
+                        ((RegisterActivity) getActivity()).setViewPager(1);
+                    } else {
+                        Toast.makeText(getActivity(), "Please input current Email", Toast.LENGTH_SHORT).show();
+                        mail.setError("Email Pattern Invalidate");
+                    }
+
+                } else {
+                    Toast.makeText(getActivity(), "Please input current Email", Toast.LENGTH_SHORT).show();
+                    mail.setError("Email Invalidate");
+                }
             }
         });
 
         return view;
+    }
+
+    private void saveData() {
+        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("UserRegister", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("Mail", mail.getText().toString());
+        editor.apply();
     }
 }

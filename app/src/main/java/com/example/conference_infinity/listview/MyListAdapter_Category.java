@@ -64,7 +64,7 @@ public class MyListAdapter_Category extends BaseAdapter {
         }
         holder.title.setText(titles[position]);
         holder.icon.setImageResource(R.drawable.img);
-        holder.tag.setImageResource(R.drawable.tag);
+        holder.tag.setImageResource(R.drawable.ic_bookmark_off);
         return convertView;
     }
 }

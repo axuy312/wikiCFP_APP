@@ -2,9 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     android:paddingHorizontal="15dp"
-    android:paddingVertical="10dp"
-    android:orientation="vertical">
+    android:paddingVertical="10dp">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -15,20 +15,21 @@
             android:id="@+id/category_item_icon"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:scaleType="centerInside"
-            android:background="@color/teal_200"/>
+            android:background="@color/teal_200"
+            android:scaleType="centerInside" />
 
         <TextView
             android:id="@+id/category_item_title"
             android:layout_width="0dp"
             android:layout_height="20dp"
             android:layout_weight="1"
-            android:paddingLeft="20dp"
-            android:textSize="10dp"
-            android:text="test"
-            android:singleLine="false"
+            android:gravity="center_vertical"
             android:maxLines="2"
-            android:gravity="center_vertical"/>
+            android:paddingStart="20sp"
+            android:paddingEnd="0sp"
+            android:singleLine="false"
+            android:text="test"
+            android:textSize="10dp" />
 
     </LinearLayout>
 
@@ -36,12 +37,13 @@
         android:id="@+id/conference_item_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingVertical="5dp"
-        android:textSize="20dp"
-        android:text="test"
-        android:singleLine="false"
+        android:gravity="center_vertical"
         android:maxLines="2"
-        android:gravity="center_vertical"/>
+        android:paddingVertical="5dp"
+        android:singleLine="false"
+        android:text="@string/topics"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:textColor="@color/dark_gray" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -51,46 +53,47 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:paddingVertical="5dp"
-            android:textSize="10dp"
             android:text="@string/Paper_Deadline"
-            android:gravity="center_vertical"/>
+            android:textSize="10dp" />
 
         <TextView
             android:id="@+id/conference_item_deadline"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingVertical="5dp"
-            android:textSize="10dp"
-            android:text="2020/11/02"
-            android:singleLine="false"
+            android:gravity="center_vertical"
             android:maxLines="2"
-            android:gravity="center_vertical"/>
+            android:paddingVertical="5dp"
+            android:singleLine="false"
+            android:text="2020/11/02"
+            android:textSize="10dp" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
         <ImageView
             android:layout_width="15dp"
             android:layout_height="15dp"
+            android:background="@color/teal_200"
             android:scaleType="centerInside"
-            android:src="@drawable/tag"
-            android:background="@color/teal_200"/>
+            android:src="@drawable/ic_comments" />
 
         <TextView
             android:id="@+id/comment_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="5dp"
+            android:gravity="center_vertical"
             android:paddingVertical="5dp"
-            android:textSize="10dp"
+            android:paddingStart="5sp"
+            android:paddingEnd="0sp"
             android:text="1234"
-            android:gravity="center_vertical"/>
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -103,9 +106,10 @@
                 android:id="@+id/bell"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
+                android:background="@color/teal_200"
+                android:contentDescription="@string/bookmarked"
                 android:scaleType="centerInside"
-                android:src="@drawable/tag"
-                android:background="@color/teal_200"/>
+                android:src="@drawable/ic_bookmark_off" />
 
         </LinearLayout>
 
