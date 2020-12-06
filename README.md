@@ -1,7 +1,7 @@
 # Branch
 This is a final project of Embedded System course.
 
-12/6 17:28(axuy312)
+12/7 1:46(axuy312)
 
 <h2> Info </h2>
 
