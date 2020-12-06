@@ -42,6 +42,7 @@ public class HomeFragment extends Fragment {
     ListView Category_List;
 
     String[] Category_List_Data;
+    GlobalVariable user;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -80,6 +81,7 @@ public class HomeFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+        user = (GlobalVariable)getActivity().getApplicationContext();
 
 
         //Create List
@@ -97,34 +99,9 @@ public class HomeFragment extends Fragment {
 
 
 
-        //Update List
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("CategorysPreview");
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                //String keys = dataSnapshot.getKey();
-                if (dataSnapshot == null)
-                    Toast.makeText(getActivity(), "Realtime database error: No data", Toast.LENGTH_LONG).show();
-                else {
-                    String[] listData = {};
-                    for (DataSnapshot data : dataSnapshot.getChildren()){
-                        listData = Arrays.copyOf(listData, listData.length + 1);
-                        listData[listData.length - 1] = data.getKey();
-                    }
-                    UpdateCategoryData(listData);
-                    Category_List.setAdapter(new MyListAdapter_Category(getActivity(), Category_List_Data));
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Toast.makeText(getActivity(), "Realtime database error: "+error.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
+        if (user.categoryPreview != null && getActivity() != null){
+            Category_List.setAdapter(new MyListAdapter_Category(getActivity(), user.categoryPreview));
+        }
     }
 
     public void UpdateCategoryData(String[] strings){
