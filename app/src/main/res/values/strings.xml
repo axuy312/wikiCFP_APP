@@ -66,5 +66,8 @@
     <string name="conference_date">Conference Date</string>
     <string name="conference_location">Conference Location</string>
     <string name="bookmarked">Bookmarked</string>
+    <string name="topic_icon">Topic_Icon</string>
+    <string name="test">test</string>
+    <string name="comments_icon">Comments_Icon</string>
 
 </resources>

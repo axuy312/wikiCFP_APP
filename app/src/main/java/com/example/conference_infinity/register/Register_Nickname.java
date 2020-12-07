@@ -70,6 +70,10 @@ public class Register_Nickname extends Fragment {
                         // navigate to the other fragment method
                         ((RegisterActivity) getActivity()).setViewPager(new States().getFragmentNum(States.STATE_PASSWORD));
                     }
+                    else
+                    {
+                        nickname.setError("Input a name");
+                    }
                 }
             });
         }

@@ -8,6 +8,8 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
 
 import com.example.conference_infinity.register.Register_Density;
 import com.example.conference_infinity.register.Register_Done;
@@ -46,6 +48,13 @@ public class RegisterActivity extends AppCompatActivity {
 
         // Add first Page to Stack
         pageStack.push(0);
+
+        mViewPager.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
     }
 
     private void setupViewPager(ViewPager viewPager) {

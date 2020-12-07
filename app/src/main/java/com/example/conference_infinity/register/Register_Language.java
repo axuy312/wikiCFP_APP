@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,7 +24,7 @@ public class Register_Language extends Fragment {
 
     private static final String TAG = "Fragment Language";
     private Button Language_ZH, Language_EN;
-    private int lang_index = 0;
+    private int lang_index = -1;
 
     @Nullable
     @Override
@@ -55,8 +56,17 @@ public class Register_Language extends Fragment {
             @Override
             public void onClick(View v) {
                 //Toast.makeText(getActivity(), "Going to theme", Toast.LENGTH_SHORT).show();
-                // navigate to the other fragment method
-                ((RegisterActivity) getActivity()).setViewPager(new States().getFragmentNum(States.STATE_THEME));
+                // Check if user has input
+                if(lang_index!=-1)
+                {
+                    // navigate to the other fragment method
+                    ((RegisterActivity) getActivity()).setViewPager(new States().getFragmentNum(States.STATE_THEME));
+                }
+                else
+                {
+                    Toast.makeText(getActivity(),"Select one to choose theme.",Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
@@ -82,6 +92,8 @@ public class Register_Language extends Fragment {
 
         return view;
     }
+
+    // add view
 
     private void loadData() {
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("UserRegister", Context.MODE_PRIVATE);

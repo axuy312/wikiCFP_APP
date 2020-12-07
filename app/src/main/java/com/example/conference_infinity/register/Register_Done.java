@@ -1,12 +1,15 @@
 package com.example.conference_infinity.register;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,7 +30,12 @@ public class Register_Done extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // Create xml Layout (Same as Activity "OnCreate()")
-        View view = inflater.inflate(R.layout.register_done_layout, container, false);
+        return inflater.inflate(R.layout.register_done_layout, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         // Connect the button in xml, must add "view.findView" in Fragment
         Button next_btn = view.findViewById(R.id.done_next_btn);
@@ -42,7 +50,5 @@ public class Register_Done extends Fragment {
                 getActivity().finish();
             }
         });
-
-        return view;
     }
 }

@@ -10,13 +10,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0sp"
-        android:layout_marginTop="50sp"
+        android:layout_gravity="bottom"
         android:layout_marginHorizontal="20sp"
+        android:layout_marginTop="50sp"
         android:layout_marginBottom="20sp"
         android:layout_weight="1"
         android:orientation="vertical"
-        tools:ignore="Suspicious0dp"
-        android:layout_gravity="bottom">
+        tools:ignore="Suspicious0dp">
 
         <TextView
             android:layout_width="match_parent"
@@ -56,9 +56,9 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_register_done"
             android:layout_margin="20sp"
-            android:contentDescription="@string/welcome_pic" />
+            android:contentDescription="@string/welcome_pic"
+            android:src="@drawable/ic_register_done" />
 
     </LinearLayout>
 
@@ -67,17 +67,18 @@
         android:layout_height="0sp"
         android:layout_margin="40sp"
         android:layout_weight="1"
-        android:orientation="vertical"
-        android:gravity="bottom">
+        android:gravity="bottom"
+        android:orientation="vertical">
 
         <TextView
+            android:id="@+id/show_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20sp"
             android:layout_marginEnd="20sp"
             android:layout_marginBottom="30sp"
-            android:text="@string/you_will_be_accepted_our_terms_of_service_after_you_continue"
             android:gravity="center"
+            android:text="@string/you_will_be_accepted_our_terms_of_service_after_you_continue"
             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
             android:textColor="@color/light_gray" />
 
