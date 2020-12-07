@@ -38,6 +38,7 @@ public class CategoryFragment extends Fragment {
 
     //
     String[] Category_List_Data;
+    GlobalVariable user;
     //
 
     // TODO: Rename parameter arguments, choose names that match
@@ -85,7 +86,7 @@ public class CategoryFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-
+        user = (GlobalVariable)getActivity().getApplicationContext();
 
         //Create List
         Category_List = view.findViewById(R.id.Category_List);
@@ -94,12 +95,17 @@ public class CategoryFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), ConferencesActivity.class);
-                intent.putExtra("title", Category_List_Data[position]);
+                intent.putExtra("title", user.categoryPreview[position]);
                 startActivity(intent);
                 //getActivity().finish();
             }
         });
 
+        if (user.categoryPreview != null && getActivity() != null){
+            Category_List.setAdapter(new MyListAdapter_Category(getActivity(), user.categoryPreview));
+        }
+
+        /*
         //Update List
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("CategorysPreview");
@@ -128,7 +134,11 @@ public class CategoryFragment extends Fragment {
                 Toast.makeText(getActivity(), "Realtime database error: "+error.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+        */
+
     }
+
+
 
     public void UpdateCategoryData(String[] strings){
         if (strings != null){

@@ -13,6 +13,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        GlobalVariable gv = (GlobalVariable)getApplicationContext();
+        gv.setRealtime();
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
