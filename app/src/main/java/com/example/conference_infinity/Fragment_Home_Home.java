@@ -83,7 +83,7 @@ public class Fragment_Home_Home extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), Activity_Conferences.class);
-                intent.putExtra("title", Category_List_Data[position]);
+                intent.putExtra("title", user.categoryPreview[position]);
                 startActivity(intent);
                 //getActivity().finish();
             }

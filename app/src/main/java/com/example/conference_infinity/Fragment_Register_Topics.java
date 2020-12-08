@@ -63,7 +63,7 @@ public class Fragment_Register_Topics extends Fragment {
 
                 //Toast.makeText(getActivity(), "Going to density", Toast.LENGTH_SHORT).show();
                 // navigate to the other fragment method
-                ((Activity_Register_Register) getActivity()).setViewPager(new Root_Register_States().getFragmentNum(Root_Register_States.STATE_DENSITY));
+                ((Activity_Register_Register) getActivity()).setViewPager(new Root_Register_States().getFragmentNum(Root_Register_States.STATE_THEME));
             }
         });
 

@@ -53,7 +53,6 @@ public class Activity_Register_Register extends AppCompatActivity {
         adapter.addFragment(new Fragment_Register_Password(), "Register Password");
         adapter.addFragment(new Fragment_Register_Language(), "Register Language");
         adapter.addFragment(new Fragment_Register_Theme(), "Register Theme");
-        adapter.addFragment(new Fragment_Register_Density(), "Register Density");
         adapter.addFragment(new Fragment_Register_Topics(), "Register Topics");
         adapter.addFragment(new Fragment_Register_Done(), "Register Done");
 

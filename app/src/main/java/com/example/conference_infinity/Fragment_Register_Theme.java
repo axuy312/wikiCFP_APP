@@ -58,7 +58,7 @@ public class Fragment_Register_Theme extends Fragment {
                 if(theme!=-1)
                 {
                     // navigate to the other fragment method
-                    ((Activity_Register_Register) getActivity()).setViewPager(new Root_Register_States().getFragmentNum(Root_Register_States.STATE_DENSITY));
+                    ((Activity_Register_Register) getActivity()).setViewPager(new Root_Register_States().getFragmentNum(Root_Register_States.STATE_TOPIC));
                 }
                 else
                 {
