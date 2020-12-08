@@ -5,7 +5,7 @@ plugins {
 
 android {
     compileSdkVersion 30
-    buildToolsVersion '30.0.2'
+    buildToolsVersion '30.0.3'
 
     defaultConfig {
         applicationId "com.example.conference_infinity"
@@ -21,24 +21,6 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-
-    sourceSets {
-        main {
-            manifest.srcFile 'src/main/AndroidManifest.xml'
-            java.srcDirs = ['src/main/java', 'apt_generated']
-            aidl.srcDirs = ['src/main.aidl', 'apt_generated']
-            assets.srcDirs = ['src/main/assets']
-            res.srcDirs =
-                    [
-                            'src/main/res/layouts',
-                            'src/main/res',
-                            'src\\main\\res',
-                            'src\\main\\res\\layout\\layout_register',
-                            'src\\main\\res\\layout\\layout_home',
-                            'src\\main\\res\\layout\\layout_settings'
-                    ]
         }
     }
 
@@ -59,7 +41,7 @@ dependencies {
     implementation 'androidx.fragment:fragment:1.2.5'
     implementation 'com.google.firebase:firebase-database:19.5.1'
     implementation 'com.google.firebase:firebase-firestore:22.0.0'
-    testImplementation 'junit:junit:4.+'
+    testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 

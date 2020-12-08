@@ -11,14 +11,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Conference_Infinity">
-        <activity android:name=".ArticleActivity" />
-        <activity android:name=".ConferencesActivity" />
-        <activity android:name=".LoginActivity_Phone" />
-        <activity android:name=".PreferenceActivity" />
-        <activity android:name=".HomeActivity" />
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".Activity_Article" />
+        <activity android:name=".Activity_Conferences" />
+        <activity android:name=".Activity_Login_Phone" />
+        <activity android:name=".Activity_Setting_Preference" />
+        <activity android:name=".Activity_Home_Home" />
+        <activity android:name=".Activity_Register_Register" />
+        <activity android:name=".Activity_Login" />
+        <activity android:name=".Activity_Main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
