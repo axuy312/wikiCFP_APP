@@ -69,5 +69,8 @@
     <string name="topic_icon">Topic_Icon</string>
     <string name="test">test</string>
     <string name="comments_icon">Comments_Icon</string>
+    <string name="trend">Trend</string>
+    <string name="latest">Latest</string>
+    <string name="following">Following</string>
 
 </resources>

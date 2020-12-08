@@ -7,6 +7,8 @@ This is a final project of Embedded System course.
 
 12/9 00:48(adsf)
 
+12/9 01:00(adsf) 
+
 <h2> Info </h2>
 
 <h2> Conference Infinity Feature </h2>
@@ -22,5 +24,6 @@ This is a final project of Embedded System course.
     <img src="" />
   <summary>功能圖</summary>
     <img src="" />
- </details></h2>
+ </details>
+ </h2>
  

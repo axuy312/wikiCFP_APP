@@ -28,8 +28,6 @@ public class Activity_Home_Home extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_UNLABELED);
 
-
-
         // Add home Fragment in Deque
         integerDeque.push(R.id.home_nav);
 
