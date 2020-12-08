@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:backgroundTint="@color/white_gray"
     android:orientation="vertical"
-    tools:context=".ArticleActivity">
+    tools:context=".Activity_Article">
 
     <LinearLayout
         android:layout_width="match_parent"

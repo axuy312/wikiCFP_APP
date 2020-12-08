@@ -3,8 +3,10 @@
 
     <item
         android:id="@+id/trend_nav"
-        android:title="Trend" />
+        android:title="@string/trend" />
+
     <item
         android:id="@+id/latest_nav"
-        android:title="Latest" />
+        android:title="@string/latest" />
+
 </menu>

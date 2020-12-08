@@ -2,23 +2,26 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.conference_infinity">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:name=".GlobalVariable"
-        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Conference_Infinity">
-        <activity android:name=".ArticleActivity" />
-        <activity android:name=".ConferencesActivity" />
-        <activity android:name=".LoginActivity_Phone" />
-        <activity android:name=".PreferenceActivity" />
-        <activity android:name=".HomeActivity" />
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".MainActivity">
+        android:theme="@style/Theme.Conference_Infinity"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".Activity_Setting_About" />
+        <activity android:name=".Activity_Article" />
+        <activity android:name=".Activity_Conferences" />
+        <activity android:name=".Activity_Login_Phone" />
+        <activity android:name=".Activity_Setting_Preference" />
+        <activity android:name=".Activity_Home_Home" />
+        <activity android:name=".Activity_Register_Register" />
+        <activity android:name=".Activity_Login" />
+        <activity android:name=".Activity_Main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="10"
+    tools:context=".Activity_Setting_Preference">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0sp"
+        android:layout_marginHorizontal="24sp"
+        android:layout_marginVertical="24sp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:weightSum="4">
+
+        <at.markushi.ui.CircleButton
+            android:id="@+id/language_back_btn"
+            android:layout_width="64sp"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_back"
+            app:cb_color="@color/light_selected_gray"
+
+            app:cb_pressedRingWidth="0sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingStart="20sp"
+            android:paddingEnd="20sp"
+            android:text="@string/preference"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textColor="@color/dark_gray" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/light_gray" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0sp"
+        android:layout_margin="30sp"
+        android:layout_weight="4"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/theme_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30sp"
+            android:background="@android:color/transparent"
+            android:drawableStart="@drawable/ic_theme"
+            android:drawablePadding="24sp"
+            android:paddingVertical="20sp"
+            android:text="@string/theme"
+            android:textAlignment="textStart"
+            android:textAllCaps="false"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/dark_gray" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/prefernce_language_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30sp"
+            android:background="@android:color/transparent"
+            android:drawableStart="@drawable/ic_language"
+            android:drawablePadding="24sp"
+            android:paddingVertical="20sp"
+            android:text="@string/prefer_language"
+            android:textAlignment="textStart"
+            android:textAllCaps="false"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/dark_gray" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/preference_density_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30sp"
+            android:background="@android:color/transparent"
+            android:drawableStart="@drawable/ic_density"
+            android:drawablePadding="24sp"
+            android:paddingVertical="20sp"
+            android:text="@string/density"
+            android:textAlignment="textStart"
+            android:textAllCaps="false"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/dark_gray" />
+
+
+    </LinearLayout>
+
+</LinearLayout>
