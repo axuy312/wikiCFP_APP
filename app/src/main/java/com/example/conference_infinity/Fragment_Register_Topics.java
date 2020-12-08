@@ -31,7 +31,7 @@ public class Fragment_Register_Topics extends Fragment {
 
     private static final String TAG = "Fragment Topics";
     private ChipGroup chipGroup;
-    private String CheckId = "";
+    private final String CheckId = "";
     private List<String> topics;
     private String email, nickname, password;
     private String[] topic;

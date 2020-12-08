@@ -18,7 +18,7 @@ public class Activity_Register_Register extends AppCompatActivity {
     // Use For fragment
     private Root_Register_SectionsStatePagerAdapter mFragmentRegisterSectionsStatePagerAdapter;
     private ViewPager mViewPager;
-    private Stack<Integer> pageStack = new Stack<>();
+    private final Stack<Integer> pageStack = new Stack<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +29,7 @@ public class Activity_Register_Register extends AppCompatActivity {
 
         mFragmentRegisterSectionsStatePagerAdapter = new Root_Register_SectionsStatePagerAdapter(getSupportFragmentManager());
 
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager = findViewById(R.id.container);
         // Setup the Pager
         setupViewPager(mViewPager);
 

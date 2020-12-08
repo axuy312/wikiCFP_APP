@@ -15,11 +15,11 @@ import java.util.HashMap;
 
 public class MyListAdapter_Conference extends BaseAdapter {
 
-    private Context mContext;
-    private LayoutInflater mLayoutInflater;
+    private final Context mContext;
+    private final LayoutInflater mLayoutInflater;
 
     private HashMap<String, String>[] datas;
-    private String title;
+    private final String title;
     private int data_len = 0;
 
     public MyListAdapter_Conference(Context context, HashMap[] dictionaries, String t){
@@ -70,8 +70,8 @@ public class MyListAdapter_Conference extends BaseAdapter {
         }
         holder.category_item_icon.setImageResource(R.drawable.img);
         holder.category_item_title.setText(title);
-        holder.conference_item_title.setText(datas[position].get("Topic").toString());
-        holder.conference_item_deadline.setText(datas[position].get("Deadline").toString());
+        holder.conference_item_title.setText(datas[position].get("Topic"));
+        holder.conference_item_deadline.setText(datas[position].get("Deadline"));
         holder.comment_number.setText(String.valueOf(position));
         return convertView;
     }

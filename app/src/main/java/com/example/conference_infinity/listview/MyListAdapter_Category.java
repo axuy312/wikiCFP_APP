@@ -13,8 +13,8 @@ import com.example.conference_infinity.R;
 
 public class MyListAdapter_Category extends BaseAdapter {
 
-    private Context mContext;
-    private LayoutInflater mLayoutInflater;
+    private final Context mContext;
+    private final LayoutInflater mLayoutInflater;
 
     private String[] titles;
     private int data_len = 0;
