@@ -1,12 +1,21 @@
 package com.example.conference_infinity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+
+import java.util.Objects;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -15,14 +24,9 @@ import android.view.ViewGroup;
  */
 public class Fragment_Home_Account extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private CircleImageView user_photo;
+    private TextView user_nickname;
+    private Button preference_btn, history_btn, account_management_btn, logout_btn, about_btn;
 
     public Fragment_Home_Account() {
         // Required empty public constructor
@@ -40,8 +44,6 @@ public class Fragment_Home_Account extends Fragment {
     public static Fragment_Home_Account newInstance(String param1, String param2) {
         Fragment_Home_Account fragment = new Fragment_Home_Account();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -49,10 +51,6 @@ public class Fragment_Home_Account extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -60,5 +58,57 @@ public class Fragment_Home_Account extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home_account, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Get id from fragment
+        user_photo = view.findViewById(R.id.profile_image);
+        user_nickname = view.findViewById(R.id.user_name);
+        preference_btn = view.findViewById(R.id.preference_btn);
+        history_btn = view.findViewById(R.id.history_conference_btn);
+        account_management_btn = view.findViewById(R.id.account_management_btn);
+        logout_btn = view.findViewById(R.id.logout_btn);
+        about_btn = view.findViewById(R.id.about_btn);
+
+        //onclick listener
+        preference_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), Activity_Setting_Preference.class);
+                startActivity(intent);
+            }
+        });
+        history_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        account_management_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        logout_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), Activity_Login.class);
+                startActivity(intent);
+                requireActivity().finish();
+            }
+        });
+
+        about_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), Activity_Setting_About.class);
+                startActivity(intent);
+            }
+        });
     }
 }
