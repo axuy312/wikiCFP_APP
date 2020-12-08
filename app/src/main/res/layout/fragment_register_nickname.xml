@@ -17,18 +17,19 @@
 
         <at.markushi.ui.CircleButton
             android:id="@+id/nickname_back_btn"
-            android:layout_width="80dp"
-            android:layout_height="80sp"
+            android:layout_width="72sp"
+            android:layout_height="72sp"
             android:src="@drawable/ic_back"
             app:cb_color="@color/light_selected_gray"
-            app:cb_pressedRingWidth="10sp" />
+            app:cb_pressedRingWidth="0sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20sp"
+            android:layout_marginTop="40sp"
             android:paddingStart="20sp"
             android:paddingEnd="0sp"
+            android:layout_marginHorizontal="20sp"
             android:text="@string/welcome_conference_infinity"
             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
             android:textColor="@color/light_gray" />
@@ -37,14 +38,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20sp"
+            android:elevation="50sp"
+            android:fontFamily="monospace"
             android:paddingStart="20sp"
             android:paddingEnd="0sp"
-            android:shadowColor="@color/black"
-            android:shadowDx="0"
-            android:shadowDy="10"
-            android:shadowRadius="6"
+            android:shadowColor="@color/dark_gray"
+            android:shadowDx="5"
+            android:shadowDy="7"
+            android:shadowRadius="10"
             android:text="@string/let_s_start"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/dark_gray"
             android:textStyle="bold" />
 
@@ -65,7 +68,7 @@
             android:layout_marginEnd="20sp"
             android:layout_marginBottom="10sp"
             android:text="@string/enter_your_name_this_will_be_display_on_our_forum"
-            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:textColor="@color/light_gray" />
 
 
@@ -78,12 +81,10 @@
             android:drawableStart="@drawable/ic_nickname"
             android:drawablePadding="12sp"
             android:hint="@string/nickname"
-            android:inputType="textWebEmailAddress"
-            android:paddingStart="12sp"
-            android:paddingTop="5sp"
-            android:paddingEnd="12sp"
-            android:paddingBottom="5sp"
-            android:textSize="14sp" />
+            android:inputType="textPersonName"
+            android:paddingVertical="20sp"
+            android:paddingHorizontal="20sp"
+            android:textSize="20sp" />
 
     </LinearLayout>
 

@@ -22,7 +22,7 @@
     <string name="login">Login</string>
     <string name="login_by_mail">Login by Mail</string>
     <string name="nickname">NickName</string>
-    <string name="enter_your_name_this_will_be_display_on_our_forum">Enter Your Name (This will be display on our forum)</string>
+    <string name="enter_your_name_this_will_be_display_on_our_forum">Enter Nickname \n(Name will be display on forum)</string>
     <string name="phone_login">Phone Login</string>
     <string name="register">Register</string>
     <string name="select_your_preference_article_density">Select your preference Article Density</string>
