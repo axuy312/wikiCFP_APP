@@ -29,21 +29,30 @@ public class GlobalVariable extends Application {
             "Light",
             "Dark"
     };
-
+    ValueEventListener valueEventListener;
+    DatabaseReference myRefConference;
+    void remove(){
+        myRefConference.removeEventListener(valueEventListener);
+    }
     void setRealtime(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRefConference = database.getReference("Conference");
-        myRefConference.addValueEventListener(new ValueEventListener() {
+        myRefConference = database.getReference("Conference");
+
+        valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 UpdateConferences((HashMap)dataSnapshot.getValue());
+                remove();
             }
 
             @Override
             public void onCancelled(DatabaseError error) {}
-        });
+        };
+        myRefConference.addValueEventListener(valueEventListener);
+
+
         DatabaseReference myRefCategory = database.getReference("Category");
         myRefCategory.addValueEventListener(new ValueEventListener() {
             @Override

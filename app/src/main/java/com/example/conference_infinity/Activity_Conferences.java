@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -31,12 +32,16 @@ public class Activity_Conferences extends AppCompatActivity {
     //
     private String title;
     private HashMap<String, String>[] Conference_List_Data;
+    private  GlobalVariable db;
     //
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conferences);
+
+        db = (GlobalVariable)getApplicationContext();
+
         title_view = findViewById(R.id.Category_Title);
         title = getIntent().getExtras().getString("title");
         if (title != null){
@@ -52,49 +57,26 @@ public class Activity_Conferences extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(Activity_Conferences.this, Activity_Article.class);
                 intent.putExtra("Topic", Conference_List_Data[position].get("Topic"));
-                intent.putExtra("Deadline", Conference_List_Data[position].get("Deadline"));
-                intent.putExtra("Link", Conference_List_Data[position].get("Link"));
-                intent.putExtra("When", Conference_List_Data[position].get("When"));
-                intent.putExtra("Where", Conference_List_Data[position].get("Where"));
+                intent.putExtra("Abbreviation", Conference_List_Data[position].get("Abbreviation"));
                 startActivity(intent);
                 //getActivity().finish();
             }
         });
 
-        //Update List
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("Category/"+title);
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                //String keys = dataSnapshot.getKey();
-                if (dataSnapshot == null)
-                    Toast.makeText(Activity_Conferences.this, "Realtime database error: No data", Toast.LENGTH_LONG).show();
-                else {
-                    HashMap[] listData = {};
-                    for (DataSnapshot data : dataSnapshot.getChildren()){
-                        Map<String, Object> values = (Map<String, Object>)data.getValue();
-                        listData = Arrays.copyOf(listData, listData.length + 1);
-                        listData[listData.length - 1] = new HashMap<String,String>();
-                        listData[listData.length - 1].put("Topic",values.get("Topic"));
-                        listData[listData.length - 1].put("Deadline",values.get("Deadline"));
-                        listData[listData.length - 1].put("Link",values.get("Link"));
-                        listData[listData.length - 1].put("When",values.get("When"));
-                        listData[listData.length - 1].put("Where",values.get("Where"));
-                    }
-                    UpdateConferenceData(listData);
-                    Conference_List.setAdapter(new MyListAdapter_Conference(Activity_Conferences.this, Conference_List_Data, title));
-                }
-            }
+        Conference_List.setAdapter(new MyListAdapter_Conference(Activity_Conferences.this, Conference_List_Data, title));
 
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Toast.makeText(Activity_Conferences.this, "Realtime database error: "+error.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
+        //Update List
+        HashMap<String,Object>conferences = (HashMap<String, Object>) db.categorys.get(title);
+        HashMap<String,Object>[] listData =  new HashMap[0];
+        Object[] objectKeys = conferences.keySet().toArray();
+        String[] keys = Arrays.copyOf(objectKeys, objectKeys.length, String[].class);
+        for (int i = 0; i < keys.length; i++){
+            listData = Arrays.copyOf(listData, listData.length + 1);
+            listData[listData.length - 1] = (HashMap<String, Object>) (((HashMap<String,Object>) conferences.get(keys[i])).clone());
+        }
+        UpdateConferenceData(listData);
+        Conference_List.setAdapter(new MyListAdapter_Conference(Activity_Conferences.this, Conference_List_Data, title));
+
     }
 
     public void UpdateConferenceData(HashMap[] dictionaries){
