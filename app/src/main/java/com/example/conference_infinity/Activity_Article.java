@@ -1,8 +1,13 @@
 package com.example.conference_infinity;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -27,6 +32,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,9 +44,15 @@ public class Activity_Article extends AppCompatActivity {
     private WebView webView;
     private LinearLayout loadWeb;
     private TextView topicView;
+    private ViewPager viewPager;
+    private TabLayout tabLayout;
     VerticalStepView verticalStepView;
 
-    private String url = "";
+    private Fragment_Article_Content fragment_article_content;
+    private Fragment_Article_Discuss fragment_article_discuss;
+    private Fragment_Article_Arrangement fragment_article_arrangement;
+
+    public String url = "";
     private String topic, abbreviation, Abstract_Registration_Due, when, where, Submission_Deadline, Notification_Due, Final_Version_Due;
     private GlobalVariable db;
     private HashMap<String, String>conference;
@@ -54,6 +66,8 @@ public class Activity_Article extends AppCompatActivity {
 
         db = (GlobalVariable) getApplicationContext();
         topicView = findViewById(R.id.Conference_topic);
+        tabLayout = findViewById(R.id.article_tablayout);
+        viewPager = findViewById(R.id.article_viewpager);
 
 
         topic = getIntent().getExtras().getString("Topic", "N/A");
@@ -79,9 +93,21 @@ public class Activity_Article extends AppCompatActivity {
 
         }
 
+        fragment_article_content = new Fragment_Article_Content(url);
+        fragment_article_discuss = new Fragment_Article_Discuss();
+        fragment_article_arrangement = new Fragment_Article_Arrangement();
+
+        tabLayout.setupWithViewPager(viewPager);
+
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), 0);
+        viewPagerAdapter.addFragment(fragment_article_content, "Content");
+        viewPagerAdapter.addFragment(fragment_article_discuss, "Discuss");
+        viewPagerAdapter.addFragment(fragment_article_arrangement, "Arrangement");
+        viewPager.setAdapter(viewPagerAdapter);
+
         //back_btn = findViewById(R.id.article_back_btn);
-        webView = findViewById(R.id.webView);
-        loadWeb = findViewById(R.id.load_web);
+        //webView = findViewById(R.id.webView);
+        //loadWeb = findViewById(R.id.load_web);
 
 
         verticalStepView = findViewById(R.id.test);
@@ -114,7 +140,7 @@ public class Activity_Article extends AppCompatActivity {
                 .setStepsViewIndicatorAttentionIcon(ContextCompat.getDrawable(this, R.drawable.ic_timeline_on))
                 .setStepsViewIndicatorDefaultIcon(ContextCompat.getDrawable(this, R.drawable.ic_timeline_off));
 
-        loadWebView();
+        //loadWebView();
 
         /*back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -209,4 +235,38 @@ public class Activity_Article extends AppCompatActivity {
 
         webView.loadUrl(url);
     }
+
+    private class ViewPagerAdapter extends FragmentPagerAdapter {
+
+        private List<Fragment>fragments = new ArrayList<>();
+        private List<String>fragmentTitle = new ArrayList<>();
+
+        public ViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {
+            super(fm, behavior);
+
+        }
+
+        public void addFragment(Fragment fragment, String title){
+            fragments.add(fragment);
+            fragmentTitle.add(title);
+        }
+
+        @NonNull
+        @Override
+        public Fragment getItem(int position) {
+            return fragments.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return fragments.size();
+        }
+
+        @Nullable
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return fragmentTitle.get(position);
+        }
+    }
+
 }
