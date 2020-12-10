@@ -13,6 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Conference_Infinity"
         android:usesCleartextTraffic="true">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
         <activity android:name=".Activity_Setting_About" />
         <activity android:name=".Activity_Article" />
         <activity android:name=".Activity_Conferences" />

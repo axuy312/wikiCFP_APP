@@ -145,14 +145,16 @@ public class Fragment_Article_Content extends Fragment {
                         "\t\tdocument.body.innerHTML = table[0].innerHTML;\n" +
                         "\t}\n" +
                         "\tvar form = document.getElementsByTagName(\"form\");\n" +
-                        "\tif(form.length > 0){\n" +
                         "\t\twhile(form.length > 0){\n" +
-                        "\t\t\tform[0].parentNode.removeChild(form[0])\n" +
+                        "\t\t\tform[0].parentNode.removeChild(form[0]);\n" +
                         "\t\t}\n" +
+                        "\tvar gglu = document.getElementsByClassName(\"gglu\");\n" +
+                        "\tif (gglu.length > 0){\n" +
+                        "\tgglu[0].parentNode.removeChild(gglu[0]);\n" +
                         "\t}\n" +
-                        "\t\n" +
+                        "\n" +
                         "}\n" +
-                        "showDetail()";
+                        "showDetail();";
                 view.loadUrl(javascript);
                 //view.loadUrl("javascript:showDetail();");
                 loadWeb.setVisibility(View.GONE);

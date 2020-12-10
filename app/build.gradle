@@ -47,4 +47,7 @@ dependencies {
 
     implementation 'com.github.baoyachi:StepView:1.9'
 
+    //目前位置
+    implementation 'com.google.android.gms:play-services-location:15.0.1'
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
 }
