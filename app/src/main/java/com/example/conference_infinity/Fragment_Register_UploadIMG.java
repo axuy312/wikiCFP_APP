@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -21,7 +22,9 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Objects;
 
 import at.markushi.ui.CircleButton;
@@ -45,6 +48,7 @@ public class Fragment_Register_UploadIMG extends Fragment {
         Button next_btn = view.findViewById(R.id.density_next_btn);
         Button add_img_btn = view.findViewById(R.id.add_img_btn);
         circleButton = view.findViewById(R.id.register_head_img);
+        gb = (GlobalVariable) getActivity().getApplicationContext();
 
         Log.d(TAG, "onCreateView: Started.");
 
@@ -70,7 +74,18 @@ public class Fragment_Register_UploadIMG extends Fragment {
         add_img_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+//          // 測試版本
+//                if(getActivity().checkSelfPermission(Build.VERSION.SDK_INT)>= Build.VERSION_CODES.M)
+//                {
+//                    if(getActivity().checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_DENIED)
+//                    {
+//                        // permission not granted, request again
+//                        String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
+//                        // show popup for runtime permission
+//                        requestPermissions(permissions,PERMISSION_CODE);
+//                    }
+//                }
+                // 確定使用者有打開權限
                 if (ActivityCompat.checkSelfPermission(requireActivity(),
                         Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                     requestPermissions(
@@ -106,8 +121,8 @@ public class Fragment_Register_UploadIMG extends Fragment {
             if (data != null) {
                 returnUri = data.getData();
             }
-            circleButton.setImageURI(null);
-            circleButton.setImageURI(returnUri);
+//            circleButton.setImageURI(null);
+//            circleButton.setImageURI(returnUri);
 
 //            Bitmap bitmap = null;
 //            try {
@@ -115,8 +130,19 @@ public class Fragment_Register_UploadIMG extends Fragment {
 //            } catch (IOException e) {
 //                e.printStackTrace();
 //            }
+
+            try {
+                InputStream inputStream = getActivity().getContentResolver().openInputStream(returnUri);
+
+                bitmapImage = BitmapFactory.decodeStream(inputStream);
+
+                circleButton.setImageBitmap(bitmapImage);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
             //gb.headPhoto = Bitmap.createBitmap(bitmap);
-            //gb.headPhoto = getActivity()
+            gb.headPhoto = bitmapImage;
             //circleButton.setImageBitmap(bitmap);
         }
     }
