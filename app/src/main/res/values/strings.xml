@@ -72,5 +72,6 @@
     <string name="trend">Trend</string>
     <string name="latest">Latest</string>
     <string name="following">Following</string>
+    <string name="upload_head_photo">Upload Head Photo</string>
 
 </resources>

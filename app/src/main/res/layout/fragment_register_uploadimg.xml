@@ -17,16 +17,17 @@
 
         <at.markushi.ui.CircleButton
             android:id="@+id/density_back_btn"
-            android:layout_width="80sp"
-            android:layout_height="80sp"
+            android:layout_width="72sp"
+            android:layout_height="72sp"
             android:src="@drawable/ic_back"
             app:cb_color="@color/light_selected_gray"
-            app:cb_pressedRingWidth="10sp" />
+            app:cb_pressedRingWidth="0sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20sp"
+            android:layout_marginHorizontal="20sp"
+            android:layout_marginTop="40sp"
             android:paddingStart="20sp"
             android:paddingEnd="0sp"
             android:text="@string/welcome_conference_infinity"
@@ -37,14 +38,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20sp"
+            android:elevation="50sp"
+            android:fontFamily="monospace"
             android:paddingStart="20sp"
             android:paddingEnd="0sp"
-            android:shadowColor="@color/black"
-            android:shadowDx="3"
-            android:shadowDy="10"
-            android:shadowRadius="6"
-            android:text="@string/article_density"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:shadowColor="@color/dark_gray"
+            android:shadowDx="5"
+            android:shadowDy="7"
+            android:shadowRadius="10"
+            android:text="@string/upload_head_photo"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/dark_gray"
             android:textStyle="bold" />
 
@@ -64,9 +67,14 @@
             android:layout_marginStart="20sp"
             android:layout_marginEnd="20sp"
             android:layout_marginBottom="10sp"
-            android:text="@string/select_your_preference_article_density"
+            android:text="Image Preview"
             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
             android:textColor="@color/light_gray" />
+
+        <ImageView
+            android:id="@+id/register_head_img"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
 
     </LinearLayout>
@@ -75,7 +83,18 @@
         android:layout_width="match_parent"
         android:layout_height="0sp"
         android:layout_margin="40sp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/add_img_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginVertical="10sp"
+            android:background="@drawable/custom_register_btn"
+            android:padding="10sp"
+            android:text="Pick a photo" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/density_next_btn"

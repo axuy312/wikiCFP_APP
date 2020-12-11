@@ -53,7 +53,7 @@ public class Fragment_Register_Password extends Fragment {
                     if (password.getText().length() > 5 && password.getText().length() < 25) {
                         saveData();
                         // navigate to the other fragment method
-                        ((Activity_Register_Register) getActivity()).setViewPager(new Root_Register_States().getFragmentNum(Root_Register_States.STATE_LANGUAGE));
+                        ((Activity_Register_Register) getActivity()).setViewPager(new Root_Register_States().getFragmentNum(Root_Register_States.STATE_UPLOADIMG));
                     } else {
                         password.setError("Password length no correct");
                     }

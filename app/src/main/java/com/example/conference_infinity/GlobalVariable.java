@@ -1,6 +1,7 @@
 package com.example.conference_infinity;
 
 import android.app.Application;
+import android.graphics.Bitmap;
 import android.util.Log;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,6 +30,7 @@ public class GlobalVariable extends Application {
             "Light",
             "Dark"
     };
+    Bitmap headPhoto;
     ValueEventListener valueEventListener;
     DatabaseReference myRefConference;
     void remove(){
