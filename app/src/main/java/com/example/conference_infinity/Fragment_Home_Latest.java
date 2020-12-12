@@ -33,6 +33,8 @@ public class Fragment_Home_Latest extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    MyListAdapter_Conference Conference_List_Adapter;
+
     GlobalVariable db;
     HashMap<String,String>[] Conference_List_Data;
 
@@ -89,7 +91,8 @@ public class Fragment_Home_Latest extends Fragment {
 
 
         if (db.conferences != null && getActivity() != null){
-            Conference_List.setAdapter(new MyListAdapter_Conference(getActivity(), Conference_List_Data));
+            Conference_List_Adapter = new MyListAdapter_Conference(getActivity(), Conference_List_Data);
+            Conference_List.setAdapter(Conference_List_Adapter);
             Conference_List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -101,5 +104,9 @@ public class Fragment_Home_Latest extends Fragment {
                 }
             });
         }
+    }
+
+    void RefreshListView(String newText){
+        Conference_List_Adapter.getFilter().filter(newText);
     }
 }

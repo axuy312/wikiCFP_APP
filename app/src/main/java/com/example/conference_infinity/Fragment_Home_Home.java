@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.SearchView;
 
 import com.baoyachi.stepview.VerticalStepView;
 import com.example.conference_infinity.listview.MyListAdapter_Category;
@@ -49,6 +50,7 @@ public class Fragment_Home_Home extends Fragment {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    SearchView Conference_search;
 
 
     public Fragment_Home_Home() {
@@ -90,6 +92,7 @@ public class Fragment_Home_Home extends Fragment {
 
         tabLayout = getActivity().findViewById(R.id.hom_tablayout);
         viewPager = getActivity().findViewById(R.id.home_viewpager);
+        Conference_search = getActivity().findViewById(R.id.home_searchview);
 
         //Add Fragment
         fragment_home_latest = new Fragment_Home_Latest();
@@ -101,6 +104,20 @@ public class Fragment_Home_Home extends Fragment {
         viewPagerAdapter.addFragment(fragment_home_latest, "Lastest");
         viewPagerAdapter.addFragment(fragment_home_following, "Following");
         viewPager.setAdapter(viewPagerAdapter);
+
+
+        Conference_search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                fragment_home_latest.RefreshListView(newText);
+                return false;
+            }
+        });
 
     }
 
