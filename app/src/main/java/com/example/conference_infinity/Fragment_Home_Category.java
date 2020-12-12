@@ -7,12 +7,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.SearchView;
 
 import com.example.conference_infinity.listview.MyListAdapter_Category;
 
@@ -25,7 +27,8 @@ public class Fragment_Home_Category extends Fragment {
 
     //View
      ListView Category_List;
-     ListAdapter Category_List_Adapter;
+     SearchView Category_search;
+     MyListAdapter_Category Category_List_Adapter;
     //end View
 
     //
@@ -80,9 +83,10 @@ public class Fragment_Home_Category extends Fragment {
 
         user = (GlobalVariable)getActivity().getApplicationContext();
 
+        Category_search = view.findViewById(R.id.Search_Category);
+
         //Create List
         Category_List = view.findViewById(R.id.Category_List);
-        Category_List.setAdapter(new MyListAdapter_Category(getActivity(), null));
         Category_List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -94,40 +98,22 @@ public class Fragment_Home_Category extends Fragment {
         });
 
         if (user.categoryPreview != null && getActivity() != null){
-            Category_List.setAdapter(new MyListAdapter_Category(getActivity(), user.categoryPreview));
+            Category_List_Adapter = new MyListAdapter_Category(getActivity(), user.following_categoryPreview, user.preferCategory.size());
+            Category_List.setAdapter(Category_List_Adapter);
         }
 
-        /*
-        //Update List
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("CategorysPreview");
-        myRef.addValueEventListener(new ValueEventListener() {
+        Category_search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                //String keys = dataSnapshot.getKey();
-                if (dataSnapshot == null)
-                    Toast.makeText(getActivity(), "Realtime database error: No data", Toast.LENGTH_LONG).show();
-                else {
-                    String[] listData = {};
-                    for (DataSnapshot data : dataSnapshot.getChildren()){
-                        listData = Arrays.copyOf(listData, listData.length + 1);
-                        listData[listData.length - 1] = data.getKey();
-                    }
-                    UpdateCategoryData(listData);
-                    Category_List.setAdapter(new MyListAdapter_Category(getActivity(), Category_List_Data));
-                }
+            public boolean onQueryTextSubmit(String query) {
+                return false;
             }
 
             @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Toast.makeText(getActivity(), "Realtime database error: "+error.getMessage(), Toast.LENGTH_LONG).show();
+            public boolean onQueryTextChange(String newText) {
+                Category_List_Adapter.getFilter().filter(newText);
+                return false;
             }
         });
-        */
-
     }
 
 

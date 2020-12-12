@@ -9,6 +9,8 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,6 +23,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -39,6 +42,7 @@ public class GlobalVariable extends Application {
     String preferLangCode = "Traditional";
     String preferThemeCode = "Light";
     List<String> preferCategory = null;
+    String[] following_categoryPreview;
     String[] Language = {
             "Traditional",
             "English"
@@ -61,7 +65,6 @@ public class GlobalVariable extends Application {
     FirebaseFirestore db;
     //----------------------------------------------------------------------------------------------
 
-    boolean sucess = false;
 
     void setRealtime(){
         ValueEventListener valueEventListener;
@@ -115,72 +118,54 @@ public class GlobalVariable extends Application {
         });
     }
 
-    boolean loadUser(String Email, String Password){
+    void loadUser(String Email){
         if (db ==  null){
             db = FirebaseFirestore.getInstance();
         }
 
-
-        sucess = true;
         db.collection("User")
                 .document(Email)
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            Map<String, Object>UserData = document.getData();
-
-                            userName = UserData.get("Name").toString();
-                            userPassword = UserData.get("Password").toString();;
-                            userEmail = UserData.get("Email").toString();
-                            String tmpUrl = UserData.get("HeadPhoto").toString();
-                            if (tmpUrl != null && !tmpUrl.equals("N/A") && !tmpUrl.isEmpty())
-                            {
-                                try {
-                                    URL url = new URL(tmpUrl);
-                                    headPhoto = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                                } catch (Exception e) {
-                                    headPhoto = null;
-                                    e.printStackTrace();
-                                }
-                            }
-                        }
-                        else {
-                            sucess = false;
-                            Log.w("----TAG----", "Error getting documents.", task.getException());
-                        }
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        Map<String, Object>UserData = documentSnapshot.getData();
+                        UpdataUser(UserData.get("Name").toString(), UserData.get("Password").toString(), UserData.get("Email").toString(), UserData.get("HeadPhoto").toString());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("----TAG----", "Error getting documents : " + e.getMessage());
                     }
                 });
 
         db.collection("Preference")
                 .document(Email)
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            Map<String, Object>UserData = document.getData();
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        Map<String, Object>UserData = documentSnapshot.getData();
 
-                            preferLangCode = UserData.get("Language").toString();
-                            preferThemeCode = UserData.get("Theme").toString();;
-                            preferCategory = (List<String>) UserData.get("Category");
-                        }
-                        else {
-                            sucess = false;
-                            Log.w("----TAG----", "Error getting documents.", task.getException());
-                        }
+                        preferLangCode = UserData.get("Language").toString();
+                        preferThemeCode = UserData.get("Theme").toString();
+                        UpdatePreferCategorys((List<String>) UserData.get("Category"));
+                        UpdataFollowCategory();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("----TAG----", "Error getting documents : " + e.getMessage());
                     }
                 });
 
 
-        if (!sucess){
-            clearUserData();
-        }
 
-        return true;
+        Log.d("----Debug----",preferLangCode);
+        //Load following
+
     }
 
     void clearUserData(){
@@ -195,6 +180,7 @@ public class GlobalVariable extends Application {
         userPassword = "N/A";
         userEmail = "N/A";
         headPhoto = null;
+        following_categoryPreview = null;
     }
 
     void UpdateConferences(HashMap hashMap){
@@ -214,5 +200,55 @@ public class GlobalVariable extends Application {
         if (hashMap != null){
             categorys = (HashMap<String, Object>) hashMap.clone();
         }
+    }
+
+    void UpdatePreferCategorys(List<String> list){
+        if (list != null){
+            preferCategory = new ArrayList<>();
+            for(String t : list){
+                preferCategory.add(t);
+            }
+        }
+    }
+
+    void UpdataUser(String name, String password, String email, String imgUrl){
+        userName = name;
+        userPassword = password;
+        userEmail = email;
+        if (imgUrl != null && !imgUrl.equals("N/A") && !imgUrl.isEmpty())
+        {
+            try {
+                URL url = new URL(imgUrl);
+                headPhoto = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+            } catch (Exception e) {
+                headPhoto = null;
+                e.printStackTrace();
+            }
+        }
+    }
+
+    void UpdataFollowCategory(){
+        if (preferCategory == null){
+            return;
+        }
+        HashMap<String, Boolean>followingCategory = new HashMap<String, Boolean>();
+
+        following_categoryPreview = new String[categoryPreview.length];
+
+        int cnt = 0;
+        for (int i = 0; i < preferCategory.size(); i++){
+            followingCategory.put(preferCategory.get(i), true);
+            following_categoryPreview[cnt] = preferCategory.get(i);
+            cnt++;
+        }
+
+
+        for (int i = 0; i < categoryPreview.length; i++){
+            if (followingCategory.get(categoryPreview[i]) == null){
+                following_categoryPreview[cnt] = categoryPreview[i];
+                cnt++;
+            }
+        }
+
     }
 }
