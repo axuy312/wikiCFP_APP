@@ -51,7 +51,7 @@ public class Activity_Conferences extends AppCompatActivity {
 
         //Create List
         Conference_List = findViewById(R.id.Conference_List);
-        Conference_List.setAdapter(new MyListAdapter_Conference(Activity_Conferences.this, null, title));
+        Conference_List.setAdapter(new MyListAdapter_Conference(Activity_Conferences.this, null));
         Conference_List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -63,7 +63,7 @@ public class Activity_Conferences extends AppCompatActivity {
             }
         });
 
-        Conference_List.setAdapter(new MyListAdapter_Conference(Activity_Conferences.this, Conference_List_Data, title));
+        Conference_List.setAdapter(new MyListAdapter_Conference(Activity_Conferences.this, Conference_List_Data));
 
         //Update List
         HashMap<String,Object>conferences = (HashMap<String, Object>) db.categorys.get(title);
@@ -75,7 +75,7 @@ public class Activity_Conferences extends AppCompatActivity {
             listData[listData.length - 1] = (HashMap<String, Object>) (((HashMap<String,Object>) conferences.get(keys[i])).clone());
         }
         UpdateConferenceData(listData);
-        Conference_List.setAdapter(new MyListAdapter_Conference(Activity_Conferences.this, Conference_List_Data, title));
+        Conference_List.setAdapter(new MyListAdapter_Conference(Activity_Conferences.this, Conference_List_Data));
 
     }
 

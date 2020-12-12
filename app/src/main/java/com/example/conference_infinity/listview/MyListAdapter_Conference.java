@@ -19,13 +19,11 @@ public class MyListAdapter_Conference extends BaseAdapter {
     private final LayoutInflater mLayoutInflater;
 
     private HashMap<String, String>[] datas;
-    private final String title;
     private int data_len = 0;
 
-    public MyListAdapter_Conference(Context context, HashMap[] dictionaries, String t){
+    public MyListAdapter_Conference(Context context, HashMap[] dictionaries){
         this.mContext = context;
         this.mLayoutInflater = LayoutInflater.from(context);
-        title = t;
         if(dictionaries != null){
             datas = dictionaries.clone();
             data_len = datas.length;
@@ -48,8 +46,7 @@ public class MyListAdapter_Conference extends BaseAdapter {
     }
 
     static class ViewHolder{
-        public ImageView category_item_icon;
-        public TextView category_item_title, conference_item_title, conference_item_deadline, comment_number;
+        public TextView conference_item_title, conference_item_deadline, comment_number;
     }
 
     @Override
@@ -58,8 +55,6 @@ public class MyListAdapter_Conference extends BaseAdapter {
         if (convertView == null){
             convertView = mLayoutInflater.inflate(R.layout.conference_list_item, null);
             holder = new ViewHolder();
-            holder.category_item_icon = convertView.findViewById(R.id.category_item_icon);
-            holder.category_item_title = convertView.findViewById(R.id.category_item_title);
             holder.conference_item_title = convertView.findViewById(R.id.conference_item_title);
             holder.conference_item_deadline = convertView.findViewById(R.id.conference_item_deadline);
             holder.comment_number = convertView.findViewById(R.id.comment_number);
@@ -68,8 +63,6 @@ public class MyListAdapter_Conference extends BaseAdapter {
         else {
             holder = (ViewHolder)convertView.getTag();
         }
-        holder.category_item_icon.setImageResource(R.drawable.img);
-        holder.category_item_title.setText(title);
         holder.conference_item_title.setText(datas[position].get("Topic"));
         holder.conference_item_deadline.setText(datas[position].get("Deadline"));
         holder.comment_number.setText(String.valueOf(position));

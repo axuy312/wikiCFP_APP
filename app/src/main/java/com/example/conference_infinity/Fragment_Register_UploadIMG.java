@@ -43,6 +43,13 @@ public class Fragment_Register_UploadIMG extends Fragment {
         // Create xml Layout (Same as Activity "OnCreate()")
         View view = inflater.inflate(R.layout.fragment_register_uploadimg, container, false);
 
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
         // Connect the button in xml, must add "view.findView" in Fragment
         CircleButton back_btn = view.findViewById(R.id.density_back_btn);
         Button next_btn = view.findViewById(R.id.density_next_btn);
@@ -101,9 +108,7 @@ public class Fragment_Register_UploadIMG extends Fragment {
             }
         });
 
-        circleButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_done));
-
-        return view;
+        circleButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_headphoto_default));
     }
 
     private void startGallery() {

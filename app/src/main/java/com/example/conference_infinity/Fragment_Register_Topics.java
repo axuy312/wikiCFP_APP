@@ -1,12 +1,17 @@
 package com.example.conference_infinity;
 
+import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -14,12 +19,20 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,10 +46,13 @@ public class Fragment_Register_Topics extends Fragment {
     private ChipGroup chipGroup;
     private final String CheckId = "";
     private List<String> topics;
-    private String email, nickname, password;
+    private String email, nickname, password, headPhotoUrl;
     private String[] topic;
-    private int language, theme, density;
+    private int language, theme;
+
     GlobalVariable user;
+    private StorageReference storageReference;
+    private StorageTask uploadTask;
 
     @Nullable
     @Override
@@ -54,6 +70,7 @@ public class Fragment_Register_Topics extends Fragment {
         Button next_btn = view.findViewById(R.id.topics_next_btn);
         chipGroup = view.findViewById(R.id.chip_group);
         topics = new ArrayList<>();
+
 
         Log.d(TAG, "onCreateView: Started.");
 
@@ -112,17 +129,19 @@ public class Fragment_Register_Topics extends Fragment {
         //Log.d("user: ", Category_List_Data.toString());
     }
 
-    void register(String name, String email, String password) {
+    void register(String name, String email, String password, String imgURL) {
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         // Create a new user with a first and last name
-        Map<String, Object> user = new HashMap<>();
-        user.put("Name", name);
-        user.put("Email", email);
-        user.put("Password", password);
+        Map<String, Object> data = new HashMap<>();
+        data.put("Name", name);
+        data.put("Email", email);
+        data.put("Password", password);
+        data.put("HeadPhoto", imgURL);
 
         db.collection("User")
                 .document(email)
-                .set(user)
+                .set(data)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -135,6 +154,63 @@ public class Fragment_Register_Topics extends Fragment {
                         Log.w(TAG, "Error writing document", e);
                     }
                 });
+    }
+
+    private void uploadImage() {
+        storageReference = FirebaseStorage.getInstance().getReference("Uploads/Profile Picture/"+email);
+        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Uploading");
+        progressDialog.show();
+
+        if (user.headPhoto != null) {
+            final StorageReference fileReference = storageReference.child(nickname + "_HeadPhoto.png");
+
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            user.headPhoto.compress(Bitmap.CompressFormat.PNG, 100, baos);
+            byte[] data = baos.toByteArray();
+
+            uploadTask = fileReference.putBytes(data);
+            uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                @Override
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    Log.d("---Debug---", "then");
+                    if (!task.isSuccessful()) {
+                        throw task.getException();
+                    }
+                    return fileReference.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()) {
+                        Log.d("---Debug---", "success");
+                        Uri downloadUri = task.getResult();
+                        headPhotoUrl = downloadUri.toString();
+
+                        register(nickname, email, password, headPhotoUrl);
+                        prefer(email, user.Language[language], user.Theme[theme], topics);
+
+                        progressDialog.dismiss();
+                    } else {
+                        Log.d("---Debug---", "fail");
+                        Toast.makeText(getActivity(), "Failed!", Toast.LENGTH_LONG).show();
+                        progressDialog.dismiss();
+                    }
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+
+                    Log.d("---Debug---", "onfail");
+                    Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
+                    progressDialog.dismiss();
+                }
+            });
+        } else {
+            register(nickname, email, password, "N/A");
+            prefer(email, user.Language[language], user.Theme[theme], topics);
+            progressDialog.dismiss();
+        }
     }
 
     void prefer(String email, String lang, String theme, List<String> categorys) {
@@ -170,9 +246,8 @@ public class Fragment_Register_Topics extends Fragment {
         email = sharedPreferences.getString("Mail", null);
         nickname = sharedPreferences.getString("NickName", null);
         password = sharedPreferences.getString("Password", null);
-        language = sharedPreferences.getInt("Language", -1);
-        theme = sharedPreferences.getInt("Theme", -1);
-        density = sharedPreferences.getInt("Density", -1);
+        language = sharedPreferences.getInt("Language", 0);
+        theme = sharedPreferences.getInt("Theme", 0);
 
         // delete part of data
         editor.remove("Password");
@@ -183,7 +258,6 @@ public class Fragment_Register_Topics extends Fragment {
     }
 
     private void sendData() {
-        register(nickname, email, password);
-        prefer(email, user.Language[language], user.Theme[theme], topics);
+        uploadImage();
     }
 }

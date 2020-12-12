@@ -17,6 +17,7 @@ public class Activity_Main extends AppCompatActivity {
 
         gv = (GlobalVariable)getApplicationContext();
         gv.setRealtime();
+        //gv.loadUser("aa@af.aa", "aaaaaaaa");
 
         Handler handler = new Handler();
 
