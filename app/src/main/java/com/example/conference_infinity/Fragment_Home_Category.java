@@ -115,15 +115,4 @@ public class Fragment_Home_Category extends Fragment {
             }
         });
     }
-
-
-
-    public void UpdateCategoryData(String[] strings){
-        if (strings != null){
-            Category_List_Data = strings.clone();
-        }
-        else {
-            Category_List_Data = null;
-        }
-    }
 }
