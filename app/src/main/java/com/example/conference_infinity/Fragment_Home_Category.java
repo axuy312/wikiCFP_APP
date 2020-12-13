@@ -1,22 +1,16 @@
 package com.example.conference_infinity;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
-
-import com.example.conference_infinity.listview.MyListAdapter_Category;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -87,7 +81,7 @@ public class Fragment_Home_Category extends Fragment {
 
         //Create List
         Category_List = view.findViewById(R.id.Category_List);
-        Category_List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*Category_List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), Activity_Conferences.class);
@@ -95,7 +89,7 @@ public class Fragment_Home_Category extends Fragment {
                 startActivity(intent);
                 //getActivity().finish();
             }
-        });
+        });*/
 
         if (user.categoryPreview != null && getActivity() != null){
             Category_List_Adapter = new MyListAdapter_Category(getActivity(), user.following_categoryPreview, user.preferCategory.size());
