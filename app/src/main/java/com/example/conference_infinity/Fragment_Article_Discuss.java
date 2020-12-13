@@ -1,12 +1,28 @@
 package com.example.conference_infinity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,8 +40,21 @@ public class Fragment_Article_Discuss extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public Fragment_Article_Discuss() {
+    String abbreviation;
+
+    ListView discussListView;
+    MyListAdapter_Discuss myListAdapter_discuss;
+
+    FirebaseDatabase database;
+    DatabaseReference myRef;
+
+    public Fragment_Article_Discuss(String string) {
         // Required empty public constructor
+        abbreviation = string;
+    }
+
+    public Fragment_Article_Discuss() {
+
     }
 
     /**
@@ -60,5 +89,46 @@ public class Fragment_Article_Discuss extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_article_discuss, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        discussListView = view.findViewById(R.id.dicussListView);
+
+
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference("Discuss/"+abbreviation);
+
+        //myListAdapter_discuss = new MyListAdapter_Discuss(getActivity(), (List)(new ArrayList<HashMap>()));
+
+
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                if (dataSnapshot != null) {
+                    List<HashMap<String,String>>discuss = new ArrayList<>();
+                    for (DataSnapshot childSnapshot: dataSnapshot.getChildren()) {
+                        HashMap<String,String>tmp = (HashMap<String, String>) childSnapshot.getValue();
+                        discuss.add(tmp);
+                    }
+
+                    //myListAdapter_discuss.freshDiscuss(discuss);
+                    discussListView.setAdapter(new MyListAdapter_Discuss(getActivity(),discuss));
+                }
+                else {
+                    Log.d("---Discuss---", "NULL dataSnapshot");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("TAG", "Failed to read value.", error.toException());
+            }
+        });
     }
 }
