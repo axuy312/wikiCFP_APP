@@ -28,13 +28,14 @@ import java.io.InputStream;
 import java.util.Objects;
 
 import at.markushi.ui.CircleButton;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.app.Activity.RESULT_OK;
 
 public class Fragment_Register_UploadIMG extends Fragment {
 
     private static final String TAG = "Upload Img Fragment";
-    private ImageView circleButton;
+    private CircleImageView circleButton;
     private GlobalVariable gb;
 
     @Nullable
@@ -42,13 +43,6 @@ public class Fragment_Register_UploadIMG extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // Create xml Layout (Same as Activity "OnCreate()")
         View view = inflater.inflate(R.layout.fragment_register_uploadimg, container, false);
-
-        return view;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
 
         // Connect the button in xml, must add "view.findView" in Fragment
         CircleButton back_btn = view.findViewById(R.id.density_back_btn);
@@ -108,7 +102,9 @@ public class Fragment_Register_UploadIMG extends Fragment {
             }
         });
 
-        circleButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_headphoto_default));
+        circleButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_done));
+
+        return view;
     }
 
     private void startGallery() {

@@ -67,11 +67,11 @@
             android:layout_marginStart="20sp"
             android:layout_marginEnd="20sp"
             android:layout_marginBottom="10sp"
-            android:text="Image Preview"
+            android:text="@string/image_preview"
             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
             android:textColor="@color/light_gray" />
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/register_head_img"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
@@ -94,7 +94,7 @@
             android:layout_marginVertical="10sp"
             android:background="@drawable/custom_register_btn"
             android:padding="10sp"
-            android:text="Pick a photo" />
+            android:text="@string/pick_a_photo" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/density_next_btn"
