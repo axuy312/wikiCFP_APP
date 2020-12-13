@@ -21,6 +21,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -41,7 +42,7 @@ public class GlobalVariable extends Application {
     //User preference-------------------------------------------------------------------------------
     String preferLangCode = "Traditional";
     String preferThemeCode = "Light";
-    List<String> preferCategory = null;
+    HashMap<String, Boolean> preferCategory = null;
     String[] following_categoryPreview;
     String[] Language = {
             "Traditional",
@@ -79,6 +80,8 @@ public class GlobalVariable extends Application {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 UpdateConferences((HashMap)dataSnapshot.getValue());
+
+                myRefConference.removeEventListener(this);
             }
 
             @Override
@@ -94,6 +97,8 @@ public class GlobalVariable extends Application {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 UpdateCategorys((HashMap)dataSnapshot.getValue());
+
+                myRefCategory.removeEventListener(this);
             }
 
             @Override
@@ -111,6 +116,8 @@ public class GlobalVariable extends Application {
                     listData[listData.length - 1] = data.getKey();
                 }
                 UpdateCategorysPreviw(listData);
+
+                myRefCategorysPreview.removeEventListener(this);
             }
 
             @Override
@@ -168,6 +175,8 @@ public class GlobalVariable extends Application {
 
     }
 
+
+
     void clearUserData(){
         preferLangCode = "Traditional";
         preferThemeCode = "Light";
@@ -204,11 +213,47 @@ public class GlobalVariable extends Application {
 
     void UpdatePreferCategorys(List<String> list){
         if (list != null){
-            preferCategory = new ArrayList<>();
+            preferCategory = new HashMap<String, Boolean>();
             for(String t : list){
-                preferCategory.add(t);
+                preferCategory.put(t, true);
             }
         }
+    }
+
+    //Updata & Upload
+    boolean UpdatePreferCategorysValue(String title, Boolean bool){
+        if (preferCategory != null){
+            preferCategory.put(title, bool);
+            Log.d("---TAG---", title+" : "+bool.toString());
+
+            List<String>data = new ArrayList<>();
+            for (String key : preferCategory.keySet().toArray(new String[0])){
+                if (preferCategory.get(key) == true){
+                    data.add(key);
+                }
+            }
+
+            Map<String, Object> user = new HashMap<>();
+            user.put("Category", data);
+
+            db.collection("Preference")
+                    .document(userEmail)
+                    .update("Category", data)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d("TAG", "Len: "+String.valueOf(data.size()));
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w("TAG", "Error writing document", e);
+                        }
+                    });
+            return true;
+        }
+        return false;
     }
 
     void UpdataUser(String name, String password, String email, String imgUrl){
@@ -231,20 +276,21 @@ public class GlobalVariable extends Application {
         if (preferCategory == null){
             return;
         }
-        HashMap<String, Boolean>followingCategory = new HashMap<String, Boolean>();
 
         following_categoryPreview = new String[categoryPreview.length];
 
+
         int cnt = 0;
-        for (int i = 0; i < preferCategory.size(); i++){
-            followingCategory.put(preferCategory.get(i), true);
-            following_categoryPreview[cnt] = preferCategory.get(i);
-            cnt++;
+        for (int i = 0; i < categoryPreview.length; i++){
+            if (preferCategory.get(categoryPreview[i]) != null && preferCategory.get(categoryPreview[i]) == true){
+                following_categoryPreview[cnt] = categoryPreview[i];
+                cnt++;
+            }
         }
 
 
         for (int i = 0; i < categoryPreview.length; i++){
-            if (followingCategory.get(categoryPreview[i]) == null){
+            if (preferCategory.get(categoryPreview[i]) == null || preferCategory.get(categoryPreview[i]) == false){
                 following_categoryPreview[cnt] = categoryPreview[i];
                 cnt++;
             }

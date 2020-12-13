@@ -1,6 +1,5 @@
 package com.example.conference_infinity;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,18 +12,11 @@ import androidx.viewpager.widget.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.SearchView;
 
-import com.baoyachi.stepview.VerticalStepView;
-import com.example.conference_infinity.listview.MyListAdapter_Category;
-import com.example.conference_infinity.listview.MyListAdapter_Conference;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 /**
