@@ -13,8 +13,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.example.conference_infinity.listview.MyListAdapter_Conference;
-
 import java.util.HashMap;
 
 /**
@@ -85,7 +83,7 @@ public class Fragment_Home_Latest extends Fragment {
         db = (GlobalVariable)getActivity().getApplicationContext();
 
         //Create List
-        Conference_List = view.findViewById(R.id.Home_Category_List);
+        Conference_List = view.findViewById(R.id.Home_Latest_Conference_List);
         //Update List
         Conference_List_Data = db.conferences.values().toArray(new HashMap[0]);
 
