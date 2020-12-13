@@ -5,36 +5,73 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.example.conference_infinity.R;
 
-import java.util.Dictionary;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
-public class MyListAdapter_Conference extends BaseAdapter {
+public class MyListAdapter_Conference extends BaseAdapter implements Filterable {
 
     private final Context mContext;
     private final LayoutInflater mLayoutInflater;
 
-    private HashMap<String, String>[] datas;
-    private final String title;
-    private int data_len = 0;
+    private List<HashMap<String, String>> datas;
+    private List<HashMap<String, String>> datas_All;
 
-    public MyListAdapter_Conference(Context context, HashMap[] dictionaries, String t){
+    Filter filter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+
+            List<HashMap<String, String>> filter_title = new ArrayList<>();
+
+            if (constraint.toString().isEmpty()){
+                filter_title.addAll(datas_All);
+            }
+            else {
+                for (HashMap<String, String> map : datas_All){
+                    if (map.get("Topic").toLowerCase().contains(constraint.toString().toLowerCase())){
+                        filter_title.add(map);
+                    }
+                }
+            }
+
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = filter_title;
+
+            return filterResults;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            datas.clear();
+            datas.addAll((Collection<? extends HashMap<String, String>>) results.values);
+            notifyDataSetChanged();
+        }
+    };
+
+
+    public MyListAdapter_Conference(Context context, HashMap[] dictionaries){
         this.mContext = context;
         this.mLayoutInflater = LayoutInflater.from(context);
-        title = t;
+        datas = new ArrayList<>();
+        datas_All = new ArrayList<>();
         if(dictionaries != null){
-            datas = dictionaries.clone();
-            data_len = datas.length;
+            for (HashMap<String, String>map : dictionaries){
+                datas.add((HashMap<String, String>) map.clone());
+                datas_All.add((HashMap<String, String>) map.clone());
+            }
         }
     }
 
     @Override
     public int getCount() {
-        return data_len;
+        return datas.size();
     }
 
     @Override
@@ -47,9 +84,13 @@ public class MyListAdapter_Conference extends BaseAdapter {
         return 0;
     }
 
+    @Override
+    public Filter getFilter() {
+        return filter;
+    }
+
     static class ViewHolder{
-        public ImageView category_item_icon;
-        public TextView category_item_title, conference_item_title, conference_item_deadline, comment_number;
+        public TextView conference_item_title, conference_item_deadline, comment_number;
     }
 
     @Override
@@ -58,8 +99,6 @@ public class MyListAdapter_Conference extends BaseAdapter {
         if (convertView == null){
             convertView = mLayoutInflater.inflate(R.layout.conference_list_item, null);
             holder = new ViewHolder();
-            holder.category_item_icon = convertView.findViewById(R.id.category_item_icon);
-            holder.category_item_title = convertView.findViewById(R.id.category_item_title);
             holder.conference_item_title = convertView.findViewById(R.id.conference_item_title);
             holder.conference_item_deadline = convertView.findViewById(R.id.conference_item_deadline);
             holder.comment_number = convertView.findViewById(R.id.comment_number);
@@ -68,10 +107,8 @@ public class MyListAdapter_Conference extends BaseAdapter {
         else {
             holder = (ViewHolder)convertView.getTag();
         }
-        holder.category_item_icon.setImageResource(R.drawable.img);
-        holder.category_item_title.setText(title);
-        holder.conference_item_title.setText(datas[position].get("Topic"));
-        holder.conference_item_deadline.setText(datas[position].get("Deadline"));
+        holder.conference_item_title.setText(datas.get(position).get("Topic"));
+        holder.conference_item_deadline.setText(datas.get(position).get("Deadline"));
         holder.comment_number.setText(String.valueOf(position));
         return convertView;
     }

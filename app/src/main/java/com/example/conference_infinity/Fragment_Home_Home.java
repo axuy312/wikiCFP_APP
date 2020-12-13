@@ -6,14 +6,26 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.SearchView;
 
+import com.baoyachi.stepview.VerticalStepView;
 import com.example.conference_infinity.listview.MyListAdapter_Category;
+import com.example.conference_infinity.listview.MyListAdapter_Conference;
+import com.google.android.material.tabs.TabLayout;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,10 +43,15 @@ public class Fragment_Home_Home extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    ListView Category_List;
 
-    String[] Category_List_Data;
-    GlobalVariable user;
+    //Fragment
+    private Fragment_Home_Latest fragment_home_latest;
+    private Fragment_Home_Following fragment_home_following;
+
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+    SearchView Conference_search;
+
 
     public Fragment_Home_Home() {
         // Required empty public constructor
@@ -73,35 +90,69 @@ public class Fragment_Home_Home extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        user = (GlobalVariable)getActivity().getApplicationContext();
+        tabLayout = getActivity().findViewById(R.id.hom_tablayout);
+        viewPager = getActivity().findViewById(R.id.home_viewpager);
+        Conference_search = getActivity().findViewById(R.id.home_searchview);
+
+        //Add Fragment
+        fragment_home_latest = new Fragment_Home_Latest();
+        fragment_home_following = new Fragment_Home_Following();
+
+        tabLayout.setupWithViewPager(viewPager);
+
+        Fragment_Home_Home.ViewPagerAdapter viewPagerAdapter = new Fragment_Home_Home.ViewPagerAdapter(getActivity().getSupportFragmentManager(), 0);
+        viewPagerAdapter.addFragment(fragment_home_latest, "Lastest");
+        viewPagerAdapter.addFragment(fragment_home_following, "Following");
+        viewPager.setAdapter(viewPagerAdapter);
 
 
-        //Create List
-        Category_List = view.findViewById(R.id.Home_Category_List);
-        Category_List.setAdapter(new MyListAdapter_Category(getActivity(), null));
-        Category_List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        Conference_search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), Activity_Conferences.class);
-                intent.putExtra("title", user.categoryPreview[position]);
-                startActivity(intent);
-                //getActivity().finish();
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                fragment_home_latest.RefreshListView(newText);
+                return false;
             }
         });
 
+    }
 
 
-        if (user.categoryPreview != null && getActivity() != null){
-            Category_List.setAdapter(new MyListAdapter_Category(getActivity(), user.categoryPreview));
+    private class ViewPagerAdapter extends FragmentPagerAdapter {
+
+        private List<Fragment> fragments = new ArrayList<>();
+        private List<String>fragmentTitle = new ArrayList<>();
+
+        public ViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {
+            super(fm, behavior);
+
+        }
+
+        public void addFragment(Fragment fragment, String title){
+            fragments.add(fragment);
+            fragmentTitle.add(title);
+        }
+
+        @NonNull
+        @Override
+        public Fragment getItem(int position) {
+            return fragments.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return fragments.size();
+        }
+
+        @Nullable
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return fragmentTitle.get(position);
         }
     }
 
-    public void UpdateCategoryData(String[] strings){
-        if (strings != null){
-            Category_List_Data = strings.clone();
-        }
-        else {
-            Category_List_Data = null;
-        }
-    }
 }

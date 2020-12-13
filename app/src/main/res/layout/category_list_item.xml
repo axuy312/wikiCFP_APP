@@ -12,7 +12,8 @@
         android:layout_height="50dp"
         android:scaleType="centerInside"
         android:background="@color/teal_200"
-        android:contentDescription="@string/topics_icon" />
+        android:contentDescription="@string/topics_icon"
+        android:src="@drawable/img"/>
 
     <TextView
         android:id="@+id/category_item_title"
@@ -30,6 +31,7 @@
         android:id="@+id/category_item_tag"
         android:layout_width="20dp"
         android:layout_height="50dp"
+        android:src="@drawable/ic_bookmark_off"
         android:scaleType="centerInside"/>
 
 </LinearLayout>

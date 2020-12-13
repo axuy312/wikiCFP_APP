@@ -23,80 +23,49 @@
                 app:contentScrim="@color/white"
                 app:layout_scrollFlags="scroll|snap|exitUntilCollapsed">
 
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_height="50dp"
+                    android:paddingHorizontal="40dp"
+                    android:gravity="start|center_vertical">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:baselineAligned="false"
-                        android:paddingHorizontal="40sp"
-                        android:paddingVertical="20sp">
-
-                        <LinearLayout
-                            android:layout_width="0sp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="start|center_vertical">
-
-                            <TextView
-                                android:id="@+id/Category_Title"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/Category"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                                android:textColor="@color/dark_gray" />
-
-                        </LinearLayout>
-
-                        <RelativeLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1">
-
-                            <SearchView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentEnd="true"
-                                android:scrollbarSize="40sp" />
-
-                        </RelativeLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/Category_Title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:paddingHorizontal="30dp"
-                        android:paddingVertical="20dp"
-                        android:visibility="gone">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/bottom_border">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@string/Bookmark_Topics"
-                                android:textColor="@color/light_gray" />
-
-                        </LinearLayout>
-
-                        <ListView
-                            android:id="@+id/Category_Bookmark_List"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                        </ListView>
-
-                    </LinearLayout>
+                        android:text="@string/Category"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        android:textColor="@color/dark_gray" />
 
                 </LinearLayout>
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:minHeight="?attr/actionBarSize"
+                    android:gravity="top"
+                    app:layout_collapseMode="pin"
+                    app:titleMarginTop="15dp"
+                    />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="50dp"
+                    android:paddingHorizontal="20dp"
+                    app:layout_collapseMode="pin"
+                    app:layout_collapseParallaxMultiplier="1">
+
+                    <SearchView
+                        android:id="@+id/Search_Category"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:scrollbarSize="40sp" />
+
+                </RelativeLayout>
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
@@ -109,36 +78,13 @@
             android:fillViewport="true"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <LinearLayout
+
+            <ListView
+                android:id="@+id/Category_List"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:paddingHorizontal="30dp"
-                android:paddingTop="20dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bottom_border">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/All_Topics"
-                        android:textColor="@color/light_gray" />
-
-                </LinearLayout>
-
-                <ListView
-                    android:id="@+id/Category_List"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:listSelector="@color/teal_200"
-                    android:nestedScrollingEnabled="true">
-
-                </ListView>
-
-            </LinearLayout>
+                android:layout_height="wrap_content"
+                android:listSelector="@color/teal_200"
+                android:nestedScrollingEnabled="true" />
 
         </androidx.core.widget.NestedScrollView>
 

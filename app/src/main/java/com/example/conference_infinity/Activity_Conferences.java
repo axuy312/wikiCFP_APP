@@ -8,9 +8,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.conference_infinity.listview.MyListAdapter_Category;
 import com.example.conference_infinity.listview.MyListAdapter_Conference;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,6 +29,8 @@ public class Activity_Conferences extends AppCompatActivity {
     //View
     private TextView title_view;
     private ListView Conference_List;
+    SearchView Conference_search;
+    MyListAdapter_Conference Conference_List_Adapter;
     //end View
 
     //
@@ -48,10 +52,10 @@ public class Activity_Conferences extends AppCompatActivity {
             title_view.setText(title);
         }
 
+        Conference_search = findViewById(R.id.Search_Conference);
 
         //Create List
         Conference_List = findViewById(R.id.Conference_List);
-        Conference_List.setAdapter(new MyListAdapter_Conference(Activity_Conferences.this, null, title));
         Conference_List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -63,7 +67,6 @@ public class Activity_Conferences extends AppCompatActivity {
             }
         });
 
-        Conference_List.setAdapter(new MyListAdapter_Conference(Activity_Conferences.this, Conference_List_Data, title));
 
         //Update List
         HashMap<String,Object>conferences = (HashMap<String, Object>) db.categorys.get(title);
@@ -75,8 +78,21 @@ public class Activity_Conferences extends AppCompatActivity {
             listData[listData.length - 1] = (HashMap<String, Object>) (((HashMap<String,Object>) conferences.get(keys[i])).clone());
         }
         UpdateConferenceData(listData);
-        Conference_List.setAdapter(new MyListAdapter_Conference(Activity_Conferences.this, Conference_List_Data, title));
+        Conference_List_Adapter = new MyListAdapter_Conference(Activity_Conferences.this, Conference_List_Data);
+        Conference_List.setAdapter(Conference_List_Adapter);
 
+        Conference_search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Conference_List_Adapter.getFilter().filter(newText);
+                return false;
+            }
+        });
     }
 
     public void UpdateConferenceData(HashMap[] dictionaries){
