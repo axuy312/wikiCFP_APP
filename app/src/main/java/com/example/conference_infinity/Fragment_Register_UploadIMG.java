@@ -28,13 +28,14 @@ import java.io.InputStream;
 import java.util.Objects;
 
 import at.markushi.ui.CircleButton;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.app.Activity.RESULT_OK;
 
 public class Fragment_Register_UploadIMG extends Fragment {
 
     private static final String TAG = "Upload Img Fragment";
-    private ImageView circleButton;
+    private CircleImageView circleButton;
     private GlobalVariable gb;
 
     @Nullable
