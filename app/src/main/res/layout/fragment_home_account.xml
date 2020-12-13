@@ -35,6 +35,21 @@
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
+        <LinearLayout
+            android:id="@+id/load_Img"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingStart="28dp"
+            android:paddingEnd="0dp"
+            android:visibility="visible">
+
+            <ProgressBar
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center" />
+        </LinearLayout>
+
     </LinearLayout>
 
     <View

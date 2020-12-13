@@ -47,7 +47,6 @@ public class Fragment_Register_Topics extends Fragment {
     private final String CheckId = "";
     private List<String> topics;
     private String email, nickname, password, headPhotoUrl;
-    private String[] topic;
     private int language, theme;
 
     GlobalVariable user;
@@ -156,6 +155,7 @@ public class Fragment_Register_Topics extends Fragment {
                 });
     }
 
+    // TODO: 上傳使用者照片到FireStorage
     private void uploadImage() {
         storageReference = FirebaseStorage.getInstance().getReference("Uploads/Profile Picture/"+email);
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
@@ -239,6 +239,7 @@ public class Fragment_Register_Topics extends Fragment {
                 });
     }
 
+    // TODO: 取得前面設定資訊
     private void getData() {
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("UserRegister", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();

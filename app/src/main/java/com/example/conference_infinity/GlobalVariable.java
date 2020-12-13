@@ -66,7 +66,7 @@ public class GlobalVariable extends Application {
     //----------------------------------------------------------------------------------------------
 
 
-    void setRealtime(){
+    void setRealtime() {
         ValueEventListener valueEventListener;
         DatabaseReference myRefConference;
 
@@ -78,11 +78,12 @@ public class GlobalVariable extends Application {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                UpdateConferences((HashMap)dataSnapshot.getValue());
+                UpdateConferences((HashMap) dataSnapshot.getValue());
             }
 
             @Override
-            public void onCancelled(DatabaseError error) {}
+            public void onCancelled(DatabaseError error) {
+            }
         };
         myRefConference.addValueEventListener(valueEventListener);
 
@@ -93,12 +94,14 @@ public class GlobalVariable extends Application {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                UpdateCategorys((HashMap)dataSnapshot.getValue());
+                UpdateCategorys((HashMap) dataSnapshot.getValue());
             }
 
             @Override
-            public void onCancelled(DatabaseError error) {}
+            public void onCancelled(DatabaseError error) {
+            }
         });
+
         DatabaseReference myRefCategorysPreview = database.getReference("CategorysPreview");
         myRefCategorysPreview.addValueEventListener(new ValueEventListener() {
             @Override
@@ -106,7 +109,7 @@ public class GlobalVariable extends Application {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 String[] listData = {};
-                for (DataSnapshot data : dataSnapshot.getChildren()){
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
                     listData = Arrays.copyOf(listData, listData.length + 1);
                     listData[listData.length - 1] = data.getKey();
                 }
@@ -114,12 +117,13 @@ public class GlobalVariable extends Application {
             }
 
             @Override
-            public void onCancelled(DatabaseError error) {}
+            public void onCancelled(DatabaseError error) {
+            }
         });
     }
 
-    void loadUser(String Email){
-        if (db ==  null){
+    void loadUser(String Email) {
+        if (db == null) {
             db = FirebaseFirestore.getInstance();
         }
 
@@ -129,7 +133,7 @@ public class GlobalVariable extends Application {
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        Map<String, Object>UserData = documentSnapshot.getData();
+                        Map<String, Object> UserData = documentSnapshot.getData();
                         UpdataUser(UserData.get("Name").toString(), UserData.get("Password").toString(), UserData.get("Email").toString(), UserData.get("HeadPhoto").toString());
                     }
                 })
@@ -146,7 +150,7 @@ public class GlobalVariable extends Application {
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        Map<String, Object>UserData = documentSnapshot.getData();
+                        Map<String, Object> UserData = documentSnapshot.getData();
 
                         preferLangCode = UserData.get("Language").toString();
                         preferThemeCode = UserData.get("Theme").toString();
@@ -162,16 +166,15 @@ public class GlobalVariable extends Application {
                 });
 
 
-
-        Log.d("----Debug----",preferLangCode);
+        Log.d("----Debug----", preferLangCode);
         //Load following
 
     }
 
-    void clearUserData(){
+    void clearUserData() {
         preferLangCode = "Traditional";
         preferThemeCode = "Light";
-        if (preferCategory != null){
+        if (preferCategory != null) {
             preferCategory.clear();
             preferCategory = null;
         }
@@ -183,8 +186,8 @@ public class GlobalVariable extends Application {
         following_categoryPreview = null;
     }
 
-    void UpdateConferences(HashMap hashMap){
-        if (hashMap != null){
+    void UpdateConferences(HashMap hashMap) {
+        if (hashMap != null) {
             conferences = (HashMap<String, Object>) hashMap.clone();
         }
     }
@@ -196,27 +199,26 @@ public class GlobalVariable extends Application {
         }
     }
 
-    void UpdateCategorys(HashMap hashMap){
-        if (hashMap != null){
+    void UpdateCategorys(HashMap hashMap) {
+        if (hashMap != null) {
             categorys = (HashMap<String, Object>) hashMap.clone();
         }
     }
 
-    void UpdatePreferCategorys(List<String> list){
-        if (list != null){
+    void UpdatePreferCategorys(List<String> list) {
+        if (list != null) {
             preferCategory = new ArrayList<>();
-            for(String t : list){
+            for (String t : list) {
                 preferCategory.add(t);
             }
         }
     }
 
-    void UpdataUser(String name, String password, String email, String imgUrl){
+    void UpdataUser(String name, String password, String email, String imgUrl) {
         userName = name;
         userPassword = password;
         userEmail = email;
-        if (imgUrl != null && !imgUrl.equals("N/A") && !imgUrl.isEmpty())
-        {
+        if (imgUrl != null && !imgUrl.equals("N/A") && !imgUrl.isEmpty()) {
             try {
                 URL url = new URL(imgUrl);
                 headPhoto = BitmapFactory.decodeStream(url.openConnection().getInputStream());
@@ -227,24 +229,24 @@ public class GlobalVariable extends Application {
         }
     }
 
-    void UpdataFollowCategory(){
-        if (preferCategory == null){
+    void UpdataFollowCategory() {
+        if (preferCategory == null) {
             return;
         }
-        HashMap<String, Boolean>followingCategory = new HashMap<String, Boolean>();
+        HashMap<String, Boolean> followingCategory = new HashMap<String, Boolean>();
 
         following_categoryPreview = new String[categoryPreview.length];
 
         int cnt = 0;
-        for (int i = 0; i < preferCategory.size(); i++){
+        for (int i = 0; i < preferCategory.size(); i++) {
             followingCategory.put(preferCategory.get(i), true);
             following_categoryPreview[cnt] = preferCategory.get(i);
             cnt++;
         }
 
 
-        for (int i = 0; i < categoryPreview.length; i++){
-            if (followingCategory.get(categoryPreview[i]) == null){
+        for (int i = 0; i < categoryPreview.length; i++) {
+            if (followingCategory.get(categoryPreview[i]) == null) {
                 following_categoryPreview[cnt] = categoryPreview[i];
                 cnt++;
             }

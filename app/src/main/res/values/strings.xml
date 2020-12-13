@@ -73,5 +73,11 @@
     <string name="latest">Latest</string>
     <string name="following">Following</string>
     <string name="upload_head_photo">Upload Head Photo</string>
+    <string name="add_things">Add Things</string>
+    <string name="prepare_things">Prepare Things</string>
+    <string name="reminder_alert">Reminder Alert</string>
+    <string name="pending_conference">Pending Conference</string>
+    <string name="image_preview">Image Preview</string>
+    <string name="pick_a_photo">Pick a photo</string>
 
 </resources>
