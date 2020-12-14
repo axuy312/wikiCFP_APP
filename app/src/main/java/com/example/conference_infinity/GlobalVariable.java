@@ -62,6 +62,10 @@ public class GlobalVariable extends Application {
     Bitmap headPhoto;
     //----------------------------------------------------------------------------------------------
 
+    //Pending Conference----------------------------------------------------------------------------
+    ArrayList<Model> models = new ArrayList<>();
+    //----------------------------------------------------------------------------------------------
+
     //firebase--------------------------------------------------------------------------------------
     FirebaseDatabase database;
     FirebaseFirestore db;
@@ -338,5 +342,31 @@ public class GlobalVariable extends Application {
         }
     }
 
+    // TODO: 取得 firebase 的 pending conference
+    public ArrayList<Model> getPendingConference()
+    {
+        if(models.isEmpty())
+        {
+            ArrayList<String> prepare = new ArrayList<>();
+            prepare.add("test1");
+            prepare.add("Test2");
 
+            Model model = new Model();
+            model.setConference_name("New Conference Name");
+            model.setConference_location("Floor");
+            model.setConference_time("Today");
+            //model.setPrepareThings(prepare);
+            model.addPrepareThing("3333");
+            models.add(model);
+
+            model = new Model();
+            model.setConference_name("Second Conference Name");
+            model.setConference_location("Second Floor");
+            model.setConference_time("Tomorrow");
+            model.addPrepareThing("123121231231231233");
+            models.add(model);
+        }
+
+        return models;
+    }
 }

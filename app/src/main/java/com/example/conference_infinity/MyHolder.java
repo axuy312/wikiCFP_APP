@@ -58,47 +58,6 @@ public class MyHolder extends RecyclerView.ViewHolder {
 
         this.mAddItem.setImeOptions(EditorInfo.IME_ACTION_DONE);
         //this.mAddItem.setOnEditorActionListener(new DoneOnEditorActionListener());
-        this.mAddItem.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    // 讓keyboard縮回去
-                    InputMethodManager imm = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
 
-                    // 加一個item到prepareitem中
-                    if (!mAddItem.getText().toString().isEmpty()) {
-                        // Create Checkbox Dynamically
-                        CheckBox checkBox = new CheckBox(prepareItem.getContext());
-                        checkBox.setText(mAddItem.getText().toString());
-                        float scale = prepareItem.getContext().getResources().getDisplayMetrics().density;
-                        checkBox.setPadding((int) (10 * scale), (int) (10 * scale), 0, (int) (10 * scale));
-                        //checkBox.setChecked(ItemStates.get(boolIndex));
-                        checkBox.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                        checkBox.setGravity(Gravity.CENTER);
-                        checkBox.setTextAppearance(R.style.TextAppearance_AppCompat_Medium);
-                        checkBox.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if (!checkBox.isChecked()) {
-                                    // 清除 checkbox 刪除線
-                                    checkBox.setPaintFlags(checkBox.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
-                                } else {
-                                    // 增加checkbox刪除線
-                                    checkBox.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-                                }
-                            }
-                        });
-
-                        prepareItem.addView(checkBox);
-                        mAddItem.getText().clear();
-                    }
-
-
-                    return true;
-                }
-                return false;
-            }
-        });
     }
 }
