@@ -6,18 +6,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragment_Article_Discuss">
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <ListView
-            android:id="@+id/dicussListView"
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/discuss_body"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:nestedScrollingEnabled="true"/>
+            android:fillViewport="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    </androidx.core.widget.NestedScrollView>
+
+            <ListView
+                android:id="@+id/dicussListView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:nestedScrollingEnabled="true"/>
+
+        </androidx.core.widget.NestedScrollView>
 
 </FrameLayout>

@@ -60,6 +60,7 @@ public class GlobalVariable extends Application {
     String userPassword = "N/A";
     String userEmail = "N/A";
     Bitmap headPhoto;
+    String headPhotoURL = "N/A";
     //----------------------------------------------------------------------------------------------
 
     //firebase--------------------------------------------------------------------------------------
@@ -196,6 +197,7 @@ public class GlobalVariable extends Application {
         userPassword = "N/A";
         userEmail = "N/A";
         headPhoto = null;
+        headPhotoURL = "N/A";
         following_categoryPreview = null;
     }
 
@@ -302,6 +304,7 @@ public class GlobalVariable extends Application {
     }
 
     private class GetBitmap extends AsyncTask<String, Integer, Bitmap> {
+        String urlStr;
 
         @Override
         protected void onPreExecute() {
@@ -313,12 +316,13 @@ public class GlobalVariable extends Application {
         protected Bitmap doInBackground(String... params) {
             //執行中
 
-            String urlStr = params[0];
+            urlStr = params[0];
             try {
                 URL url = new URL(urlStr);
                 return BitmapFactory.decodeStream(url.openConnection().getInputStream());
             } catch (Exception e) {
                 e.printStackTrace();
+                headPhotoURL = "N/A";
                 return null;
             }
         }
@@ -335,6 +339,7 @@ public class GlobalVariable extends Application {
             //執行後
             super.onPostExecute(bitmap);
             headPhoto = bitmap;
+            headPhotoURL = urlStr;
         }
     }
 

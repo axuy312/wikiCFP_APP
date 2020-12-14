@@ -22,6 +22,8 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +35,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,6 +52,8 @@ public class Activity_Article extends AppCompatActivity {
     private TextView topicView;
     private ViewPager viewPager;
     private TabLayout tabLayout;
+    private EditText input_editText;
+    private ImageButton send_img;
     VerticalStepView verticalStepView;
 
     private Fragment_Article_Content fragment_article_content;
@@ -82,6 +92,7 @@ public class Activity_Article extends AppCompatActivity {
         Notification_Due = conference.get("Notification Due");
         Final_Version_Due = conference.get("Final Version Due");
 
+
         if (topic != null){
             topicView.setText(topic);
         }
@@ -104,7 +115,65 @@ public class Activity_Article extends AppCompatActivity {
         viewPagerAdapter.addFragment(fragment_article_arrangement, "Arrangement");
         viewPager.setAdapter(viewPagerAdapter);
 
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 1)
+                    ((LinearLayout)findViewById(R.id.discuss_input_layout)).setVisibility(View.VISIBLE);
+                else
+                    ((LinearLayout)findViewById(R.id.discuss_input_layout)).setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) { }
+        });
+
+
         back_btn = findViewById(R.id.article_back_btn);
+
+        input_editText = findViewById(R.id.discuss_input_edittext);
+        send_img = findViewById(R.id.discuss_send_img);
+
+        send_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String text = input_editText.getText().toString();
+                if (text != null && !text.isEmpty()){
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    DatabaseReference myRef = database.getReference("Discuss/"+abbreviation);
+
+                    myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot == null){
+                                Log.d("----data---", "NULL");
+                            }
+                            else {
+                                long i = snapshot.getChildrenCount();
+                                Log.d("----data---", "Count: "+String.valueOf(i)+ " ---> "+snapshot.toString());
+                                DatabaseReference myRefChild = database.getReference("Discuss/"+abbreviation+"/"+String.valueOf(i+1));
+                                HashMap<String, Object> data = new HashMap();
+                                data.put("HeadPhoto",db.headPhotoURL);
+                                data.put("Name",db.userName);
+                                data.put("Content",text);
+                                data.put("Time",ServerValue.TIMESTAMP);
+                                myRefChild.setValue(data);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                    input_editText.setText("");
+                }
+            }
+        });
 
 
         verticalStepView = findViewById(R.id.test);

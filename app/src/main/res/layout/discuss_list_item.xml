@@ -10,14 +10,23 @@
         android:id="@+id/category_item_title_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/headphoto_item"
+        <LinearLayout
             android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_headphoto_default"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/headphoto_item"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_headphoto_default"/>
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -25,21 +34,37 @@
             android:layout_marginLeft="15dp"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/discuss_time"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:textSize="15sp"
-                android:singleLine="false"
-                android:maxLines="2"
-                android:gravity="center_vertical"/>
+                android:layout_height="20dp">
+
+                <TextView
+                    android:id="@+id/discuss_name"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+                    android:singleLine="false"
+                    android:maxLines="2"
+                    android:gravity="center_vertical"/>
+
+                <TextView
+                    android:id="@+id/discuss_time"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+                    android:singleLine="false"
+                    android:maxLines="2"
+                    android:gravity="center_vertical"/>
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/discuss_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textSize="20sp"
+                android:autoSizeTextType="uniform"
                 android:singleLine="false"
                 android:gravity="center_vertical"/>
 

@@ -101,8 +101,8 @@ public class Fragment_Article_Discuss extends Fragment {
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("Discuss/"+abbreviation);
 
-        //myListAdapter_discuss = new MyListAdapter_Discuss(getActivity(), (List)(new ArrayList<HashMap>()));
-
+        myListAdapter_discuss = new MyListAdapter_Discuss(getActivity(), (List)(new ArrayList<HashMap>()));
+        discussListView.setAdapter(myListAdapter_discuss);
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -117,7 +117,9 @@ public class Fragment_Article_Discuss extends Fragment {
                     }
 
                     //myListAdapter_discuss.freshDiscuss(discuss);
-                    discussListView.setAdapter(new MyListAdapter_Discuss(getActivity(),discuss));
+                    myListAdapter_discuss.freshDiscuss(discuss);
+                    myListAdapter_discuss.notifyDataSetChanged();
+                    discussListView.setSelection(myListAdapter_discuss.getCount());
                 }
                 else {
                     Log.d("---Discuss---", "NULL dataSnapshot");
@@ -131,4 +133,5 @@ public class Fragment_Article_Discuss extends Fragment {
             }
         });
     }
+
 }
