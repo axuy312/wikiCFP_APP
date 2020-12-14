@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -82,7 +83,11 @@ public class MyListAdapter_Discuss extends BaseAdapter {
         }
 
         if (URLtoBitmap.get(discuss.get(position).get("HeadPhoto")) != null) {
+            Log.d("---URL---", "exist");
             holder.headphoto.setImageBitmap(URLtoBitmap.get(discuss.get(position).get("HeadPhoto")));
+        }
+        else {
+            Log.d("---RUL---", "null");
         }
 
         holder.time.setText(discuss.get(position).get("Time"));
@@ -111,9 +116,7 @@ public class MyListAdapter_Discuss extends BaseAdapter {
                     Log.d("---url---","add");
                     if (d.get("HeadPhoto").equals("N/A") != true){
                         try {
-                            Log.d("---url---","try");
-                            Bitmap bitmap = BitmapFactory.decodeStream(new URL(d.get("HeadPhoto")).openStream());
-                            URLtoBitmap.put(d.get("HeadPhoto"), bitmap);
+                            new GetBitmap().execute(d.get("HeadPhoto"));
                         } catch (Exception e) {
                             Log.d("---url---","catch");
                             Log.d("-----Discuss-----", d.get("HeadPhoto")+"----"+e.toString());
@@ -124,6 +127,46 @@ public class MyListAdapter_Discuss extends BaseAdapter {
 
                 discuss.add(tmp);
             }
+        }
+    }
+
+    private class GetBitmap extends AsyncTask<String, Integer, Bitmap> {
+
+        String urlStr;
+
+        @Override
+        protected void onPreExecute() {
+            //執行前
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Bitmap doInBackground(String... params) {
+            //執行中
+
+            urlStr = params[0];
+            try {
+                URL url = new URL(urlStr);
+                return BitmapFactory.decodeStream(url.openConnection().getInputStream());
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            //執行進度
+            super.onProgressUpdate(values);
+
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            //執行後
+            super.onPostExecute(bitmap);
+            URLtoBitmap.put(urlStr, bitmap);
+            notifyDataSetChanged();
         }
     }
 }
