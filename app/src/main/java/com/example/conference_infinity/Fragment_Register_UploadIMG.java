@@ -102,8 +102,12 @@ public class Fragment_Register_UploadIMG extends Fragment {
             }
         });
 
-        circleButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_done));
+        //circleButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_done));
 
+        // determine the headphoto is exist
+        if (gb.headPhoto != null) {
+            circleButton.setImageBitmap(gb.headPhoto);
+        }
         return view;
     }
 

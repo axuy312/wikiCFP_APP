@@ -18,7 +18,7 @@
         android:weightSum="4">
 
         <at.markushi.ui.CircleButton
-            android:id="@+id/language_back_btn"
+            android:id="@+id/preference_back_btn"
             android:layout_width="64sp"
             android:layout_height="match_parent"
             android:src="@drawable/ic_back"
@@ -51,7 +51,7 @@
         android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/theme_btn"
+            android:id="@+id/preference_theme_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="30sp"

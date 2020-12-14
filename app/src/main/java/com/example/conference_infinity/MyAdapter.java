@@ -70,11 +70,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyHolder> {
                             //checkBox.setChecked(!checkBox.isChecked());
                             // 清除 checkbox 刪除線
                             checkBox.setPaintFlags(checkBox.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+                            checkBox.setTextColor(v.getResources().getColor(R.color.dark_gray));
                         } else {
                             // 設定checkbox狀態
                             //checkBox.setChecked(!checkBox.isChecked());
                             // 增加checkbox刪除線
                             checkBox.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+                            checkBox.setTextColor(v.getResources().getColor(R.color.light_gray));
                         }
                     }
                 });
