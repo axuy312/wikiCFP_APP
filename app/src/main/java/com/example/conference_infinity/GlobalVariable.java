@@ -4,6 +4,7 @@ import android.app.Application;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -267,13 +268,7 @@ public class GlobalVariable extends Application {
         userPassword = password;
         userEmail = email;
         if (imgUrl != null && !imgUrl.equals("N/A") && !imgUrl.isEmpty()) {
-            try {
-                URL url = new URL(imgUrl);
-                headPhoto = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-            } catch (Exception e) {
-                headPhoto = null;
-                e.printStackTrace();
-            }
+            new GetBitmap().execute(imgUrl);
         }
     }
 
@@ -305,4 +300,43 @@ public class GlobalVariable extends Application {
         }
 
     }
+
+    private class GetBitmap extends AsyncTask<String, Integer, Bitmap> {
+
+        @Override
+        protected void onPreExecute() {
+            //執行前
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Bitmap doInBackground(String... params) {
+            //執行中
+
+            String urlStr = params[0];
+            try {
+                URL url = new URL(urlStr);
+                return BitmapFactory.decodeStream(url.openConnection().getInputStream());
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            //執行進度
+            super.onProgressUpdate(values);
+
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            //執行後
+            super.onPostExecute(bitmap);
+            headPhoto = bitmap;
+        }
+    }
+
+
 }

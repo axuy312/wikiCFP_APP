@@ -71,6 +71,7 @@ public class Activity_Article extends AppCompatActivity {
         topic = getIntent().getExtras().getString("Topic", "N/A");
         abbreviation = getIntent().getExtras().getString("Abbreviation", "N/A");
 
+        Log.d("---abbreviation----", abbreviation);
         conference = (HashMap<String, String>) db.conferences.get(abbreviation);
 
         url = conference.get("Link");
@@ -92,7 +93,7 @@ public class Activity_Article extends AppCompatActivity {
         }
 
         fragment_article_content = new Fragment_Article_Content(url);
-        fragment_article_discuss = new Fragment_Article_Discuss();
+        fragment_article_discuss = new Fragment_Article_Discuss(abbreviation);
         fragment_article_arrangement = new Fragment_Article_Arrangement(where);
 
         tabLayout.setupWithViewPager(viewPager);
