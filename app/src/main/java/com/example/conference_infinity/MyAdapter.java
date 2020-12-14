@@ -4,12 +4,16 @@ import android.content.Context;
 import android.graphics.Paint;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,7 +35,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyHolder> {
     public MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         // create row layout
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.root_pending_row, null);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.root_pending_row, parent, false);
 
         // this will return our view to holder class
         return new MyHolder(view);
@@ -43,6 +47,50 @@ public class MyAdapter extends RecyclerView.Adapter<MyHolder> {
         holder.mTitle.setText(models.get(position).getConference_name());
         holder.mLocation.setText(models.get(position).getConference_location());
         holder.mTime.setText(models.get(position).getConference_time());
+        holder.mAddItem.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    // 讓keyboard縮回去
+                    InputMethodManager imm = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+
+                    // 加一個item到prepareitem中
+                    if (!holder.mAddItem.getText().toString().isEmpty()) {
+                        // Create Checkbox Dynamically
+                        CheckBox checkBox = new CheckBox(context);
+                        checkBox.setText(holder.mAddItem.getText().toString());
+                        float scale = context.getResources().getDisplayMetrics().density;
+                        checkBox.setPadding((int) (10 * scale), (int) (10 * scale), 0, (int) (10 * scale));
+                        checkBox.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                        checkBox.setGravity(Gravity.CENTER);
+                        checkBox.setTextAppearance(R.style.TextAppearance_AppCompat_Medium);
+                        checkBox.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (!checkBox.isChecked()) {
+                                    // 清除 checkbox 刪除線
+                                    checkBox.setPaintFlags(checkBox.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+                                } else {
+                                    // 增加checkbox刪除線
+                                    checkBox.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+                                }
+                            }
+                        });
+
+                        holder.prepareItem.addView(checkBox);
+                        holder.mAddItem.getText().clear();
+
+                        // add item to global variable
+                        // how to do?
+                        models.get(position).addPrepareThing(checkBox.getText().toString());
+                    }
+
+                    return true;
+                }
+                return false;
+            }
+        });
 
         ArrayList<String> setItem = new ArrayList<>();
         setItem = models.get(position).getPrepareThings();
@@ -58,7 +106,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyHolder> {
                 checkBox.setText(item);
                 float scale = context.getResources().getDisplayMetrics().density;
                 checkBox.setPadding((int) (10 * scale), (int) (10 * scale), 0, (int) (10 * scale));
-                //checkBox.setChecked(ItemStates.get(boolIndex));
+                checkBox.setChecked(ItemStates.get(boolIndex));
+                if (ItemStates.get(boolIndex)) {
+                    checkBox.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+                    checkBox.setTextColor(context.getColor(R.color.light_gray));
+                }
                 checkBox.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                 checkBox.setGravity(Gravity.CENTER);
                 checkBox.setTextAppearance(R.style.TextAppearance_AppCompat_Medium);
@@ -70,12 +122,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyHolder> {
                             //checkBox.setChecked(!checkBox.isChecked());
                             // 清除 checkbox 刪除線
                             checkBox.setPaintFlags(checkBox.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+                            checkBox.setTextColor(v.getResources().getColor(R.color.dark_gray));
                         } else {
                             // 設定checkbox狀態
                             //checkBox.setChecked(!checkBox.isChecked());
                             // 增加checkbox刪除線
                             checkBox.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+                            checkBox.setTextColor(v.getResources().getColor(R.color.light_gray));
                         }
+
+                        models.get(position).setPrepareThingBool(checkBox.isChecked(), checkBox.getText().toString());
                     }
                 });
 
@@ -98,4 +154,5 @@ public class MyAdapter extends RecyclerView.Adapter<MyHolder> {
     public int getItemCount() {
         return models.size();
     }
+
 }

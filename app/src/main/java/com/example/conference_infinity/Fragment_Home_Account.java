@@ -36,6 +36,9 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.net.URL;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -59,6 +62,7 @@ public class Fragment_Home_Account extends Fragment {
     private Uri imgUri;
     private LinearLayout loadingImg;
     private String url, code;
+    GlobalVariable user;
 
     public Fragment_Home_Account() {
         // Required empty public constructor
@@ -105,10 +109,25 @@ public class Fragment_Home_Account extends Fragment {
         logout_btn = view.findViewById(R.id.logout_btn);
         about_btn = view.findViewById(R.id.about_btn);
         loadingImg = view.findViewById(R.id.load_Img);
-        user_photo.setImageDrawable(getResources().getDrawable(R.drawable.ic_default_profile));
+
+        user = (GlobalVariable) getActivity().getApplicationContext();
+
+        // Set user name
+        if (!user.userName.equals("N/A")) {
+            user_nickname.setText(user.userName);
+        } else {
+            user_nickname.setText(getResources().getText(R.string.user_name));
+        }
+
+        // Set user head photo
+        if (user.headPhoto != null) {
+            user_photo.setImageBitmap(user.headPhoto);
+        } else {
+            user_photo.setImageDrawable(getResources().getDrawable(R.drawable.ic_default_profile));
+        }
 
         //FireStore init
-        storageReference = FirebaseStorage.getInstance().getReference("uploads/profile picture");
+        storageReference = FirebaseStorage.getInstance().getReference("Uploads/Profile Picture/" + user.userEmail);
 
         //onclick listener
         preference_btn.setOnClickListener(new View.OnClickListener() {
@@ -174,13 +193,14 @@ public class Fragment_Home_Account extends Fragment {
     }
 
     // TODO: 上傳本機照片到 FireStorage
+    /*
     private void uploadImage() {
         final ProgressDialog progressDialog = new ProgressDialog(this.getActivity());
         progressDialog.setMessage("Uploading");
         progressDialog.show();
 
         if (imgUri != null) {
-            final StorageReference fileReference = storageReference.child(code + "." + getFileExtension(imgUri));
+            final StorageReference fileReference = storageReference.child(user.userName + "_HeadPhoto.png");
 
             uploadTask = fileReference.putFile(imgUri);
             uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
@@ -195,17 +215,19 @@ public class Fragment_Home_Account extends Fragment {
                 @Override
                 public void onComplete(@NonNull Task<Uri> task) {
                     if (task.isSuccessful()) {
+                        Log.d("---Debug---", "success");
                         Uri downloadUri = task.getResult();
                         String mUri = downloadUri.toString();
                         FirebaseDatabase database = FirebaseDatabase.getInstance();
-                        DatabaseReference myRef = database.getReference("/User/" + code + "/profile picture");
+                        DatabaseReference myRef = database.getReference("Uploads/Profile Picture/" + user.userEmail);
                         myRef.setValue(mUri);
 
                         user_photo.setVisibility(View.GONE);
                         loadingImg.setVisibility(View.VISIBLE);
-                        getProfile();
+                        //getProfile();
                         progressDialog.dismiss();
                     } else {
+                        Log.d("---Debug---", "fail");
                         Toast.makeText(getActivity(), "Failed!", Toast.LENGTH_LONG).show();
                         progressDialog.dismiss();
                     }
@@ -214,12 +236,68 @@ public class Fragment_Home_Account extends Fragment {
                 @Override
                 public void onFailure(@NonNull Exception e) {
 
+                    Log.d("---Debug---", "onfail");
                     Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
                     progressDialog.dismiss();
                 }
             });
         } else {
             Toast.makeText(getActivity(), "No image selected!", Toast.LENGTH_LONG).show();
+        }
+    }
+*/
+
+    private void uploadImage() {
+        storageReference = FirebaseStorage.getInstance().getReference("Uploads/Profile Picture/" + user.userEmail);
+        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Uploading");
+        progressDialog.show();
+
+        if (user.headPhoto != null) {
+            final StorageReference fileReference = storageReference.child(user_nickname + "_HeadPhoto.png");
+
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            user.headPhoto.compress(Bitmap.CompressFormat.PNG, 100, baos);
+            byte[] data = baos.toByteArray();
+
+            uploadTask = fileReference.putBytes(data);
+            uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                @Override
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    Log.d("---Debug---", "then");
+                    if (!task.isSuccessful()) {
+                        throw task.getException();
+                    }
+                    return fileReference.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()) {
+                        Log.d("---Debug---", "success");
+                        Uri downloadUri = task.getResult();
+                        String headPhotoUrl = downloadUri.toString();
+
+                        //user.loadUser(user.userEmail);
+                        user_photo.setImageBitmap(user.headPhoto);
+                        progressDialog.dismiss();
+                    } else {
+                        Log.d("---Debug---", "fail");
+                        Toast.makeText(getActivity(), "Failed!", Toast.LENGTH_LONG).show();
+                        progressDialog.dismiss();
+                    }
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+
+                    Log.d("---Debug---", "onfail");
+                    Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
+                    progressDialog.dismiss();
+                }
+            });
+        } else {
+            progressDialog.dismiss();
         }
     }
 
@@ -229,10 +307,24 @@ public class Fragment_Home_Account extends Fragment {
         if (requestCode == IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
 
             imgUri = data.getData();
-
+            Bitmap bitmapImage = null;
             if (uploadTask != null && uploadTask.isInProgress()) {
                 Toast.makeText(getActivity(), "Upload in preogress", Toast.LENGTH_LONG).show();
             } else {
+
+                try {
+                    InputStream inputStream = getActivity().getContentResolver().openInputStream(imgUri);
+
+                    bitmapImage = BitmapFactory.decodeStream(inputStream);
+                    user.headPhoto = bitmapImage;
+                    user_photo.setImageBitmap(bitmapImage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+                //gb.headPhoto = Bitmap.createBitmap(bitmap);
+
+
                 uploadImage();
             }
         }
@@ -283,7 +375,7 @@ public class Fragment_Home_Account extends Fragment {
 
         //Profile update
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference myRef = database.getReference("/User/" + code);
+        final DatabaseReference myRef = database.getReference("Uploads/Profile Picture/" + user.userEmail);
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -293,12 +385,6 @@ public class Fragment_Home_Account extends Fragment {
                 }
 
                 Log.d("---RUN---", dataSnapshot.toString());
-                if (dataSnapshot.child("nick") != null && (!("").equals(dataSnapshot.child("nick").getValue()))) {
-                    user_nickname.setText(dataSnapshot.child("nick").getValue().toString());
-                } else {
-                    user_nickname.setText(R.string.nickname);
-                }
-
                 if (dataSnapshot.child("profile picture") != null && !dataSnapshot.child("profile picture").getValue().toString().equals("")) {
                     url = dataSnapshot.child("profile picture").getValue().toString();
                     new GetImage().execute(url);

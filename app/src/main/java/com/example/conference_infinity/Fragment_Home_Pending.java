@@ -32,6 +32,7 @@ public class Fragment_Home_Pending extends Fragment {
 
     RecyclerView recyclerView;
     MyAdapter myAdapter;
+    GlobalVariable user;
 
     public Fragment_Home_Pending() {
         // Required empty public constructor
@@ -77,9 +78,10 @@ public class Fragment_Home_Pending extends Fragment {
 
         recyclerView = view.findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        user = (GlobalVariable) getActivity().getApplicationContext();
 
         // 資料由getMyList產生，再由adapter產生
-        myAdapter = new MyAdapter(getActivity(),getMyList());
+        myAdapter = new MyAdapter(getActivity(), user.getPendingConference());
         // 設定recycleView的adapter
         recyclerView.setAdapter(myAdapter);
 
