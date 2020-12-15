@@ -44,6 +44,8 @@ public class GlobalVariable extends Application {
     String preferLangCode = "Traditional";
     String preferThemeCode = "Light";
     HashMap<String, Boolean> preferCategory = null;
+    HashMap<String, Boolean> followingConference = null;
+    HashMap<String, Object> pendingConference = null;
     String[] following_categoryPreview;
     String[] Language = {
             "Traditional",
@@ -54,6 +56,7 @@ public class GlobalVariable extends Application {
             "Dark"
     };
     //----------------------------------------------------------------------------------------------
+
 
     //User data-------------------------------------------------------------------------------------
     String userName = "N/A";
@@ -171,7 +174,7 @@ public class GlobalVariable extends Application {
 
                         preferLangCode = UserData.get("Language").toString();
                         preferThemeCode = UserData.get("Theme").toString();
-                        UpdatePreferCategorys((List<String>) UserData.get("Category"));
+                        UpdatePreferCategorys((List<String>) UserData.get("Category"), (List<String>) UserData.get("Following Conference"));
                         UpdataFollowCategory();
                     }
                 })
@@ -196,7 +199,7 @@ public class GlobalVariable extends Application {
             preferCategory.clear();
             preferCategory = null;
         }
-
+        followingConference = null;
         userName = "N/A";
         userPassword = "N/A";
         userEmail = "N/A";
@@ -224,50 +227,92 @@ public class GlobalVariable extends Application {
         }
     }
 
-    void UpdatePreferCategorys(List<String> list) {
-        if (list != null) {
+    void UpdatePreferCategorys(List<String> categ, List<String> conf) {
+        if (categ != null) {
             preferCategory = new HashMap<String, Boolean>();
-            for (String t : list) {
+            for (String t : categ) {
                 preferCategory.put(t, true);
+            }
+        }
+        if (conf != null) {
+            followingConference = new HashMap<String, Boolean>();
+            for (String t : conf) {
+                followingConference.put(t, true);
             }
         }
     }
 
     //Updata & Upload
     boolean UpdatePreferCategorysValue(String title, Boolean bool) {
-        if (preferCategory != null) {
-            preferCategory.put(title, bool);
-            Log.d("---TAG---", title + " : " + bool.toString());
-
-            List<String> data = new ArrayList<>();
-            for (String key : preferCategory.keySet().toArray(new String[0])) {
-                if (preferCategory.get(key) == true) {
-                    data.add(key);
-                }
-            }
-
-            Map<String, Object> user = new HashMap<>();
-            user.put("Category", data);
-
-            db.collection("Preference")
-                    .document(userEmail)
-                    .update("Category", data)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Log.d("TAG", "Len: " + String.valueOf(data.size()));
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.w("TAG", "Error writing document", e);
-                        }
-                    });
-            return true;
+        if (preferCategory == null) {
+            preferCategory = new HashMap<>();
         }
-        return false;
+        preferCategory.put(title, bool);
+        Log.d("---TAG---", title + " : " + bool.toString());
+
+        List<String> data = new ArrayList<>();
+        for (String key : preferCategory.keySet().toArray(new String[0])) {
+            if (preferCategory.get(key) == true) {
+                data.add(key);
+            }
+        }
+
+        Map<String, Object> user = new HashMap<>();
+        user.put("Category", data);
+
+        db.collection("Preference")
+                .document(userEmail)
+                .update("Category", data)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("TAG", "Len: " + String.valueOf(data.size()));
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("TAG", "Error writing document", e);
+                    }
+                });
+        return true;
     }
+    //Updata & Upload
+    boolean UpdateFollowingConferencesValue(String title, Boolean bool) {
+        if (followingConference == null) {
+            followingConference = new HashMap<>();
+        }
+
+
+        followingConference.put(title, bool);
+        Log.d("---TAG---", title + " : " + bool.toString());
+
+        List<String> data = new ArrayList<>();
+        for (String key : followingConference.keySet().toArray(new String[0])) {
+            if (followingConference.get(key) == true) {
+                data.add(key);
+            }
+        }
+
+
+        db.collection("Preference")
+                .document(userEmail)
+                .update("Following Conference", data)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("TAG", "Len: " + String.valueOf(data.size()));
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("TAG", "Error writing document", e);
+                    }
+                });
+        return true;
+    }
+
 
     void UpdataUser(String name, String password, String email, String imgUrl) {
         userName = name;
@@ -372,4 +417,5 @@ public class GlobalVariable extends Application {
 
         return models;
     }
+
 }

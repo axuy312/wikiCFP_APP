@@ -261,4 +261,5 @@ public class Fragment_Register_Topics extends Fragment {
     private void sendData() {
         uploadImage();
     }
+
 }

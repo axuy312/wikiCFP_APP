@@ -45,7 +45,7 @@ public class Activity_Conferences extends AppCompatActivity {
 
         //Create List
         Conference_List = findViewById(R.id.Conference_List);
-        Conference_List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*Conference_List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(Activity_Conferences.this, Activity_Article.class);
@@ -54,7 +54,7 @@ public class Activity_Conferences extends AppCompatActivity {
                 startActivity(intent);
                 //getActivity().finish();
             }
-        });
+        });*/
 
 
         //Update List
