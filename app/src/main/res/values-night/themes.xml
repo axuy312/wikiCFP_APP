@@ -12,5 +12,14 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+
+    </style>
+
+    <style name="PageTitle" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="radioTheme" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/white</item>
     </style>
 </resources>
