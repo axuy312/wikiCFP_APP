@@ -16,8 +16,9 @@
         android:fitsSystemWindows="true">
 
         <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="270dp"
             android:fitsSystemWindows="true"
             android:background="@color/white"
             android:theme="@style/Base.CardView">
@@ -32,26 +33,16 @@
                 app:statusBarScrim="@android:color/transparent"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
-                <ImageView
-                    android:id="@+id/imageview"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:scaleType="centerCrop"
-                    android:adjustViewBounds="true"
-                    app:layout_collapseMode="parallax"
-                    app:layout_collapseParallaxMultiplier="0.7"
-                    android:fitsSystemWindows="true"
-                    android:src="@drawable/ic_email"/>
 
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="130dp"
-                    android:layout_marginHorizontal="20sp"
+                    android:layout_height="150dp"
                     android:layout_marginTop="70dp"
-                    android:gravity="center"
+                    android:paddingTop="10dp"
                     app:layout_collapseMode="parallax"
                     app:layout_collapseParallaxMultiplier="0.7"
+                    android:gravity="center"
                     android:orientation="vertical">
 
                     <com.baoyachi.stepview.VerticalStepView
@@ -60,7 +51,6 @@
                         android:layout_height="wrap_content"/>
 
                 </LinearLayout>
-
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
@@ -75,27 +65,46 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
-                    android:layout_marginHorizontal="20sp"
                     app:layout_collapseMode="pin"
                     app:layout_collapseParallaxMultiplier="1"
                     android:orientation="horizontal">
 
                     <at.markushi.ui.CircleButton
                         android:id="@+id/article_back_btn"
-                        android:layout_width="64sp"
-                        android:layout_height="64sp"
+                        android:layout_width="50dp"
+                        android:layout_height="70dp"
                         android:src="@drawable/ic_back"
-                        app:cb_color="@color/white_gray" />
+                        android:layout_gravity="center_vertical"
+                        app:cb_color="@color/white" />
 
                     <TextView
                         android:id="@+id/Conference_topic"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_margin="20sp"
+                        android:layout_weight="1"
                         android:gravity="center"
+                        android:layout_marginHorizontal="5dp"
                         android:text="@string/conference_name"
+                        android:autoSizeTextType="uniform"
+                        android:minHeight="70dp"
+                        android:maxHeight="70dp"
                         android:textAppearance="@style/TextAppearance.AppCompat.Large"
                         android:textColor="@color/light_gray" />
+
+                    <LinearLayout
+                        android:layout_width="50dp"
+                        android:layout_height="70dp"
+                        android:gravity="center">
+
+                        <ImageButton
+                            android:id="@+id/attend_imgbtn"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:scaleType="centerCrop"
+                            android:background="@color/white"
+                            android:src="@drawable/ic_unattended" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -117,6 +126,7 @@
             android:layout_height="match_parent"
             android:fillViewport="true"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
@@ -150,4 +160,6 @@
                 android:src="@drawable/ic_discuss_send"/>
 
     </LinearLayout>
+
+
 </LinearLayout>

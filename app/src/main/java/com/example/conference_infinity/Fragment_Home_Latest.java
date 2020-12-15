@@ -13,7 +13,15 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -85,10 +93,12 @@ public class Fragment_Home_Latest extends Fragment {
         //Create List
         Conference_List = view.findViewById(R.id.Home_Latest_Conference_List);
         //Update List
-        Conference_List_Data = db.conferences.values().toArray(new HashMap[0]);
-
 
         if (db.conferences != null && getActivity() != null){
+            Conference_List_Data = db.conferences.values().toArray(new HashMap[0]);
+
+
+
             Conference_List_Adapter = new MyListAdapter_Conference(getActivity(), Conference_List_Data);
             Conference_List.setAdapter(Conference_List_Adapter);
             Conference_List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -107,4 +117,8 @@ public class Fragment_Home_Latest extends Fragment {
     void RefreshListView(String newText){
         Conference_List_Adapter.getFilter().filter(newText);
     }
+
+
+
+
 }

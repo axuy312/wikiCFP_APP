@@ -3,6 +3,7 @@ package com.example.conference_infinity;
 import android.content.Context;
 import android.content.Intent;
 import android.media.Image;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -135,8 +136,20 @@ public class MyListAdapter_Conference extends BaseAdapter implements Filterable 
             holder = (ViewHolder)convertView.getTag();
         }
         holder.conference_item_title.setText(datas.get(position).get("Topic"));
-        holder.conference_item_deadline.setText(datas.get(position).get("Deadline"));
-        holder.comment_number.setText(String.valueOf(position));
+        holder.conference_item_deadline.setText(datas.get(position).get("Submission Deadline"));
+
+        String abbr = datas.get(position).get("Abbreviation");
+        Long discussCnt = null;
+        if (user.discussCnt != null){
+            discussCnt = user.discussCnt.get(abbr);
+        }
+        if (discussCnt != null){
+            holder.comment_number.setText(discussCnt.toString());
+        }
+        else {
+            holder.comment_number.setText("0");
+        }
+
 
         holder.body.setOnClickListener(new View.OnClickListener() {
             @Override

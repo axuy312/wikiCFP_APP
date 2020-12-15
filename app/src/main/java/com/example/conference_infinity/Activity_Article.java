@@ -53,7 +53,7 @@ public class Activity_Article extends AppCompatActivity {
     private ViewPager viewPager;
     private TabLayout tabLayout;
     private EditText input_editText;
-    private ImageButton send_img;
+    private ImageButton send_img, attend_img;
     VerticalStepView verticalStepView;
 
     private Fragment_Article_Content fragment_article_content;
@@ -137,6 +137,7 @@ public class Activity_Article extends AppCompatActivity {
 
         input_editText = findViewById(R.id.discuss_input_edittext);
         send_img = findViewById(R.id.discuss_send_img);
+        attend_img = findViewById(R.id.attend_imgbtn);
 
         send_img.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,6 +163,7 @@ public class Activity_Article extends AppCompatActivity {
                                 data.put("Content",text);
                                 data.put("Time",ServerValue.TIMESTAMP);
                                 myRefChild.setValue(data);
+                                db.UpdateDiscussCnt(abbreviation, i+1);
                             }
                         }
 
@@ -175,6 +177,28 @@ public class Activity_Article extends AppCompatActivity {
             }
         });
 
+        attend_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (db.pendingConference.get(abbreviation) != null && ((HashMap)db.pendingConference.get(abbreviation)).get("Attend") != null && (Boolean)((HashMap)db.pendingConference.get(abbreviation)).get("Attend"))
+                {
+                    attend_img.setImageDrawable(getResources().getDrawable(R.drawable.ic_unattended));
+                    db.UpdateAttendConferencesValue(abbreviation, false, null, false);
+                }
+                else {
+                    attend_img.setImageDrawable(getResources().getDrawable(R.drawable.ic_attended));
+                    db.UpdateAttendConferencesValue(abbreviation, true, null, false);
+                }
+            }
+        });
+
+        if (db.pendingConference.get(abbreviation) != null && ((HashMap)db.pendingConference.get(abbreviation)).get("Attend") != null && (Boolean)((HashMap)db.pendingConference.get(abbreviation)).get("Attend"))
+        {
+            attend_img.setImageDrawable(getResources().getDrawable(R.drawable.ic_attended));
+        }
+        else {
+            attend_img.setImageDrawable(getResources().getDrawable(R.drawable.ic_unattended));
+        }
 
         verticalStepView = findViewById(R.id.test);
 
@@ -195,13 +219,13 @@ public class Activity_Article extends AppCompatActivity {
 
         verticalStepView.setStepsViewIndicatorComplectingPosition(1)
                 .reverseDraw(false)
-                .setTextSize(17)
+                .setTextSize(15)
                 .setStepViewTexts(list)
-                .setLinePaddingProportion(0.3f)
+                .setLinePaddingProportion(0.2f)
                 .setStepsViewIndicatorCompletedLineColor(Color.parseColor("#000000"))
                 .setStepViewComplectedTextColor(Color.parseColor("#000000"))
                 .setStepViewUnComplectedTextColor(Color.parseColor("#000000"))
-                .setStepsViewIndicatorUnCompletedLineColor(Color.parseColor("#0adff0"))
+                .setStepsViewIndicatorUnCompletedLineColor(Color.parseColor("#000000"))
                 .setStepsViewIndicatorCompleteIcon(ContextCompat.getDrawable(this, R.drawable.ic_timeline_on))
                 .setStepsViewIndicatorAttentionIcon(ContextCompat.getDrawable(this, R.drawable.ic_timeline_on))
                 .setStepsViewIndicatorDefaultIcon(ContextCompat.getDrawable(this, R.drawable.ic_timeline_off));

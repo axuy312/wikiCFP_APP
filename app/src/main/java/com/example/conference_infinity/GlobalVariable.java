@@ -4,6 +4,7 @@ import android.app.Application;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.text.style.UpdateAppearance;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -32,6 +33,7 @@ public class GlobalVariable extends Application {
     String[] categoryPreview = null;
     HashMap<String, Object> conferences;
     HashMap<String, Object> categorys;
+    HashMap<String, Long> discussCnt;
     //----------------------------------------------------------------------------------------------
 
     //User preference-------------------------------------------------------------------------------
@@ -72,11 +74,10 @@ public class GlobalVariable extends Application {
 
     void setRealtime() {
         ValueEventListener valueEventListener;
-        DatabaseReference myRefConference;
-
         database = FirebaseDatabase.getInstance();
-        myRefConference = database.getReference("Conference");
+        refreshDiscussCnt();
 
+        DatabaseReference myRefConference = database.getReference("Conference");
         valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -200,6 +201,41 @@ public class GlobalVariable extends Application {
         headPhoto = null;
         headPhotoURL = "N/A";
         following_categoryPreview = null;
+    }
+
+
+    void UpdateDiscussCnt(String abbr, long cnt){
+        if (database == null){
+            database = FirebaseDatabase.getInstance();
+        }
+        DatabaseReference myRef = database.getReference("DiscussCnt/"+abbr+"/");
+        myRef.setValue(cnt);
+    }
+
+    void refreshDiscussCnt(){
+        if (database == null){
+            database = FirebaseDatabase.getInstance();
+        }
+        DatabaseReference myRefDiscussCnt = database.getReference("DiscussCnt");
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                if (discussCnt == null){
+                    discussCnt = new HashMap<>();
+                }
+                if (dataSnapshot != null && dataSnapshot.exists()){
+                    for (DataSnapshot data : dataSnapshot.getChildren()){
+                        discussCnt.put(data.getKey(), (Long) data.getValue());
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError error) {
+            }
+        };
+        myRefDiscussCnt.addValueEventListener(valueEventListener);
     }
 
     void UpdateConferences(HashMap hashMap) {
@@ -442,7 +478,7 @@ public class GlobalVariable extends Application {
         }
     }
 
-    // TODO: 取得 firebase 的 pending conference
+    // TODO: 取得 firebase 的 pending conference :Attend == false -> no display
     public ArrayList<Model> getPendingConference() {
         String[] abbrconf = pendingConference.keySet().toArray(new String[0]);
         if (models == null) {
@@ -453,6 +489,9 @@ public class GlobalVariable extends Application {
         Model model;
 
         for (String abbr : abbrconf) {
+            if (!(Boolean) ((HashMap<String, Object>) pendingConference.get(abbr)).get("Attend")){
+                continue;
+            }
             HashMap<String, String> conference = (HashMap<String, String>) conferences.get(abbr);
             model = new Model();
             model.setConference_name(conference.get("Topic"));

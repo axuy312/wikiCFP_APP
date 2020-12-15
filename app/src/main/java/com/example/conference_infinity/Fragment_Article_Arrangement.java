@@ -114,7 +114,7 @@ public class Fragment_Article_Arrangement extends Fragment implements OnMapReady
                 e.printStackTrace();
             }
         }
-        if (addressList != null) {
+        if (addressList != null && !addressList.isEmpty()) {
             Address address = addressList.get(0);
             latLng = new LatLng(address.getLatitude(), address.getLongitude());
             mMap.addMarker(new MarkerOptions().position(latLng).title(location));

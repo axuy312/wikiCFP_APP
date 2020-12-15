@@ -32,7 +32,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:paddingVertical="5dp"
@@ -42,13 +42,15 @@
 
             <TextView
                 android:id="@+id/conference_item_deadline"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:maxLines="2"
+                android:layout_marginLeft="5dp"
                 android:paddingVertical="5dp"
                 android:singleLine="false"
-                android:text="@string/test"
+                android:text="N/A"
                 android:textSize="10sp"
                 tools:ignore="SmallSp" />
 

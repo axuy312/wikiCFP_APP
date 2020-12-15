@@ -104,7 +104,10 @@ public class Fragment_Home_Category extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                Category_List_Adapter.getFilter().filter(newText);
+                if (Category_List_Adapter != null)
+                {
+                    Category_List_Adapter.getFilter().filter(newText);
+                }
                 return false;
             }
         });

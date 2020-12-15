@@ -34,6 +34,7 @@ public class Activity_Conferences extends AppCompatActivity {
         setContentView(R.layout.activity_conferences);
 
         db = (GlobalVariable)getApplicationContext();
+        //db.refreshDiscussCnt();
 
         title_view = findViewById(R.id.Category_Title);
         title = getIntent().getExtras().getString("title");
@@ -82,6 +83,14 @@ public class Activity_Conferences extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (Conference_List_Adapter != null){
+            Conference_List_Adapter.notifyDataSetChanged();
+        }
     }
 
     public void UpdateConferenceData(HashMap[] dictionaries){
