@@ -1,26 +1,25 @@
 package com.example.conference_infinity;
 
+import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
+
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -49,7 +48,9 @@ public class MyListAdapter_Discuss extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 2;
+        if (discuss == null)
+            return 0;
+        return discuss.size();
     }
 
     @Override
@@ -64,7 +65,7 @@ public class MyListAdapter_Discuss extends BaseAdapter {
 
     static class ViewHolder{
         public ImageView headphoto;
-        public TextView time, content;
+        public TextView time, content, name;
     }
 
     @Override
@@ -75,6 +76,7 @@ public class MyListAdapter_Discuss extends BaseAdapter {
             holder = new ViewHolder();
             holder.content = convertView.findViewById(R.id.discuss_content);
             holder.time = convertView.findViewById(R.id.discuss_time);
+            holder.name = convertView.findViewById(R.id.discuss_name);
             holder.headphoto = convertView.findViewById(R.id.headphoto_item);
             convertView.setTag(holder);
         }
@@ -90,8 +92,12 @@ public class MyListAdapter_Discuss extends BaseAdapter {
             Log.d("---RUL---", "null");
         }
 
-        holder.time.setText(discuss.get(position).get("Time"));
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+
+        holder.time.setText(simpleDateFormat.format(new Date(Long.valueOf(discuss.get(position).get("Time")))));
         holder.content.setText(discuss.get(position).get("Content"));
+        holder.name.setText(discuss.get(position).get("Name"));
+
 
         return convertView;
     }
@@ -106,19 +112,17 @@ public class MyListAdapter_Discuss extends BaseAdapter {
             discuss = new ArrayList<>();
             for (HashMap<String, String> d : data){
                 HashMap<String, String>tmp = new HashMap<String, String>();
-                tmp.put("HeadPhoto", d.get("HeadPhoto"));
-                tmp.put("Content", d.get("Content"));
-                tmp.put("Time", d.get("Time"));
+                tmp.put("HeadPhoto", String.valueOf(d.get("HeadPhoto")));
+                tmp.put("Content", String.valueOf(d.get("Content")));
+                tmp.put("Name", String.valueOf(d.get("Name")));
+                tmp.put("Time", String.valueOf(d.get("Time")));
 
-                Log.d("---url---",d.get("HeadPhoto"));
 
                 if (URLtoBitmap.get((d.get("HeadPhoto"))) == null){
-                    Log.d("---url---","add");
                     if (d.get("HeadPhoto").equals("N/A") != true){
                         try {
                             new GetBitmap().execute(d.get("HeadPhoto"));
                         } catch (Exception e) {
-                            Log.d("---url---","catch");
                             Log.d("-----Discuss-----", d.get("HeadPhoto")+"----"+e.toString());
                             e.printStackTrace();
                         }
@@ -127,6 +131,7 @@ public class MyListAdapter_Discuss extends BaseAdapter {
 
                 discuss.add(tmp);
             }
+            notifyDataSetChanged();
         }
     }
 
@@ -166,7 +171,6 @@ public class MyListAdapter_Discuss extends BaseAdapter {
             //執行後
             super.onPostExecute(bitmap);
             URLtoBitmap.put(urlStr, bitmap);
-            notifyDataSetChanged();
         }
     }
 }
