@@ -174,7 +174,7 @@ public class GlobalVariable extends Application {
 
                         preferLangCode = UserData.get("Language").toString();
                         preferThemeCode = UserData.get("Theme").toString();
-                        UpdatePreferCategorys((List<String>) UserData.get("Category"), (List<String>) UserData.get("Following Conference"));
+                        UpdatePreferCategorys((List<String>) UserData.get("Category"), (List<String>) UserData.get("Following Conference"), (HashMap<String, Object>) UserData.get("Pending Conference"));
                         UpdataFollowCategory();
                     }
                 })
@@ -227,7 +227,7 @@ public class GlobalVariable extends Application {
         }
     }
 
-    void UpdatePreferCategorys(List<String> categ, List<String> conf) {
+    void UpdatePreferCategorys(List<String> categ, List<String> conf, HashMap<String, Object>pend) {
         if (categ != null) {
             preferCategory = new HashMap<String, Boolean>();
             for (String t : categ) {
@@ -239,6 +239,20 @@ public class GlobalVariable extends Application {
             for (String t : conf) {
                 followingConference.put(t, true);
             }
+        }
+        if (pend != null) {
+            pendingConference = new HashMap<String, Object>();
+            for (String abbr : pend.keySet().toArray(new String[0])) {
+                pendingConference.put(abbr, new HashMap());
+                ((HashMap<String, Object>)pendingConference.get(abbr)).put("Attend", ((HashMap<String, Object>)pend.get(abbr)).get("Attend"));
+                HashMap<String, Boolean>tmpPrepare = new HashMap<>();
+                HashMap<String, Boolean>prepare = ((HashMap)((HashMap<String, Object>)pend.get(abbr)).get("Prepare"));
+                for (String prepareKey : prepare.keySet().toArray(new String[0])){
+                    tmpPrepare.put(prepareKey, prepare.get(prepareKey));
+                }
+                ((HashMap<String, Object>)pendingConference.get(abbr)).put("Prepare", tmpPrepare);
+            }
+            Log.d("---Pend---", pendingConference.toString());
         }
     }
 
@@ -460,5 +474,4 @@ public class GlobalVariable extends Application {
 
         return models;
     }
-
 }
