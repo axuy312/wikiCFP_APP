@@ -24,10 +24,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyHolder> {
 
     Context context;
     ArrayList<Model> models;    // this array list create a list of array which parameters define in our model class
+    GlobalVariable user;
 
     public MyAdapter(Context context, ArrayList<Model> models) {
         this.context = context;
         this.models = models;
+        Log.d("---Size---", String.valueOf(models.size()) + " - " + String.valueOf(this.models.size()));
+        user = (GlobalVariable) context.getApplicationContext();
     }
 
     @NonNull
@@ -83,7 +86,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyHolder> {
 
                         // add item to global variable
                         // how to do?
-                        models.get(position).addPrepareThing(checkBox.getText().toString());
+                        models.get(position).setPrepareThingState(checkBox.getText().toString(), false);
+                        user.UpdateAttendConferencesValue(models.get(position).getAbbr(), models.get(position).getAttend(), checkBox.getText().toString(), false);
                     }
 
                     return true;
@@ -92,22 +96,18 @@ public class MyAdapter extends RecyclerView.Adapter<MyHolder> {
             }
         });
 
-        ArrayList<String> setItem = new ArrayList<>();
-        setItem = models.get(position).getPrepareThings();
-        ArrayList<Boolean> ItemStates = new ArrayList<>();
-        ItemStates = models.get(position).getPrepareThingsStatus();
         int boolIndex;
 
-        if (setItem.size() > 0) {
+        if (models.get(position).getPrepareThingCount() > 0) {
             boolIndex = 0;
-            for (String item : setItem) {
+            for (String item : models.get(position).getPrepareThing()) {
                 // Create Checkbox Dynamically
                 CheckBox checkBox = new CheckBox(context);
                 checkBox.setText(item);
                 float scale = context.getResources().getDisplayMetrics().density;
                 checkBox.setPadding((int) (10 * scale), (int) (10 * scale), 0, (int) (10 * scale));
-                checkBox.setChecked(ItemStates.get(boolIndex));
-                if (ItemStates.get(boolIndex)) {
+                checkBox.setChecked(models.get(position).getPrepareThingState(item));
+                if (checkBox.isChecked()) {
                     checkBox.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
                     checkBox.setTextColor(context.getColor(R.color.light_gray));
                 }
@@ -131,7 +131,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyHolder> {
                             checkBox.setTextColor(v.getResources().getColor(R.color.light_gray));
                         }
 
-                        models.get(position).setPrepareThingBool(checkBox.isChecked(), checkBox.getText().toString());
+                        models.get(position).setPrepareThingState(checkBox.getText().toString(), checkBox.isChecked());
+                        user.UpdateAttendConferencesValue(models.get(position).getAbbr(), models.get(position).getAttend(), checkBox.getText().toString(), checkBox.isChecked());
                     }
                 });
 

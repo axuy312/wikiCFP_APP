@@ -3,16 +3,13 @@ package com.example.conference_infinity;
 import android.app.Application;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -20,9 +17,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.SetOptions;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -227,7 +221,7 @@ public class GlobalVariable extends Application {
         }
     }
 
-    void UpdatePreferCategorys(List<String> categ, List<String> conf, HashMap<String, Object>pend) {
+    void UpdatePreferCategorys(List<String> categ, List<String> conf, HashMap<String, Object> pend) {
         if (categ != null) {
             preferCategory = new HashMap<String, Boolean>();
             for (String t : categ) {
@@ -244,13 +238,13 @@ public class GlobalVariable extends Application {
             pendingConference = new HashMap<String, Object>();
             for (String abbr : pend.keySet().toArray(new String[0])) {
                 pendingConference.put(abbr, new HashMap());
-                ((HashMap<String, Object>)pendingConference.get(abbr)).put("Attend", ((HashMap<String, Object>)pend.get(abbr)).get("Attend"));
-                HashMap<String, Boolean>tmpPrepare = new HashMap<>();
-                HashMap<String, Boolean>prepare = ((HashMap)((HashMap<String, Object>)pend.get(abbr)).get("Prepare"));
-                for (String prepareKey : prepare.keySet().toArray(new String[0])){
+                ((HashMap<String, Object>) pendingConference.get(abbr)).put("Attend", ((HashMap<String, Object>) pend.get(abbr)).get("Attend"));
+                HashMap<String, Boolean> tmpPrepare = new HashMap<>();
+                HashMap<String, Boolean> prepare = ((HashMap) ((HashMap<String, Object>) pend.get(abbr)).get("Prepare"));
+                for (String prepareKey : prepare.keySet().toArray(new String[0])) {
                     tmpPrepare.put(prepareKey, prepare.get(prepareKey));
                 }
-                ((HashMap<String, Object>)pendingConference.get(abbr)).put("Prepare", tmpPrepare);
+                ((HashMap<String, Object>) pendingConference.get(abbr)).put("Prepare", tmpPrepare);
             }
             Log.d("---Pend---", pendingConference.toString());
         }
@@ -336,19 +330,18 @@ public class GlobalVariable extends Application {
         }
 
 
-
-        if (pendingConference.get(title) == null){
+        if (pendingConference.get(title) == null) {
             pendingConference.put(title, new HashMap<String, Object>());
         }
 
-        ((HashMap)pendingConference.get(title)).put("Attend", attend);
+        ((HashMap) pendingConference.get(title)).put("Attend", attend);
 
-        if (((HashMap)pendingConference.get(title)).get("Prepare") == null){
-            ((HashMap)pendingConference.get(title)).put("Prepare", new HashMap<String, Boolean>());
+        if (((HashMap) pendingConference.get(title)).get("Prepare") == null) {
+            ((HashMap) pendingConference.get(title)).put("Prepare", new HashMap<String, Boolean>());
         }
 
-        if (prepare != null && !prepare.isEmpty() && !prepare.equals("N/A")){
-            ((HashMap)((HashMap)pendingConference.get(title)).get("Prepare")).put(prepare, ready);
+        if (prepare != null && !prepare.isEmpty() && !prepare.equals("N/A")) {
+            ((HashMap) ((HashMap) pendingConference.get(title)).get("Prepare")).put(prepare, ready);
         }
 
 
@@ -451,25 +444,28 @@ public class GlobalVariable extends Application {
 
     // TODO: 取得 firebase 的 pending conference
     public ArrayList<Model> getPendingConference() {
-        if (models.isEmpty()) {
-            ArrayList<String> prepare = new ArrayList<>();
-            prepare.add("test1");
-            prepare.add("Test2");
+        String[] abbrconf = pendingConference.keySet().toArray(new String[0]);
+        if (models == null) {
+            models = new ArrayList<>();
+        } else {
+            models.clear();
+        }
+        Model model;
 
-            Model model = new Model();
-            model.setConference_name("New Conference Name");
-            model.setConference_location("Floor");
-            model.setConference_time("Today");
-            //model.setPrepareThings(prepare);
-            model.addPrepareThing("3333");
-            models.add(model);
-
+        for (String abbr : abbrconf) {
+            HashMap<String, String> conference = (HashMap<String, String>) conferences.get(abbr);
             model = new Model();
-            model.setConference_name("Second Conference Name");
-            model.setConference_location("Second Floor");
-            model.setConference_time("Tomorrow");
-            model.addPrepareThing("123121231231231233");
+            model.setConference_name(conference.get("Topic"));
+            model.setAbbr(abbr);
+            model.setConference_location(conference.get("Where"));
+            model.setConference_time(conference.get("Submission Deadline"));
+
+            HashMap<String, Object> tmpConf = (HashMap<String, Object>) pendingConference.get(abbr);
+            HashMap<String, Boolean> tmpPrepare = (HashMap<String, Boolean>) tmpConf.get("Prepare");
+            model.setAttend((Boolean) tmpConf.get("Attend"));
+            model.setPrepareThings(tmpPrepare);
             models.add(model);
+
         }
 
         return models;

@@ -1,31 +1,27 @@
 package com.example.conference_infinity;
 
-import android.util.Log;
-
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Model {
 
     private String conference_name, conference_time, conference_location;
-    private ArrayList<String> prepareThings;
-    private ArrayList<Boolean> prepareThingsStatus;
+    private HashMap<String, Boolean> prepareThings;
+    private String abbreviation = "N/A";
+    private Boolean attend;
 
     public Model() {
         this.conference_name = "";
         this.conference_time = "";
         this.conference_location = "";
-        this.prepareThings = new ArrayList<>();
-        this.prepareThingsStatus = new ArrayList<>();
+        this.prepareThings = new HashMap<>();
+
     }
 
-    public Model(String conference_name, String conference_time, String conference_location, ArrayList<String> prepareThings, ArrayList<Boolean> prepareThingsStatus) {
+    public Model(String conference_name, String conference_time, String conference_location, HashMap<String, Boolean> prepareThings) {
         this.conference_name = conference_name;
         this.conference_time = conference_time;
         this.conference_location = conference_location;
-        this.prepareThings = new ArrayList<>();
         this.prepareThings = prepareThings;
-        this.prepareThingsStatus = new ArrayList<>();
-        this.prepareThingsStatus = prepareThingsStatus;
     }
 
     public String getConference_name() {
@@ -41,7 +37,8 @@ public class Model {
     }
 
     public void setConference_time(String conference_time) {
-        this.conference_time = conference_time;
+        if (conference_time != null)
+            this.conference_time = conference_time;
     }
 
     public String getConference_location() {
@@ -52,60 +49,62 @@ public class Model {
         this.conference_location = conference_location;
     }
 
-    public ArrayList<String> getPrepareThings() {
+    public HashMap<String, Boolean> getPrepareThings() {
         return prepareThings;
     }
 
-    public void setPrepareThings(ArrayList<String> prepareThings) {
-        this.prepareThings = prepareThings;
+    public void setPrepareThings(HashMap<String, Boolean> prepareThings) {
+        if (prepareThings != null) {
+            for (String prepare : prepareThings.keySet().toArray(new String[0])) {
+                this.prepareThings.put(prepare, prepareThings.get(prepare));
+            }
+        }
+
     }
 
-    public ArrayList<Boolean> getPrepareThingsStatus() {
-        return prepareThingsStatus;
+    public String[] getPrepareThing() {
+        return prepareThings.keySet().toArray(new String[0]);
     }
 
-    public void setPrepareThingsStatus(ArrayList<Boolean> prepareThingsStatus) {
-        this.prepareThingsStatus = prepareThingsStatus;
+    public Boolean getPrepareThingState(String thing) {
+        return prepareThings.get(thing);
     }
 
     // TODO: 增加一個PrepareThing
-    public void addPrepareThing(String thing) {
-        if (!thing.isEmpty()) {
-            if (this.prepareThings.isEmpty()) {
-                this.prepareThings = new ArrayList<>();
-            }
-            this.prepareThings.add(thing);
-            addPrepareThingBool(false);
+    public void setPrepareThingState(String thing, Boolean bool) {
+        if (prepareThings == null) {
+            prepareThings = new HashMap<>();
+        }
+
+        if (thing != null) {
+            this.prepareThings.put(thing, bool);
         }
     }
 
-    // TODO:增加一個 PrepareThing 的 bool 判斷 checkbox 是否已被勾選
-    public void addPrepareThingBool(Boolean thing_Status) {
-        if (this.prepareThingsStatus.isEmpty()) {
-            this.prepareThingsStatus = new ArrayList<>();
-        }
-        this.prepareThingsStatus.add(thing_Status);
+    public int getPrepareThingCount() {
+        if (prepareThings == null)
+            return 0;
+        else
+            return prepareThings.size();
     }
 
-    public void setPrepareThingBool(Boolean thing_Status, String item_name) {
-        if (!this.prepareThingsStatus.isEmpty() && !this.prepareThings.isEmpty()) {
-            for (int i = 0; i < prepareThings.size(); ++i) {
-                if (prepareThings.get(i).equals(item_name)) {
-                    prepareThingsStatus.set(i, thing_Status);
-                    break;
-                }
-            }
-        } else {
-            Log.d("debug", "Arraylist Empty");
+    public String getAbbr() {
+        return abbreviation;
+    }
+
+    public void setAbbr(String tmp)
+    {
+        if(tmp!=null)
+        {
+            abbreviation = tmp;
         }
     }
 
-    public boolean getPrepareThingBool(int pos) {
-        boolean tmp = false;
-        if (!this.prepareThingsStatus.isEmpty() && !this.prepareThings.isEmpty()) {
-            tmp = prepareThingsStatus.get(pos);
-        }
+    public Boolean getAttend() {
+        return attend;
+    }
 
-        return tmp;
+    public void setAttend(Boolean attend) {
+        this.attend = attend;
     }
 }

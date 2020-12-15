@@ -1,16 +1,16 @@
 package com.example.conference_infinity;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
@@ -81,32 +81,12 @@ public class Fragment_Home_Pending extends Fragment {
         user = (GlobalVariable) getActivity().getApplicationContext();
 
         // 資料由getMyList產生，再由adapter產生
-        myAdapter = new MyAdapter(getActivity(), user.getPendingConference());
+        myAdapter = new MyAdapter(getActivity(), (ArrayList<Model>) user.getPendingConference().clone());
+        Log.d("pending size-----------", String.valueOf(user.getPendingConference().size()));
         // 設定recycleView的adapter
         recyclerView.setAdapter(myAdapter);
 
     }
 
-    private ArrayList<Model> getMyList() {
 
-        ArrayList<Model> models = new ArrayList<>();
-        ArrayList<String> prepare = new ArrayList<>();
-        prepare.add("Computer");
-        prepare.add("Test");
-
-        Model model = new Model();
-        model.setConference_name("New Conference Name");
-        model.setConference_location("HAHAHA Floor");
-        model.setConference_time("Today");
-        model.setPrepareThings(prepare);
-        models.add(model);
-
-        model = new Model();
-        model.setConference_name("Second Conference Name");
-        model.setConference_location("Second Floor");
-        model.setConference_time("Tomorrow");
-        models.add(model);
-
-        return models;
-    }
 }

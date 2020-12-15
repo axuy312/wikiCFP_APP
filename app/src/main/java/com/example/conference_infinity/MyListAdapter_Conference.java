@@ -1,6 +1,7 @@
 package com.example.conference_infinity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -140,7 +141,10 @@ public class MyListAdapter_Conference extends BaseAdapter implements Filterable 
         holder.body.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(mContext, Activity_Article.class);
+                intent.putExtra("Topic", datas.get(position).get("Topic"));
+                intent.putExtra("Abbreviation", datas.get(position).get("Abbreviation"));
+                mContext.startActivity(intent);
             }
         });
 
