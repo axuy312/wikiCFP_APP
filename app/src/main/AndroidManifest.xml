@@ -15,7 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Conference_Infinity"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity_Setting_Theme"></activity>
+        <activity android:name=".Activity_Setting_Language"></activity>
+        <activity android:name=".Activity_Setting_Theme" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

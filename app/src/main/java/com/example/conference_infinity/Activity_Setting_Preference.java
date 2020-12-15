@@ -39,8 +39,16 @@ public class Activity_Setting_Preference extends AppCompatActivity {
         preferLanguageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(Activity_Setting_Preference.this, Activity_Setting_Language.class);
+                startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        finish();
     }
 }
