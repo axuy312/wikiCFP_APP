@@ -277,7 +277,8 @@ public class GlobalVariable extends Application {
                 });
         return true;
     }
-    //Updata & Upload
+
+    //Updata & Upload Conference follow
     boolean UpdateFollowingConferencesValue(String title, Boolean bool) {
         if (followingConference == null) {
             followingConference = new HashMap<>();
@@ -302,6 +303,48 @@ public class GlobalVariable extends Application {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.d("TAG", "Len: " + String.valueOf(data.size()));
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("TAG", "Error writing document", e);
+                    }
+                });
+        return true;
+    }
+
+    //Updata & Upload Attend Conference
+    boolean UpdateAttendConferencesValue(String title, Boolean attend, String prepare, Boolean ready) {
+        if (pendingConference == null) {
+            pendingConference = new HashMap<>();
+
+        }
+
+
+
+        if (pendingConference.get(title) == null){
+            pendingConference.put(title, new HashMap<String, Object>());
+        }
+
+        ((HashMap)pendingConference.get(title)).put("Attend", attend);
+
+        if (((HashMap)pendingConference.get(title)).get("Prepare") == null){
+            ((HashMap)pendingConference.get(title)).put("Prepare", new HashMap<String, Boolean>());
+        }
+
+        if (prepare != null && !prepare.isEmpty() && !prepare.equals("N/A")){
+            ((HashMap)((HashMap)pendingConference.get(title)).get("Prepare")).put(prepare, ready);
+        }
+
+
+        db.collection("Preference")
+                .document(userEmail)
+                .update("Pending Conference", pendingConference)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("TAG", "Len: " + String.valueOf(pendingConference.size()));
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
