@@ -25,12 +25,14 @@ import androidx.fragment.app.Fragment;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
@@ -193,78 +195,25 @@ public class Fragment_Home_Account extends Fragment {
     }
 
     // TODO: 上傳本機照片到 FireStorage
-    /*
-    private void uploadImage() {
-        final ProgressDialog progressDialog = new ProgressDialog(this.getActivity());
-        progressDialog.setMessage("Uploading");
-        progressDialog.show();
-
-        if (imgUri != null) {
-            final StorageReference fileReference = storageReference.child(user.userName + "_HeadPhoto.png");
-
-            uploadTask = fileReference.putFile(imgUri);
-            uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                @Override
-                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                    if (!task.isSuccessful()) {
-                        throw task.getException();
-                    }
-                    return fileReference.getDownloadUrl();
-                }
-            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    if (task.isSuccessful()) {
-                        Log.d("---Debug---", "success");
-                        Uri downloadUri = task.getResult();
-                        String mUri = downloadUri.toString();
-                        FirebaseDatabase database = FirebaseDatabase.getInstance();
-                        DatabaseReference myRef = database.getReference("Uploads/Profile Picture/" + user.userEmail);
-                        myRef.setValue(mUri);
-
-                        user_photo.setVisibility(View.GONE);
-                        loadingImg.setVisibility(View.VISIBLE);
-                        //getProfile();
-                        progressDialog.dismiss();
-                    } else {
-                        Log.d("---Debug---", "fail");
-                        Toast.makeText(getActivity(), "Failed!", Toast.LENGTH_LONG).show();
-                        progressDialog.dismiss();
-                    }
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-
-                    Log.d("---Debug---", "onfail");
-                    Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
-                    progressDialog.dismiss();
-                }
-            });
-        } else {
-            Toast.makeText(getActivity(), "No image selected!", Toast.LENGTH_LONG).show();
-        }
-    }
-*/
-
-    private void uploadImage() {
+    private void uploadImage(Bitmap bitmap) {
         storageReference = FirebaseStorage.getInstance().getReference("Uploads/Profile Picture/" + user.userEmail);
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Uploading");
         progressDialog.show();
 
-        if (user.headPhoto != null) {
+        if (bitmap != null) {
+            user.headPhoto = bitmap;
             final StorageReference fileReference = storageReference.child(user_nickname + "_HeadPhoto.png");
 
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            user.headPhoto.compress(Bitmap.CompressFormat.PNG, 100, baos);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
             byte[] data = baos.toByteArray();
 
             uploadTask = fileReference.putBytes(data);
             uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                 @Override
                 public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                    Log.d("---Debug---", "then");
+                    Log.d("TH---------", "then");
                     if (!task.isSuccessful()) {
                         throw task.getException();
                     }
@@ -274,30 +223,55 @@ public class Fragment_Home_Account extends Fragment {
                 @Override
                 public void onComplete(@NonNull Task<Uri> task) {
                     if (task.isSuccessful()) {
-                        Log.d("---Debug---", "success");
+                        Log.d("TH---------", "success");
                         Uri downloadUri = task.getResult();
-                        String headPhotoUrl = downloadUri.toString();
+                        user.headPhotoURL = downloadUri.toString();
 
                         //user.loadUser(user.userEmail);
                         user_photo.setImageBitmap(user.headPhoto);
-                        progressDialog.dismiss();
+
                     } else {
-                        Log.d("---Debug---", "fail");
+                        user.headPhoto = null;
+                        user.headPhotoURL = "N/A";
+                        Log.d("TH---------", "fail");
                         Toast.makeText(getActivity(), "Failed!", Toast.LENGTH_LONG).show();
-                        progressDialog.dismiss();
+
                     }
+                    //upload firestore
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    // Create a new user with a first and last name
+
+                    db.collection("User")
+                            .document(user.userEmail)
+                            .update("HeadPhoto", user.headPhotoURL)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d("TH---------", "DocumentSnapshot successfully written!");
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.w("TH---------", "Error writing document", e);
+                                }
+                            });
+                    progressDialog.dismiss();
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
 
-                    Log.d("---Debug---", "onfail");
+                    Log.d("TH---------", "onfail");
+                    user.headPhoto = null;
+                    user.headPhotoURL = "N/A";
                     Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
-                    progressDialog.dismiss();
+
                 }
             });
         } else {
-            progressDialog.dismiss();
+            user.headPhoto = null;
+            user.headPhotoURL = "N/A";
         }
     }
 
@@ -321,83 +295,8 @@ public class Fragment_Home_Account extends Fragment {
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
-
-                //gb.headPhoto = Bitmap.createBitmap(bitmap);
-
-
-                uploadImage();
+                uploadImage(bitmapImage);
             }
         }
-    }
-
-    // TODO: 取得網址的照片 並更新
-    private class GetImage extends AsyncTask<String, Integer, Bitmap> {
-
-        @Override
-        protected void onPreExecute() {
-            //執行前
-            super.onPreExecute();
-        }
-
-        @Override
-        protected Bitmap doInBackground(String... params) {
-            //執行中
-
-            String urlStr = params[0];
-            try {
-                URL url = new URL(urlStr);
-                return BitmapFactory.decodeStream(url.openConnection().getInputStream());
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            //執行進度
-            super.onProgressUpdate(values);
-
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap bitmap) {
-            //執行後
-            super.onPostExecute(bitmap);
-            user_photo.setImageBitmap(bitmap);
-            user_photo.setVisibility(View.VISIBLE);
-            loadingImg.setVisibility(View.GONE);
-        }
-    }
-
-    // TODO: 取得 Firebase Storage 存的照片網址
-    private void getProfile() {
-
-        //Profile update
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference myRef = database.getReference("Uploads/Profile Picture/" + user.userEmail);
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d("---RUN---", "getProfile");
-                if (dataSnapshot == null) {
-                    return;
-                }
-
-                Log.d("---RUN---", dataSnapshot.toString());
-                if (dataSnapshot.child("profile picture") != null && !dataSnapshot.child("profile picture").getValue().toString().equals("")) {
-                    url = dataSnapshot.child("profile picture").getValue().toString();
-                    new GetImage().execute(url);
-                } else {
-                    user_photo.setImageDrawable(getResources().getDrawable(R.drawable.ic_default_profile));
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getActivity(), "Failed to read value." + error.toException().toString(), Toast.LENGTH_LONG).show();
-            }
-        });
-
     }
 }

@@ -67,10 +67,6 @@ public class GlobalVariable extends Application {
     ArrayList<Model> models = new ArrayList<>();
     //----------------------------------------------------------------------------------------------
 
-    //Pending Conference----------------------------------------------------------------------------
-    ArrayList<Model> models = new ArrayList<>();
-    //----------------------------------------------------------------------------------------------
-
     //firebase--------------------------------------------------------------------------------------
     FirebaseDatabase database;
     FirebaseFirestore db;
@@ -90,7 +86,7 @@ public class GlobalVariable extends Application {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
 
-                UpdateConferences((HashMap)dataSnapshot.getValue());
+                UpdateConferences((HashMap) dataSnapshot.getValue());
 
                 myRefConference.removeEventListener(this);
 
@@ -110,7 +106,7 @@ public class GlobalVariable extends Application {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
 
-                UpdateCategorys((HashMap)dataSnapshot.getValue());
+                UpdateCategorys((HashMap) dataSnapshot.getValue());
 
                 myRefCategory.removeEventListener(this);
 
@@ -193,7 +189,7 @@ public class GlobalVariable extends Application {
     }
 
 
-    void clearUserData(){
+    void clearUserData() {
         preferLangCode = "Traditional";
         preferThemeCode = "Light";
         if (preferCategory != null) {
@@ -228,24 +224,24 @@ public class GlobalVariable extends Application {
         }
     }
 
-    void UpdatePreferCategorys(List<String> list){
-        if (list != null){
+    void UpdatePreferCategorys(List<String> list) {
+        if (list != null) {
             preferCategory = new HashMap<String, Boolean>();
-            for(String t : list){
+            for (String t : list) {
                 preferCategory.put(t, true);
             }
         }
     }
 
     //Updata & Upload
-    boolean UpdatePreferCategorysValue(String title, Boolean bool){
-        if (preferCategory != null){
+    boolean UpdatePreferCategorysValue(String title, Boolean bool) {
+        if (preferCategory != null) {
             preferCategory.put(title, bool);
-            Log.d("---TAG---", title+" : "+bool.toString());
+            Log.d("---TAG---", title + " : " + bool.toString());
 
-            List<String>data = new ArrayList<>();
-            for (String key : preferCategory.keySet().toArray(new String[0])){
-                if (preferCategory.get(key) == true){
+            List<String> data = new ArrayList<>();
+            for (String key : preferCategory.keySet().toArray(new String[0])) {
+                if (preferCategory.get(key) == true) {
                     data.add(key);
                 }
             }
@@ -259,7 +255,7 @@ public class GlobalVariable extends Application {
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Log.d("TAG", "Len: "+String.valueOf(data.size()));
+                            Log.d("TAG", "Len: " + String.valueOf(data.size()));
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -291,18 +287,18 @@ public class GlobalVariable extends Application {
 
 
         int cnt = 0;
-      
-      
-        for (int i = 0; i < categoryPreview.length; i++){
-            if (preferCategory.get(categoryPreview[i]) != null && preferCategory.get(categoryPreview[i]) == true){
+
+
+        for (int i = 0; i < categoryPreview.length; i++) {
+            if (preferCategory.get(categoryPreview[i]) != null && preferCategory.get(categoryPreview[i]) == true) {
                 following_categoryPreview[cnt] = categoryPreview[i];
                 cnt++;
             }
         }
 
 
-        for (int i = 0; i < categoryPreview.length; i++){
-            if (preferCategory.get(categoryPreview[i]) == null || preferCategory.get(categoryPreview[i]) == false){
+        for (int i = 0; i < categoryPreview.length; i++) {
+            if (preferCategory.get(categoryPreview[i]) == null || preferCategory.get(categoryPreview[i]) == false) {
 
                 following_categoryPreview[cnt] = categoryPreview[i];
                 cnt++;
@@ -352,10 +348,8 @@ public class GlobalVariable extends Application {
     }
 
     // TODO: 取得 firebase 的 pending conference
-    public ArrayList<Model> getPendingConference()
-    {
-        if(models.isEmpty())
-        {
+    public ArrayList<Model> getPendingConference() {
+        if (models.isEmpty()) {
             ArrayList<String> prepare = new ArrayList<>();
             prepare.add("test1");
             prepare.add("Test2");
