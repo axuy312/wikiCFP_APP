@@ -1,12 +1,15 @@
 package com.example.conference_infinity;
 
 import android.content.Context;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.conference_infinity.R;
@@ -23,6 +26,10 @@ public class MyListAdapter_Conference extends BaseAdapter implements Filterable 
 
     private List<HashMap<String, String>> datas;
     private List<HashMap<String, String>> datas_All;
+
+    HashMap<String , Boolean>following;
+
+    GlobalVariable user;
 
     Filter filter = new Filter() {
         @Override
@@ -61,6 +68,21 @@ public class MyListAdapter_Conference extends BaseAdapter implements Filterable 
         this.mLayoutInflater = LayoutInflater.from(context);
         datas = new ArrayList<>();
         datas_All = new ArrayList<>();
+        user = (GlobalVariable)mContext.getApplicationContext();
+        following = new HashMap<>();
+
+        if (user.followingConference != null){
+            String[] keys = user.followingConference.keySet().toArray(new String[0]);
+            if (keys != null){
+                for (String key : keys){
+                    if (user.followingConference.get(key) == true){
+                        following.put(key, true);
+                    }
+                }
+            }
+        }
+
+
         if(dictionaries != null){
             for (HashMap<String, String>map : dictionaries){
                 datas.add((HashMap<String, String>) map.clone());
@@ -91,6 +113,8 @@ public class MyListAdapter_Conference extends BaseAdapter implements Filterable 
 
     static class ViewHolder{
         public TextView conference_item_title, conference_item_deadline, comment_number;
+        public ImageView tag;
+        public LinearLayout body;
     }
 
     @Override
@@ -102,6 +126,8 @@ public class MyListAdapter_Conference extends BaseAdapter implements Filterable 
             holder.conference_item_title = convertView.findViewById(R.id.conference_item_title);
             holder.conference_item_deadline = convertView.findViewById(R.id.conference_item_deadline);
             holder.comment_number = convertView.findViewById(R.id.comment_number);
+            holder.body = convertView.findViewById(R.id.conference_item_body);
+            holder.tag = convertView.findViewById(R.id.conference_bookmark);
             convertView.setTag(holder);
         }
         else {
@@ -110,6 +136,39 @@ public class MyListAdapter_Conference extends BaseAdapter implements Filterable 
         holder.conference_item_title.setText(datas.get(position).get("Topic"));
         holder.conference_item_deadline.setText(datas.get(position).get("Deadline"));
         holder.comment_number.setText(String.valueOf(position));
+
+        holder.body.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        holder.tag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (following.get(datas.get(position).get("Abbreviation")) == null || following.get(datas.get(position).get("Abbreviation")) == false){
+                    if (user.UpdateFollowingConferencesValue(datas.get(position).get("Abbreviation"), true)){
+                        following.put(datas.get(position).get("Abbreviation"), true);
+                        ((ImageView)v).setImageResource(R.drawable.ic_bookmark_on);
+                    }
+                }
+                else {
+                    if (user.UpdateFollowingConferencesValue(datas.get(position).get("Abbreviation"), false)) {
+                        following.put(datas.get(position).get("Abbreviation"), false);
+                        ((ImageView) v).setImageResource(R.drawable.ic_bookmark_off);
+                    }
+                }
+            }
+        });
+
+        if (following.get(datas.get(position).get("Abbreviation")) == null || following.get(datas.get(position).get("Abbreviation")) == false){
+            holder.tag.setImageResource(R.drawable.ic_bookmark_off);
+        }
+        else {
+            holder.tag.setImageResource(R.drawable.ic_bookmark_on);
+        }
+
         return convertView;
     }
 }

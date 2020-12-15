@@ -3,90 +3,99 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:paddingHorizontal="15dp"
     android:paddingVertical="10dp">
 
-    <TextView
-        android:id="@+id/conference_item_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:maxLines="2"
-        android:paddingVertical="5dp"
-        android:singleLine="false"
-        android:text="@string/topics"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        android:textColor="@color/dark_gray" />
-
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:id="@+id/conference_item_body"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
+        android:layout_weight="1"
+        android:orientation="vertical">
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:paddingVertical="5dp"
-            android:text="@string/Paper_Deadline"
-            android:textSize="10sp"
-            tools:ignore="SmallSp" />
-
-        <TextView
-            android:id="@+id/conference_item_deadline"
+            android:id="@+id/conference_item_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:maxLines="2"
             android:paddingVertical="5dp"
             android:singleLine="false"
-            android:text="@string/test"
-            android:textSize="10sp"
-            tools:ignore="SmallSp" />
+            android:text="@string/topics"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textColor="@color/dark_gray" />
+
+        <LinearLayout
+            android:id="@+id/conference_item_deadline_LL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingVertical="5dp"
+                android:text="@string/Paper_Deadline"
+                android:textSize="10sp"
+                tools:ignore="SmallSp" />
+
+            <TextView
+                android:id="@+id/conference_item_deadline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:maxLines="2"
+                android:paddingVertical="5dp"
+                android:singleLine="false"
+                android:text="@string/test"
+                android:textSize="10sp"
+                tools:ignore="SmallSp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="18dp"
+                android:contentDescription="@string/comments_icon"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_comments" />
+
+            <TextView
+                android:id="@+id/comment_number"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:paddingVertical="5dp"
+                android:paddingStart="5sp"
+                android:paddingEnd="10sp"
+                android:text="@string/test"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+
+        </LinearLayout>
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:layout_width="40dp"
+        android:layout_height="match_parent"
+        android:gravity="center">
 
         <ImageView
+            android:id="@+id/conference_bookmark"
             android:layout_width="24dp"
-            android:layout_height="18dp"
-            android:contentDescription="@string/comments_icon"
+            android:layout_height="24dp"
+            android:contentDescription="@string/bookmarked"
             android:scaleType="centerInside"
-            android:src="@drawable/ic_comments" />
-
-        <TextView
-            android:id="@+id/comment_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:paddingVertical="5dp"
-            android:paddingStart="5sp"
-            android:paddingEnd="10sp"
-            android:text="@string/test"
-            android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="end"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/conference_bookmark"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:contentDescription="@string/bookmarked"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_bookmark_off" />
-
-        </LinearLayout>
+            android:src="@drawable/ic_bookmark_off" />
 
     </LinearLayout>
 
