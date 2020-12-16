@@ -115,7 +115,9 @@ public class Fragment_Home_Latest extends Fragment {
     }
 
     void RefreshListView(String newText){
-        Conference_List_Adapter.getFilter().filter(newText);
+        if (Conference_List_Adapter != null){
+            Conference_List_Adapter.getFilter().filter(newText);
+        }
     }
 
 
