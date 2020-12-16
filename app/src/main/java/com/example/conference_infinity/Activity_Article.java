@@ -9,31 +9,17 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.net.http.SslError;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.webkit.SslErrorHandler;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.baoyachi.stepview.VerticalStepView;
-import com.google.android.material.bottomappbar.BottomAppBar;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.BaseTransientBottomBar;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -44,10 +30,12 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class Activity_Article extends AppCompatActivity {
 
@@ -206,33 +194,88 @@ public class Activity_Article extends AppCompatActivity {
         verticalStepView = findViewById(R.id.test);
 
 
-        /*SimpleDateFormat f = new SimpleDateFormat("MMM d, yyyy");
-        Log.d("Time-----", f.format(new Date()));
-        try {
-            Date d = f.parse("Dec 15, 2020");
-            long milliseconds = d.getTime();
-            Log.d("Time-----", String.valueOf(milliseconds));
-        } catch (ParseException e) {
-            e.printStackTrace();
-            Log.d("Time-----", "---"+e.getMessage());
-        }*/
+        Long current = (new Date()).getTime();
+        boolean gettime = false;
+        int cnttime = 0;
+
+        SimpleDateFormat f = new SimpleDateFormat("MMM d yyyy", Locale.ENGLISH);
 
         List<String> list = new ArrayList<>();
 
         if (Abstract_Registration_Due != null){
             list.add(Abstract_Registration_Due + " - Abstract Registration Due");
+            if (!gettime){
+                try {
+                    Date d = f.parse(Abstract_Registration_Due.replaceAll("[^0-9a-zA-Z ]", ""));
+                    long milliseconds = d.getTime();
+                    if (milliseconds > current){
+                        gettime = true;
+                    }
+                    else {
+                        cnttime += 1;
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         if (Submission_Deadline != null){
             list.add(Submission_Deadline + " - Submission Deadline");
+            if (!gettime){
+                try {
+                    Date d = f.parse(Submission_Deadline.replaceAll("[^0-9a-zA-Z ]", ""));
+                    long milliseconds = d.getTime();
+                    if (milliseconds > current){
+                        gettime = true;
+                    }
+                    else {
+                        cnttime += 1;
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         if (Notification_Due != null){
             list.add(Notification_Due + " - Notification Due");
+            if (!gettime){
+                try {
+                    Date d = f.parse(Notification_Due.replaceAll("[^0-9a-zA-Z ]", ""));
+                    long milliseconds = d.getTime();
+                    if (milliseconds > current){
+                        gettime = true;
+                    }
+                    else {
+                        cnttime += 1;
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         if (Final_Version_Due != null){
             list.add(Final_Version_Due + " - Final Version Due");
+            if (!gettime){
+                try {
+                    Date d = f.parse(Final_Version_Due.replaceAll("[^0-9a-zA-Z ]", ""));
+                    long milliseconds = d.getTime();
+                    if (milliseconds > current){
+                        gettime = true;
+                    }
+                    else {
+                        cnttime += 1;
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
         }
+        Log.d("time----", Submission_Deadline);
+        Log.d("time----", Submission_Deadline.replaceAll("[^0-9a-zA-Z ]", ""));
+        Log.d("time----", String.valueOf(cnttime) + " / " + String.valueOf(list.size()));
 
-        verticalStepView.setStepsViewIndicatorComplectingPosition(1)
+
+        verticalStepView.setStepsViewIndicatorComplectingPosition(cnttime)
                 .reverseDraw(false)
                 .setTextSize(15)
                 .setStepViewTexts(list)
@@ -242,7 +285,7 @@ public class Activity_Article extends AppCompatActivity {
                 .setStepViewUnComplectedTextColor(Color.parseColor("#000000"))
                 .setStepsViewIndicatorUnCompletedLineColor(Color.parseColor("#000000"))
                 .setStepsViewIndicatorCompleteIcon(ContextCompat.getDrawable(this, R.drawable.ic_timeline_on))
-                .setStepsViewIndicatorAttentionIcon(ContextCompat.getDrawable(this, R.drawable.ic_timeline_on))
+                .setStepsViewIndicatorAttentionIcon(ContextCompat.getDrawable(this, R.drawable.ic_timeline_off))
                 .setStepsViewIndicatorDefaultIcon(ContextCompat.getDrawable(this, R.drawable.ic_timeline_off));
 
         back_btn.setOnClickListener(new View.OnClickListener() {

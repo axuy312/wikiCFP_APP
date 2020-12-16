@@ -117,7 +117,13 @@ public class MyListAdapter_Conference extends BaseAdapter implements Filterable 
             holder = (ViewHolder)convertView.getTag();
         }
         holder.conference_item_title.setText(datas.get(position).get("Topic"));
-        holder.conference_item_deadline.setText(datas.get(position).get("Submission Deadline"));
+
+        if (datas.get(position).get("Submission Deadline") == null){
+            holder.conference_item_deadline.setText(((HashMap<String,String>)user.conferences.get(datas.get(position).get("Abbreviation"))).get("Submission Deadline"));
+        }
+        else {
+            holder.conference_item_deadline.setText(datas.get(position).get("Submission Deadline"));
+        }
 
         String abbr = datas.get(position).get("Abbreviation");
         Long discussCnt = null;
