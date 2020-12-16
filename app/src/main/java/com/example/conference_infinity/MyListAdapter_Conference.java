@@ -2,7 +2,6 @@ package com.example.conference_infinity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,10 +13,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.conference_infinity.R;
-
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -65,32 +64,14 @@ public class MyListAdapter_Conference extends BaseAdapter implements Filterable 
     };
 
 
+
     public MyListAdapter_Conference(Context context, HashMap[] dictionaries){
         this.mContext = context;
         this.mLayoutInflater = LayoutInflater.from(context);
-        datas = new ArrayList<>();
-        datas_All = new ArrayList<>();
+
         user = (GlobalVariable)mContext.getApplicationContext();
-        following = new HashMap<>();
 
-        if (user.followingConference != null){
-            String[] keys = user.followingConference.keySet().toArray(new String[0]);
-            if (keys != null){
-                for (String key : keys){
-                    if (user.followingConference.get(key) == true){
-                        following.put(key, true);
-                    }
-                }
-            }
-        }
-
-
-        if(dictionaries != null){
-            for (HashMap<String, String>map : dictionaries){
-                datas.add((HashMap<String, String>) map.clone());
-                datas_All.add((HashMap<String, String>) map.clone());
-            }
-        }
+        refresh(dictionaries);
     }
 
     @Override
@@ -187,5 +168,46 @@ public class MyListAdapter_Conference extends BaseAdapter implements Filterable 
         }
 
         return convertView;
+    }
+
+    void refresh(HashMap[] dictionaries){
+        if (datas != null){
+            datas.clear();
+        }
+        if (datas_All != null){
+            datas_All.clear();
+        }
+        if (following != null){
+            following.clear();
+        }
+
+        datas = new ArrayList<>();
+        datas_All = new ArrayList<>();
+        following = new HashMap<>();
+
+
+        if (user.followingConference != null){
+            String[] keys = user.followingConference.keySet().toArray(new String[0]);
+            if (keys != null){
+                for (String key : keys){
+                    if (user.followingConference.get(key) == true){
+                        following.put(key, true);
+                    }
+                }
+            }
+        }
+
+
+        if(dictionaries != null){
+            for (HashMap<String, String>map : dictionaries){
+                if (map != null){
+                    datas.add((HashMap<String, String>) map.clone());
+                    datas_All.add((HashMap<String, String>) map.clone());
+                }
+            }
+        }
+
+
+        notifyDataSetChanged();
     }
 }

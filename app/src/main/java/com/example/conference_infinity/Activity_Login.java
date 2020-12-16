@@ -1,14 +1,14 @@
 package com.example.conference_infinity;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -28,7 +28,7 @@ public class Activity_Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        user = (GlobalVariable) getApplicationContext();
+        user = (GlobalVariable)getApplicationContext();
         db = FirebaseFirestore.getInstance();
 
         login_btn = findViewById(R.id.login_btn);
@@ -61,7 +61,7 @@ public class Activity_Login extends AppCompatActivity {
         });
     }
 
-    void Login(String email, String password) {
+    void Login(String email, String password){
         db.collection("User")
                 .document(email)
                 .get()
@@ -69,7 +69,7 @@ public class Activity_Login extends AppCompatActivity {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         Map<String, Object> UserData = documentSnapshot.getData();
-                        if (UserData != null && UserData.get("Password") != null && UserData.get("Password").equals(password)) {
+                        if (UserData != null && UserData.get("Password") != null && UserData.get("Password").equals(password)){
                             user.loadUser(email);
                             nextPage();
                         }
@@ -83,8 +83,7 @@ public class Activity_Login extends AppCompatActivity {
                 });
     }
 
-    void nextPage() {
-        setLocale();
+    void nextPage(){
         Intent intent = new Intent(Activity_Login.this, Activity_Home_Home.class);
         startActivity(intent);
         finish();

@@ -1,12 +1,23 @@
 package com.example.conference_infinity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +34,13 @@ public class Fragment_Home_Following extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    MyListAdapter_Conference Conference_List_Adapter;
+
+    GlobalVariable db;
+    HashMap<String,String>[] Conference_List_Data;
+
+    ListView Conference_List;
 
     public Fragment_Home_Following() {
         // Required empty public constructor
@@ -47,6 +65,12 @@ public class Fragment_Home_Following extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        refreshData();
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
@@ -60,5 +84,61 @@ public class Fragment_Home_Following extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment__home__following, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        Log.d("onViewCreated-------","-----");
+        db = (GlobalVariable)getActivity().getApplicationContext();
+
+        //Create List
+        Conference_List = view.findViewById(R.id.Home_Following_Conference_List);
+        //Update List
+
+        if (db.conferences != null && getActivity() != null){
+
+            List<HashMap<String,String>>tmpList = new ArrayList<>();
+
+            if (db.followingConference != null){
+                for (String abbr : db.followingConference.keySet().toArray(new String[0])){
+                    if (db.followingConference.get(abbr))
+                    {
+                        tmpList.add((HashMap<String, String>) db.conferences.get(abbr));
+                    }
+                }
+            }
+
+            Conference_List_Data = tmpList.toArray(new HashMap[0]);
+
+
+
+            Conference_List_Adapter = new MyListAdapter_Conference(getActivity(), Conference_List_Data);
+            Conference_List.setAdapter(Conference_List_Adapter);
+        }
+    }
+
+    public void refreshData(){
+        Log.d("Onresume-------","-----");
+
+        if (db.conferences != null && getActivity() != null){
+
+            List<HashMap<String,String>>tmpList = new ArrayList<>();
+
+            if (db.followingConference != null){
+                Log.d("Onresume-------",db.followingConference.toString());
+                for (String abbr : db.followingConference.keySet().toArray(new String[0])){
+                    if (db.followingConference.get(abbr))
+                    {
+                        tmpList.add((HashMap<String, String>) db.conferences.get(abbr));
+                    }
+                }
+            }
+
+            Conference_List_Data = tmpList.toArray(new HashMap[0]);
+
+            Conference_List_Adapter.refresh(Conference_List_Data);
+        }
     }
 }
