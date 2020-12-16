@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,11 +26,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -41,7 +35,6 @@ import com.google.firebase.storage.UploadTask;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.net.URL;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -65,6 +58,7 @@ public class Fragment_Home_Account extends Fragment {
     private LinearLayout loadingImg;
     private String url, code;
     GlobalVariable user;
+    String lang;
 
     public Fragment_Home_Account() {
         // Required empty public constructor
@@ -113,6 +107,7 @@ public class Fragment_Home_Account extends Fragment {
         loadingImg = view.findViewById(R.id.load_Img);
 
         user = (GlobalVariable) getActivity().getApplicationContext();
+        lang = user.preferLangCode;
 
         // Set user name
         if (!user.userName.equals("N/A")) {
@@ -297,6 +292,18 @@ public class Fragment_Home_Account extends Fragment {
                 }
                 uploadImage(bitmapImage);
             }
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (!lang.equals(user.preferLangCode)) {
+            preference_btn.setText(getText(R.string.preference));
+            history_btn.setText(getText(R.string.history_conference));
+            account_management_btn.setText(getText(R.string.account_management));
+            logout_btn.setText(getText(R.string.logout));
+            about_btn.setText(getText(R.string.about));
         }
     }
 }

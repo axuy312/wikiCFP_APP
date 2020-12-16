@@ -70,8 +70,7 @@ public class Activity_Login extends AppCompatActivity {
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         Map<String, Object> UserData = documentSnapshot.getData();
                         if (UserData != null && UserData.get("Password") != null && UserData.get("Password").equals(password)){
-                            user.loadUser(email);
-                            nextPage();
+                            user.loadUser(email, Activity_Login.this);
                         }
                     }
                 })
@@ -82,6 +81,7 @@ public class Activity_Login extends AppCompatActivity {
                     }
                 });
     }
+
 
     void nextPage(){
         Intent intent = new Intent(Activity_Login.this, Activity_Home_Home.class);

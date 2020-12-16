@@ -1,6 +1,10 @@
 package com.example.conference_infinity;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -8,11 +12,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.SearchView;
 
 import com.google.android.material.tabs.TabLayout;
 
@@ -93,8 +92,8 @@ public class Fragment_Home_Home extends Fragment {
         tabLayout.setupWithViewPager(viewPager);
 
         Fragment_Home_Home.ViewPagerAdapter viewPagerAdapter = new Fragment_Home_Home.ViewPagerAdapter(getActivity().getSupportFragmentManager(), 0);
-        viewPagerAdapter.addFragment(fragment_home_latest, "Popular");
-        viewPagerAdapter.addFragment(fragment_home_following, "Following");
+        viewPagerAdapter.addFragment(fragment_home_latest, getText(R.string.trend).toString());
+        viewPagerAdapter.addFragment(fragment_home_following, getText(R.string.following).toString());
         viewPager.setAdapter(viewPagerAdapter);
 
 
@@ -117,14 +116,14 @@ public class Fragment_Home_Home extends Fragment {
     private class ViewPagerAdapter extends FragmentPagerAdapter {
 
         private List<Fragment> fragments = new ArrayList<>();
-        private List<String>fragmentTitle = new ArrayList<>();
+        private List<String> fragmentTitle = new ArrayList<>();
 
         public ViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {
             super(fm, behavior);
 
         }
 
-        public void addFragment(Fragment fragment, String title){
+        public void addFragment(Fragment fragment, String title) {
             fragments.add(fragment);
             fragmentTitle.add(title);
         }

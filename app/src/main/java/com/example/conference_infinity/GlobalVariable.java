@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.text.style.UpdateAppearance;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -144,7 +143,7 @@ public class GlobalVariable extends Application {
             db = FirebaseFirestore.getInstance();
         }
 
-        if (pendingConference == null){
+        if (pendingConference == null) {
             pendingConference = new HashMap<>();
         }
 
@@ -183,6 +182,7 @@ public class GlobalVariable extends Application {
                         UpdataFollowCategory();
 
                         Intent intent = new Intent(activity, Activity_Home_Home.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                         activity.finish();
                     }
@@ -193,7 +193,6 @@ public class GlobalVariable extends Application {
                         Log.w("----TAG----", "Error getting documents : " + e.getMessage());
                     }
                 });
-
 
 
         //Load following
@@ -217,16 +216,16 @@ public class GlobalVariable extends Application {
     }
 
 
-    void UpdateDiscussCnt(String abbr, long cnt){
-        if (database == null){
+    void UpdateDiscussCnt(String abbr, long cnt) {
+        if (database == null) {
             database = FirebaseDatabase.getInstance();
         }
-        DatabaseReference myRef = database.getReference("DiscussCnt/"+abbr+"/");
+        DatabaseReference myRef = database.getReference("DiscussCnt/" + abbr + "/");
         myRef.setValue(cnt);
     }
 
-    void refreshDiscussCnt(){
-        if (database == null){
+    void refreshDiscussCnt() {
+        if (database == null) {
             database = FirebaseDatabase.getInstance();
         }
         DatabaseReference myRefDiscussCnt = database.getReference("DiscussCnt");
@@ -235,15 +234,16 @@ public class GlobalVariable extends Application {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                if (discussCnt == null){
+                if (discussCnt == null) {
                     discussCnt = new HashMap<>();
                 }
-                if (dataSnapshot != null && dataSnapshot.exists()){
-                    for (DataSnapshot data : dataSnapshot.getChildren()){
+                if (dataSnapshot != null && dataSnapshot.exists()) {
+                    for (DataSnapshot data : dataSnapshot.getChildren()) {
                         discussCnt.put(data.getKey(), (Long) data.getValue());
                     }
                 }
             }
+
             @Override
             public void onCancelled(DatabaseError error) {
             }
@@ -493,7 +493,7 @@ public class GlobalVariable extends Application {
 
     // TODO: 取得 firebase 的 pending conference :Attend == false -> no display
     public ArrayList<Model> getPendingConference() {
-        if (pendingConference == null){
+        if (pendingConference == null) {
             pendingConference = new HashMap<>();
         }
         String[] abbrconf = pendingConference.keySet().toArray(new String[0]);
@@ -505,7 +505,7 @@ public class GlobalVariable extends Application {
         Model model;
 
         for (String abbr : abbrconf) {
-            if (!(Boolean) ((HashMap<String, Object>) pendingConference.get(abbr)).get("Attend")){
+            if (!(Boolean) ((HashMap<String, Object>) pendingConference.get(abbr)).get("Attend")) {
                 continue;
             }
             HashMap<String, String> conference = (HashMap<String, String>) conferences.get(abbr);
