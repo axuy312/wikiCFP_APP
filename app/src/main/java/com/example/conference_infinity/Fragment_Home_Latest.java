@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import android.widget.ListView;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -95,22 +97,20 @@ public class Fragment_Home_Latest extends Fragment {
         //Update List
 
         if (db.conferences != null && getActivity() != null){
-            Conference_List_Data = db.conferences.values().toArray(new HashMap[0]);
+            HashMap[] tmpHashmaps = db.conferences.values().toArray(new HashMap[0]);
+
+            List<HashMap<String, String>>tmp = new ArrayList<>();
+            for (HashMap hashMap : tmpHashmaps)
+            {
+                tmp.add(hashMap);
+            }
+            Collections.sort(tmp, new sortByDiscussCnt());
 
 
+            Conference_List_Data = tmp.toArray(new HashMap[0]);
 
             Conference_List_Adapter = new MyListAdapter_Conference(getActivity(), Conference_List_Data);
             Conference_List.setAdapter(Conference_List_Adapter);
-            Conference_List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent intent = new Intent(getActivity(), Activity_Article.class);
-                    intent.putExtra("Topic", Conference_List_Data[position].get("Topic"));
-                    intent.putExtra("Abbreviation", Conference_List_Data[position].get("Abbreviation"));
-                    startActivity(intent);
-                    //getActivity().finish();
-                }
-            });
         }
     }
 
@@ -120,5 +120,31 @@ public class Fragment_Home_Latest extends Fragment {
 
 
 
+    class sortByDiscussCnt implements Comparator<HashMap<String, String>>
+    {
+        //以book的ID升序排列
+        public int compare(HashMap<String, String> a, HashMap<String, String> b)
+        {
+            if (db == null) {
+                db = (GlobalVariable) getActivity().getApplicationContext();
+            }
+
+            String abbrA, abbrB;
+            abbrA = a.get("Abbreviation");
+            abbrB = b.get("Abbreviation");
+            Long aLong, bLong;
+            aLong = db.discussCnt.get(abbrA);
+            bLong = db.discussCnt.get(abbrB);
+
+            if (aLong == null){
+                aLong = Long.valueOf(0);
+            }
+            if (bLong == null){
+                bLong = Long.valueOf(0);
+            }
+
+            return (int) (bLong - aLong);
+        }
+    }
 
 }

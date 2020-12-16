@@ -1,6 +1,8 @@
 package com.example.conference_infinity;
 
+import android.app.Activity;
 import android.app.Application;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -137,9 +139,13 @@ public class GlobalVariable extends Application {
         });
     }
 
-    void loadUser(String Email) {
+    void loadUser(String Email, Activity activity) {
         if (db == null) {
             db = FirebaseFirestore.getInstance();
+        }
+
+        if (pendingConference == null){
+            pendingConference = new HashMap<>();
         }
 
         db.collection("User")
@@ -167,10 +173,18 @@ public class GlobalVariable extends Application {
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         Map<String, Object> UserData = documentSnapshot.getData();
 
+                        Log.v("Following------", ((List<String>) UserData.get("Following Conference")).toString());
+
                         preferLangCode = UserData.get("Language").toString();
                         preferThemeCode = UserData.get("Theme").toString();
+
+
                         UpdatePreferCategorys((List<String>) UserData.get("Category"), (List<String>) UserData.get("Following Conference"), (HashMap<String, Object>) UserData.get("Pending Conference"));
                         UpdataFollowCategory();
+
+                        Intent intent = new Intent(activity, Activity_Home_Home.class);
+                        startActivity(intent);
+                        activity.finish();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -181,9 +195,8 @@ public class GlobalVariable extends Application {
                 });
 
 
-        Log.d("----Debug----", preferLangCode);
-        //Load following
 
+        //Load following
     }
 
 
@@ -480,6 +493,9 @@ public class GlobalVariable extends Application {
 
     // TODO: 取得 firebase 的 pending conference :Attend == false -> no display
     public ArrayList<Model> getPendingConference() {
+        if (pendingConference == null){
+            pendingConference = new HashMap<>();
+        }
         String[] abbrconf = pendingConference.keySet().toArray(new String[0]);
         if (models == null) {
             models = new ArrayList<>();

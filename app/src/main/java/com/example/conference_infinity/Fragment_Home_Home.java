@@ -93,7 +93,7 @@ public class Fragment_Home_Home extends Fragment {
         tabLayout.setupWithViewPager(viewPager);
 
         Fragment_Home_Home.ViewPagerAdapter viewPagerAdapter = new Fragment_Home_Home.ViewPagerAdapter(getActivity().getSupportFragmentManager(), 0);
-        viewPagerAdapter.addFragment(fragment_home_latest, "Lastest");
+        viewPagerAdapter.addFragment(fragment_home_latest, "Popular");
         viewPagerAdapter.addFragment(fragment_home_following, "Following");
         viewPager.setAdapter(viewPagerAdapter);
 
