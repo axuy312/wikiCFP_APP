@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">Conference_Infinity</string>
+    <string name="app_name" translatable="false">Conference_Infinity</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="preference">Preference</string>
     <string name="history_conference">History Conference</string>
     <string name="logout">Logout</string>
@@ -15,9 +15,9 @@
     <string name="prefer_language">Prefer Language</string>
     <string name="theme">Theme</string>
     <string name="enter_your_email">Enter your Email</string>
-    <string name="email_sample">xxx@gmail.com</string>
+    <string name="email_sample" translatable="false">xxx@gmail.com</string>
     <string name="next">Next</string>
-    <string name="let_s_start">Let\'s Start</string>
+    <string name="let_s_start" translatable="false">Let\'s Start</string>
     <string name="welcome_conference_infinity">Welcome Conference Infinity</string>
     <string name="login">Login</string>
     <string name="login_by_mail">Login by Mail</string>
@@ -29,11 +29,11 @@
     <string name="article_density">Article Density</string>
     <string name="all_done">All Done !</string>
     <string name="welcome_pic">Welcome Pic</string>
-    <string name="you_will_be_accepted_our_terms_of_service_after_you_continue">You will be accepted our Terms of Service after you continue.</string>
+    <string name="you_will_be_accepted_our_terms_of_service_after_you_continue" translatable="false">You will be accepted our Terms of Service after you continue.</string>
     <string name="meet_conference_infinity">Meet Conference Infinity</string>
     <string name="select_preference_language">Select Preference Language</string>
-    <string name="traditional_chinese">Traditional Chinese</string>
-    <string name="english_us">English (US)</string>
+    <string name="traditional_chinese">Traditional Chinese(ZH-TW)</string>
+    <string name="english_us" translatable="false">English (US)</string>
     <string name="_6_to_24_characters">(6 to 24 characters)</string>
     <string name="enter_your_password">Enter your Password</string>
     <string name="select_preference_theme">Select Preference Theme</string>
@@ -41,20 +41,20 @@
     <string name="dark">Dark</string>
     <string name="select_following_topics">Select Following Topics</string>
     <string name="topics">Topics</string>
-    <string name="conference_infinity">Conference Infinity</string>
-    <string name="topics_icon">Topics Icon</string>
+    <string name="conference_infinity" translatable="false">Conference Infinity</string>
+    <string name="topics_icon" translatable="false">Topics Icon</string>
     <string name="email_address">Email Address</string>
     <string name="password">Password</string>
     <string name="welcome">Welcome</string>
     <string name="sign_in">Sign in</string>
-    <string name="power_by_wikicfp">Power by WikiCFP</string>
-    <string name="seperate_line">Separate Line</string>
-    <string name="or">OR</string>
+    <string name="power_by_wikicfp" translatable="false">Power by WikiCFP</string>
+    <string name="seperate_line" translatable="false">Separate Line</string>
+    <string name="or" translatable="false">OR</string>
     <string name="don_t_have_an_account_signup">Don\'t have an account? SIGNUP</string>
 
     <string name="Category">Category</string>
     <string name="Conference">Conference</string>
-    <string name="Bookmark_Topics">Bookmark Topics</string>
+    <string name="Bookmark_Topics" translatable="false">Bookmark Topics</string>
     <string name="All_Topics">All Topics</string>
 
     <string name="Paper_Deadline">Paper Deadline : </string>
@@ -66,9 +66,9 @@
     <string name="conference_date">Conference Date</string>
     <string name="conference_location">Conference Location</string>
     <string name="bookmarked">Bookmarked</string>
-    <string name="topic_icon">Topic_Icon</string>
-    <string name="test">test</string>
-    <string name="comments_icon">Comments_Icon</string>
+    <string name="topic_icon" translatable="false">Topic_Icon</string>
+    <string name="test" translatable="false">test</string>
+    <string name="comments_icon" translatable="false">Comments_Icon</string>
     <string name="trend">Trend</string>
     <string name="latest">Latest</string>
     <string name="following">Following</string>
@@ -79,5 +79,6 @@
     <string name="pending_conference">Pending Conference</string>
     <string name="image_preview">Image Preview</string>
     <string name="pick_a_photo">Pick a photo</string>
+    <string name="no_pending_conference">No Pending Conference</string>
 
 </resources>

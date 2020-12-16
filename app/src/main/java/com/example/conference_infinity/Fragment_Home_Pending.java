@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -86,7 +87,14 @@ public class Fragment_Home_Pending extends Fragment {
         // 設定recycleView的adapter
         recyclerView.setAdapter(myAdapter);
 
+        // 判斷是否為空的 提示文字
+        if (user.getPendingConference().size() == 0) {
+            recyclerView.setVisibility(View.GONE);
+            TextView empty_conference_tag = view.findViewById(R.id.empty_conference_tag);
+            empty_conference_tag.setVisibility(View.VISIBLE);
+        } else {
+            recyclerView.setVisibility(View.VISIBLE);
+        }
     }
-
 
 }

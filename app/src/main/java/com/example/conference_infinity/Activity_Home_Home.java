@@ -1,11 +1,14 @@
 package com.example.conference_infinity;
 
+import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
+import android.view.MenuItem;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-
-import android.os.Bundle;
-import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomnavigation.LabelVisibilityMode;
@@ -18,6 +21,7 @@ public class Activity_Home_Home extends AppCompatActivity {
 
     Deque<Integer> integerDeque = new ArrayDeque<>(4);
     boolean flag = true;
+    boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,35 +47,13 @@ public class Activity_Home_Home extends AppCompatActivity {
                 // Get Selected item id
                 int id = item.getItemId();
 
-                if (integerDeque.contains(id))
-                {
-                    //When deque list contains selected id
-
-                    if (id == R.id.home_nav)
-                    {
-                        //When selected id is equal to home fragment
-
-                        if (integerDeque.size() != 1)
-                        {
-                            //When deque list size is not equal to 1
-
-                            if (flag)
-                            {
-                                // When flag value is true
-                                // Add home fragment in deque list
-                                integerDeque.addFirst(R.id.home_nav);
-                                //Set flag to false
-                                flag = false;
-                            }
-                        }
-
-                    }
-
-                    //Remove Selected id from deque list
-                    integerDeque.remove(id);
+                // only save home fragment in the first
+                if (integerDeque.size() > 1) {
+                    integerDeque.pop();
                 }
-                // Push selected id in deque list
                 integerDeque.push(id);
+
+                //Log.d("integerDeque", integerDeque.toString());
 
                 //Load Fragment
                 loadFragment(getFragment(item.getItemId()));
@@ -81,8 +63,7 @@ public class Activity_Home_Home extends AppCompatActivity {
     }
 
     private Fragment getFragment(int itemId) {
-        switch(itemId)
-        {
+        switch (itemId) {
             case R.id.home_nav:
                 //Set Checked Home fragment
                 bottomNavigationView.getMenu().getItem(0).setChecked(true);
@@ -90,14 +71,14 @@ public class Activity_Home_Home extends AppCompatActivity {
                 //Return home fragment
                 return new Fragment_Home_Home();
 
-                case R.id.category_nav:
+            case R.id.category_nav:
                 //Set Checked Home fragment
                 bottomNavigationView.getMenu().getItem(1).setChecked(true);
 
                 //Return home fragment
                 return new Fragment_Home_Category();
 
-                case R.id.pending_nav:
+            case R.id.pending_nav:
                 //Set Checked Home fragment
                 bottomNavigationView.getMenu().getItem(2).setChecked(true);
 
@@ -124,19 +105,39 @@ public class Activity_Home_Home extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        // Pop to previous fragment
-        integerDeque.pop();
+        // When deque list is not empty
+        if (!integerDeque.isEmpty()) {
+            integerDeque.pop();
+        }
 
-        if(!integerDeque.isEmpty())
-        {
-            // When deque list is not empty
+        // Pop to previous fragment
+        if (!integerDeque.isEmpty()) {
             //Load fragment
             loadFragment(getFragment(integerDeque.peek()));
-        }
-        else
-        {
+        } else {
             // When deque list is empty
-            finish();
+            // check double click
+            if (doubleBackToExitPressedOnce) {
+                super.onBackPressed();
+                finish();
+            }
+
+            doubleBackToExitPressedOnce = true;
+            Toast.makeText(this, "Double BackPressed to exit", Toast.LENGTH_SHORT).show();
+
+            // delay to get the second back press
+            final Runnable runnable = new Runnable() {
+                public void run() {
+                    doubleBackToExitPressedOnce = false;
+                    // Add home Fragment in Deque
+                    integerDeque.addFirst(R.id.home_nav);
+                }
+            };
+
+            Handler handler = new Handler();
+            handler.postDelayed(runnable, 800);
         }
+
+        Log.d("integerDeque", integerDeque.toString());
     }
 }
