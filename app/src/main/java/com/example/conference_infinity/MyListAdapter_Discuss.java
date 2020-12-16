@@ -171,6 +171,7 @@ public class MyListAdapter_Discuss extends BaseAdapter {
             //執行後
             super.onPostExecute(bitmap);
             URLtoBitmap.put(urlStr, bitmap);
+            notifyDataSetChanged();
         }
     }
 }

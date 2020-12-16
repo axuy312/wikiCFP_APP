@@ -42,7 +42,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -112,7 +115,7 @@ public class Activity_Article extends AppCompatActivity {
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), 0);
         viewPagerAdapter.addFragment(fragment_article_content, "Content");
         viewPagerAdapter.addFragment(fragment_article_discuss, "Discuss");
-        viewPagerAdapter.addFragment(fragment_article_arrangement, "Arrangement");
+        viewPagerAdapter.addFragment(fragment_article_arrangement, "Location");
         viewPager.setAdapter(viewPagerAdapter);
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -201,6 +204,18 @@ public class Activity_Article extends AppCompatActivity {
         }
 
         verticalStepView = findViewById(R.id.test);
+
+
+        /*SimpleDateFormat f = new SimpleDateFormat("MMM d, yyyy");
+        Log.d("Time-----", f.format(new Date()));
+        try {
+            Date d = f.parse("Dec 15, 2020");
+            long milliseconds = d.getTime();
+            Log.d("Time-----", String.valueOf(milliseconds));
+        } catch (ParseException e) {
+            e.printStackTrace();
+            Log.d("Time-----", "---"+e.getMessage());
+        }*/
 
         List<String> list = new ArrayList<>();
 

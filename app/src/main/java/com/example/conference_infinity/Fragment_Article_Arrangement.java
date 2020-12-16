@@ -123,6 +123,6 @@ public class Fragment_Article_Arrangement extends Fragment implements OnMapReady
         else {
             mMap.addMarker(new MarkerOptions().position(latLng).title("Here is Taiwan!"));
         }
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 7.0f));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15.0f));
     }
 }
