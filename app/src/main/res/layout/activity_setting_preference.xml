@@ -27,6 +27,7 @@
             app:cb_pressedRingWidth="0sp" />
 
         <TextView
+            android:id="@+id/preference_title"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"

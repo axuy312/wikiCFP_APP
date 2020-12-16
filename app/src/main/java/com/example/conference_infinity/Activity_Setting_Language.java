@@ -1,19 +1,19 @@
 package com.example.conference_infinity;
 
+import android.content.res.Configuration;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.Locale;
 
 import at.markushi.ui.CircleButton;
 
@@ -65,15 +65,11 @@ public class Activity_Setting_Language extends AppCompatActivity {
 
     }
 
-    private void setLanguage()
-    {
-        if(user.preferLangCode.equals(user.Language[1]))
-        {
+    private void setLanguage() {
+        if (user.preferLangCode.equals(user.Language[1])) {
             Language_EN.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_en_us), null, getResources().getDrawable(R.drawable.ic_done), null);
             Language_ZH.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_zh_tw), null, null, null);
-        }
-        else if(user.preferLangCode.equals(user.Language[0]))
-        {
+        } else if (user.preferLangCode.equals(user.Language[0])) {
             Language_EN.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_en_us), null, null, null);
             Language_ZH.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_zh_tw), null, getResources().getDrawable(R.drawable.ic_done), null);
         }
@@ -103,7 +99,7 @@ public class Activity_Setting_Language extends AppCompatActivity {
         if (lang) {
             db.collection("Preference")
                     .document(user.userEmail)
-                    .update("Language", user.preferThemeCode)
+                    .update("Language", user.preferLangCode)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
@@ -126,6 +122,29 @@ public class Activity_Setting_Language extends AppCompatActivity {
         // if theme has change
         if (change) {
             UploadPrefer(false, true);
+            setLocale();
         }
+    }
+
+    private void setLocale() {
+        Locale locale = Locale.getDefault();
+
+        if (!user.preferLangCode.equals("N/A")) {
+            if (user.preferLangCode.equals(user.Language[0])) {
+                locale = Locale.TRADITIONAL_CHINESE;
+            } else if (user.preferLangCode.equals(user.Language[1])) {
+                locale = Locale.US;
+            }
+        }
+        Log.d("----locale-----", locale.toString());
+        Locale.setDefault(locale);
+        Configuration config = getBaseContext().getResources().getConfiguration();
+        overwriteConfigurationLocale(config, locale);
+    }
+
+    private void overwriteConfigurationLocale(Configuration config, Locale locale) {
+        config.locale = locale;
+        getBaseContext().getResources()
+                .updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
     }
 }

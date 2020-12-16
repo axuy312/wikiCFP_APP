@@ -1,9 +1,9 @@
 package com.example.conference_infinity;
 
 import android.app.ProgressDialog;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -21,11 +20,11 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -36,6 +35,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import at.markushi.ui.CircleButton;
@@ -105,7 +105,7 @@ public class Fragment_Register_Topics extends Fragment {
                 // navigate to the other fragment method
                 ((Activity_Register_Register) getActivity()).setViewPager(new Root_Register_States().getFragmentNum(Root_Register_States.STATE_DONE));
 
-
+                setLocale();
             }
         });
 
@@ -157,7 +157,7 @@ public class Fragment_Register_Topics extends Fragment {
 
     // TODO: 上傳使用者照片到FireStorage
     private void uploadImage() {
-        storageReference = FirebaseStorage.getInstance().getReference("Uploads/Profile Picture/"+email);
+        storageReference = FirebaseStorage.getInstance().getReference("Uploads/Profile Picture/" + email);
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Uploading");
         progressDialog.show();
@@ -252,7 +252,7 @@ public class Fragment_Register_Topics extends Fragment {
 
         // delete part of data
         editor.remove("Password");
-        editor.remove("Language");
+        //editor.remove("Language");
         editor.remove("Theme");
         editor.remove("Density");
         editor.apply();
@@ -260,6 +260,27 @@ public class Fragment_Register_Topics extends Fragment {
 
     private void sendData() {
         uploadImage();
+    }
+
+    private void setLocale() {
+        Locale locale = Locale.getDefault();
+        Log.d("----locale-----", locale.toString());
+        if (!user.preferLangCode.equals("N/A")) {
+            if (user.preferLangCode.equals(user.Language[1])) {
+                locale = Locale.TRADITIONAL_CHINESE;
+            } else if (user.preferLangCode.equals(user.Language[0])) {
+                locale = Locale.US;
+            }
+        }
+        Locale.setDefault(locale);
+        Configuration config = getActivity().getBaseContext().getResources().getConfiguration();
+        overwriteConfigurationLocale(config, locale);
+    }
+
+    private void overwriteConfigurationLocale(Configuration config, Locale locale) {
+        config.locale = locale;
+        getActivity().getBaseContext().getResources()
+                .updateConfiguration(config, getActivity().getBaseContext().getResources().getDisplayMetrics());
     }
 
 }
