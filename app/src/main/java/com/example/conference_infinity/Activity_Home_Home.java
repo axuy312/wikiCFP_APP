@@ -1,5 +1,6 @@
 package com.example.conference_infinity;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -15,18 +16,22 @@ import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.Locale;
 
 public class Activity_Home_Home extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
 
     Deque<Integer> integerDeque = new ArrayDeque<>(4);
-    boolean flag = true;
     boolean doubleBackToExitPressedOnce = false;
+    GlobalVariable gv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_home);
+
+        gv = (GlobalVariable) getApplicationContext();
+        setLocale();
 
         // Connect to xml
         bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -139,5 +144,27 @@ public class Activity_Home_Home extends AppCompatActivity {
         }
 
         Log.d("integerDeque", integerDeque.toString());
+    }
+
+    private void setLocale() {
+        Locale locale = Locale.getDefault();
+
+        if (!gv.preferLangCode.equals("N/A")) {
+            if (gv.preferLangCode.equals(gv.Language[0])) {
+                locale = Locale.TRADITIONAL_CHINESE;
+            } else if (gv.preferLangCode.equals(gv.Language[1])) {
+                locale = Locale.US;
+            }
+        }
+        Log.d("----locale-----", locale.toString());
+        Locale.setDefault(locale);
+        Configuration config = getBaseContext().getResources().getConfiguration();
+        overwriteConfigurationLocale(config, locale);
+    }
+
+    private void overwriteConfigurationLocale(Configuration config, Locale locale) {
+        config.locale = locale;
+        getBaseContext().getResources()
+                .updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
     }
 }
