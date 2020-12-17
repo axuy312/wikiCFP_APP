@@ -106,6 +106,7 @@ public class Fragment_Home_Home extends Fragment {
             @Override
             public boolean onQueryTextChange(String newText) {
                 fragment_home_latest.RefreshListView(newText);
+                fragment_home_following.RefreshListView(newText);
                 return false;
             }
         });

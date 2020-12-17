@@ -13,6 +13,8 @@ import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -129,6 +131,15 @@ public class Activity_Article extends AppCompatActivity {
         input_editText = findViewById(R.id.discuss_input_edittext);
         send_img = findViewById(R.id.discuss_send_img);
         attend_img = findViewById(R.id.attend_imgbtn);
+
+        input_editText.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                LinearLayout linearLayout = findViewById(R.id.discuss_input_layout);
+                linearLayout.setGravity(Gravity.CENTER);
+                return false;
+            }
+        });
 
         send_img.setOnClickListener(new View.OnClickListener() {
             @Override

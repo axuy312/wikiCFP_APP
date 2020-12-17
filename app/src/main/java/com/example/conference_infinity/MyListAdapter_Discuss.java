@@ -82,11 +82,7 @@ public class MyListAdapter_Discuss extends BaseAdapter {
         }
 
         if (user.EmailToBitmap != null && user.EmailToBitmap.get(discuss.get(position).get("Email")) != null) {
-            Log.d("---URL---", "exist");
             holder.headphoto.setImageBitmap(user.EmailToBitmap.get(discuss.get(position).get("Email")));
-        }
-        else {
-            Log.d("---RUL---", "null");
         }
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
