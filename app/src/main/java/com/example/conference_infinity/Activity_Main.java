@@ -20,6 +20,7 @@ public class Activity_Main extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         gv = (GlobalVariable) getApplicationContext();
+        gv.initBitmapFromSharedPreferences();
         gv.setRealtime();
 
         setLocale();

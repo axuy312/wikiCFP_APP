@@ -2,7 +2,9 @@ package com.example.conference_infinity;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -56,11 +58,15 @@ public class GlobalVariable extends Application {
 
 
     //User data-------------------------------------------------------------------------------------
+    boolean finishLoadBitmap = false;
     String userName = "N/A";
     String userPassword = "N/A";
     String userEmail = "N/A";
     Bitmap headPhoto;
     String headPhotoURL = "N/A";
+    HashMap<String,Bitmap>EmailToBitmap;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
     //----------------------------------------------------------------------------------------------
 
     //Pending Conference----------------------------------------------------------------------------
@@ -72,6 +78,32 @@ public class GlobalVariable extends Application {
     FirebaseFirestore db;
     //----------------------------------------------------------------------------------------------
 
+    void initBitmapFromSharedPreferences(){
+        if (EmailToBitmap == null){
+            EmailToBitmap = new HashMap<>();
+        }
+        sharedPreferences = getSharedPreferences("BitmapLoad", Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+        String dataStr = sharedPreferences.getString("Email", "");
+        Log.d("----TAG----", "Share : "+ dataStr);
+        editor.remove("Email");
+        editor.apply();
+        HashMap<String,Boolean>tmp = new HashMap<>();
+        for (String mail : dataStr.split(",")) {
+            if (mail != null && !mail.isEmpty()) {
+                tmp.put(mail, true);
+            }
+        }
+        if (!tmp.isEmpty()) {
+            String[] tmparr = tmp.keySet().toArray(new String[0]);
+            for (String mail : tmparr) {
+                if (mail != null && !mail.isEmpty()) {
+                    Log.d("----TAG----", "Share : " + dataStr);
+                    storeBitmap(mail);
+                }
+            }
+        }
+    }
 
     void setRealtime() {
         ValueEventListener valueEventListener;
@@ -412,13 +444,43 @@ public class GlobalVariable extends Application {
         return true;
     }
 
+    void storeBitmap(String email){
+        if (email != null && (EmailToBitmap == null || EmailToBitmap.get(email) == null)) {
+            if (db == null) {
+                db = FirebaseFirestore.getInstance();
+            }
+
+            db.collection("User")
+                    .document(email)
+                    .get()
+                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            Map<String, Object> UserData = documentSnapshot.getData();
+                            String url = UserData.get("HeadPhoto").toString();
+                            if (url != null && !url.equals("N/A") && EmailToBitmap.get(email) == null){
+                                Log.d("----TAG----", "Exist : "+ url);
+                                new GetBitmap().execute(url, email);
+                            }
+                            Log.d("----TAG----", "here : "+ url);
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.d("----TAG----", "Error getting documents : " + e.getMessage());
+                        }
+                    });
+
+        }
+    }
 
     void UpdataUser(String name, String password, String email, String imgUrl) {
         userName = name;
         userPassword = password;
         userEmail = email;
         if (imgUrl != null && !imgUrl.equals("N/A") && !imgUrl.isEmpty()) {
-            new GetBitmap().execute(imgUrl);
+            new GetBitmap().execute(imgUrl, null);
         }
     }
 
@@ -452,7 +514,7 @@ public class GlobalVariable extends Application {
     }
 
     private class GetBitmap extends AsyncTask<String, Integer, Bitmap> {
-        String urlStr;
+        String urlStr, mail;
 
         @Override
         protected void onPreExecute() {
@@ -465,6 +527,12 @@ public class GlobalVariable extends Application {
             //執行中
 
             urlStr = params[0];
+            if (params.length == 1 || params[1] == null || params[1].equals("")){
+                mail = null;
+            }
+            else {
+                mail = params[1];
+            }
             try {
                 URL url = new URL(urlStr);
                 return BitmapFactory.decodeStream(url.openConnection().getInputStream());
@@ -486,8 +554,49 @@ public class GlobalVariable extends Application {
         protected void onPostExecute(Bitmap bitmap) {
             //執行後
             super.onPostExecute(bitmap);
-            headPhoto = bitmap;
-            headPhotoURL = urlStr;
+            if (mail == null || mail.isEmpty()){
+                Log.d("----TAG----", "Fun1");
+                headPhoto = bitmap;
+                headPhotoURL = urlStr;
+                if (EmailToBitmap == null){
+                    EmailToBitmap = new HashMap<>();
+                }
+                if (bitmap != null){
+                    EmailToBitmap.put(userEmail, bitmap);
+                    Log.d("----TAG----", "new img");
+                }
+                else {
+                    EmailToBitmap.put(userEmail, null);
+                    Log.d("----TAG----", "failed img");
+                }
+            }
+            else {
+                Log.d("----TAG2----", "Fun2");
+                if (EmailToBitmap == null){
+                    EmailToBitmap = new HashMap<>();
+                }
+                if (bitmap != null){
+                    EmailToBitmap.put(mail, bitmap);
+
+                    sharedPreferences = getSharedPreferences("BitmapLoad", Context.MODE_PRIVATE);
+                    editor = sharedPreferences.edit();
+
+                    String data = sharedPreferences.getString("Email", "");
+                    Log.d("----TAG2----", "Data add" + mail);
+                    if (data == null || data.isEmpty()){
+                        data = mail;
+                    }
+                    else {
+                        data = data + "," + mail;
+                    }
+                    editor.putString("Email", data);
+                    editor.apply();
+                    Log.d("----TAG2----", "Result: " + sharedPreferences.getString("Email", ""));
+                }
+                else {
+                    EmailToBitmap.put(userEmail, null);
+                }
+            }
         }
     }
 
@@ -525,4 +634,6 @@ public class GlobalVariable extends Application {
 
         return models;
     }
+
+
 }

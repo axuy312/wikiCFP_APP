@@ -149,7 +149,7 @@ public class Activity_Article extends AppCompatActivity {
                                 Log.d("----data---", "Count: "+String.valueOf(i)+ " ---> "+snapshot.toString());
                                 DatabaseReference myRefChild = database.getReference("Discuss/"+abbreviation+"/"+String.valueOf(i+1));
                                 HashMap<String, Object> data = new HashMap();
-                                data.put("HeadPhoto",db.headPhotoURL);
+                                data.put("Email",db.userEmail);
                                 data.put("Name",db.userName);
                                 data.put("Content",text);
                                 data.put("Time",ServerValue.TIMESTAMP);
