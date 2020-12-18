@@ -23,7 +23,8 @@
             android:value="@string/google_maps_key" />
 
         <activity android:name=".Activity_Setting_About" />
-        <activity android:name=".Activity_Article" />
+        <activity android:name=".Activity_Article"
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".Activity_Conferences" />
         <activity android:name=".Activity_Login_Phone" />
         <activity android:name=".Activity_Setting_Preference" />

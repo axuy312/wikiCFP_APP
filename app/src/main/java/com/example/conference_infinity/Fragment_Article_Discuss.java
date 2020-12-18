@@ -119,10 +119,9 @@ public class Fragment_Article_Discuss extends Fragment {
                     //myListAdapter_discuss.freshDiscuss(discuss);
                     myListAdapter_discuss.freshDiscuss(discuss);
                     myListAdapter_discuss.notifyDataSetChanged();
-                    discussListView.setSelection(myListAdapter_discuss.getCount());
-                }
-                else {
-                    Log.d("---Discuss---", "NULL dataSnapshot");
+                    int tmp = myListAdapter_discuss.getCount();
+                    Log.d("---count---", String.valueOf(tmp));
+                    discussListView.setSelection(tmp);
                 }
             }
 

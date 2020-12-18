@@ -118,7 +118,7 @@ public class MyListAdapter_Conference extends BaseAdapter implements Filterable 
         }
         holder.conference_item_title.setText(datas.get(position).get("Topic"));
 
-        if (datas.get(position).get("Submission Deadline") == null){
+        if (datas.get(position).get("Submission Deadline") == null && user.conferences.get(datas.get(position).get("Abbreviation")) != null){
             holder.conference_item_deadline.setText(((HashMap<String,String>)user.conferences.get(datas.get(position).get("Abbreviation"))).get("Submission Deadline"));
         }
         else {

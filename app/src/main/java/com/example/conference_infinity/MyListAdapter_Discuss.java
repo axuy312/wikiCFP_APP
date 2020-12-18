@@ -33,15 +33,12 @@ public class MyListAdapter_Discuss extends BaseAdapter {
     GlobalVariable user;
 
     List<HashMap<String, String>>discuss;
-    HashMap<String, Bitmap>URLtoBitmap;
 
     public MyListAdapter_Discuss(Context context, List<HashMap<String, String>>data){
         this.mContext = context;
         this.mLayoutInflater = LayoutInflater.from(context);
 
         user = (GlobalVariable)mContext.getApplicationContext();
-
-        URLtoBitmap = new HashMap<String, Bitmap>();
 
         freshDiscuss(data);
     }
@@ -84,12 +81,8 @@ public class MyListAdapter_Discuss extends BaseAdapter {
             holder = (ViewHolder)convertView.getTag();
         }
 
-        if (URLtoBitmap.get(discuss.get(position).get("HeadPhoto")) != null) {
-            Log.d("---URL---", "exist");
-            holder.headphoto.setImageBitmap(URLtoBitmap.get(discuss.get(position).get("HeadPhoto")));
-        }
-        else {
-            Log.d("---RUL---", "null");
+        if (user.EmailToBitmap != null && user.EmailToBitmap.get(discuss.get(position).get("Email")) != null) {
+            holder.headphoto.setImageBitmap(user.EmailToBitmap.get(discuss.get(position).get("Email")));
         }
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
@@ -110,67 +103,22 @@ public class MyListAdapter_Discuss extends BaseAdapter {
 
         if (data != null){
             discuss = new ArrayList<>();
+            HashMap<String, Boolean>tmpMail = new HashMap<>();
             for (HashMap<String, String> d : data){
                 HashMap<String, String>tmp = new HashMap<String, String>();
-                tmp.put("HeadPhoto", String.valueOf(d.get("HeadPhoto")));
                 tmp.put("Content", String.valueOf(d.get("Content")));
                 tmp.put("Name", String.valueOf(d.get("Name")));
                 tmp.put("Time", String.valueOf(d.get("Time")));
+                tmp.put("Email", String.valueOf(d.get("Email")));
 
-
-                if (URLtoBitmap.get((d.get("HeadPhoto"))) == null){
-                    if (d.get("HeadPhoto").equals("N/A") != true){
-                        try {
-                            new GetBitmap().execute(d.get("HeadPhoto"));
-                        } catch (Exception e) {
-                            Log.d("-----Discuss-----", d.get("HeadPhoto")+"----"+e.toString());
-                            e.printStackTrace();
-                        }
-                    }
-                }
+                tmpMail.put(d.get("Email"), true);
 
                 discuss.add(tmp);
             }
-            notifyDataSetChanged();
-        }
-    }
 
-    private class GetBitmap extends AsyncTask<String, Integer, Bitmap> {
-
-        String urlStr;
-
-        @Override
-        protected void onPreExecute() {
-            //執行前
-            super.onPreExecute();
-        }
-
-        @Override
-        protected Bitmap doInBackground(String... params) {
-            //執行中
-
-            urlStr = params[0];
-            try {
-                URL url = new URL(urlStr);
-                return BitmapFactory.decodeStream(url.openConnection().getInputStream());
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
+            for (String mail : tmpMail.keySet().toArray(new String[0])){
+                user.storeBitmap(mail);
             }
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            //執行進度
-            super.onProgressUpdate(values);
-
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap bitmap) {
-            //執行後
-            super.onPostExecute(bitmap);
-            URLtoBitmap.put(urlStr, bitmap);
             notifyDataSetChanged();
         }
     }

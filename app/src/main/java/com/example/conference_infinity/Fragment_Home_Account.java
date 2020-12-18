@@ -224,6 +224,7 @@ public class Fragment_Home_Account extends Fragment {
 
                         //user.loadUser(user.userEmail);
                         user_photo.setImageBitmap(user.headPhoto);
+                        user.EmailToBitmap.put(user.userEmail, user.headPhoto);
 
                     } else {
                         user.headPhoto = null;
