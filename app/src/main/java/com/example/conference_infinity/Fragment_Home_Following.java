@@ -119,6 +119,12 @@ public class Fragment_Home_Following extends Fragment {
         }
     }
 
+    void RefreshListView(String newText){
+        if (Conference_List_Adapter != null){
+            Conference_List_Adapter.getFilter().filter(newText);
+        }
+    }
+
     public void refreshData(){
         Log.d("Onresume-------","-----");
 

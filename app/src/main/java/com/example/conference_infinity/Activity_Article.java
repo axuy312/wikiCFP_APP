@@ -3,6 +3,8 @@ package com.example.conference_infinity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -130,6 +132,15 @@ public class Activity_Article extends AppCompatActivity {
         send_img = findViewById(R.id.discuss_send_img);
         attend_img = findViewById(R.id.attend_imgbtn);
 
+        input_editText.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                LinearLayout linearLayout = findViewById(R.id.discuss_input_layout);
+                linearLayout.setGravity(Gravity.CENTER);
+                return false;
+            }
+        });
+
         send_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -147,11 +158,12 @@ public class Activity_Article extends AppCompatActivity {
                                 long i = snapshot.getChildrenCount();
                                 Log.d("----data---", "Count: " + String.valueOf(i) + " ---> " + snapshot.toString());
                                 DatabaseReference myRefChild = database.getReference("Discuss/" + abbreviation + "/" + String.valueOf(i + 1));
-                                HashMap<String, Object> data = new HashMap();
-                                data.put("HeadPhoto", db.headPhotoURL);
-                                data.put("Name", db.userName);
-                                data.put("Content", text);
-                                data.put("Time", ServerValue.TIMESTAMP);
+                                HashMap<String, Object> data = new Hash
+                                data.put("Email",db.userEmail);
+                                data.put("Name",db.userName);
+                                data.put("Content",text);
+                                data.put("Time",ServerValue.TIMESTAMP);
+                              
                                 myRefChild.setValue(data);
                                 db.UpdateDiscussCnt(abbreviation, i + 1);
                             }
