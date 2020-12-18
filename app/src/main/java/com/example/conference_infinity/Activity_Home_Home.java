@@ -40,18 +40,18 @@ public class Activity_Home_Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_home);
 
-        gv = (GlobalVariable) getApplicationContext();
+
         //setLocale();
         // determine user theme
-        if (!gv.preferThemeCode.equals("N/A") && gv.preferThemeCode != null) {
-            if (gv.preferThemeCode.equals(gv.Theme[0])) {
-                // light theme
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            } else {
-                // dark theme
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            }
-        }
+//        if (!gv.preferThemeCode.equals("N/A") && gv.preferThemeCode != null) {
+//            if (gv.preferThemeCode.equals(gv.Theme[0])) {
+//                // light theme
+//                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+//            } else {
+//                // dark theme
+//                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+//            }
+//        }
 
         // Connect to xml
         bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -59,6 +59,8 @@ public class Activity_Home_Home extends AppCompatActivity {
 
         // Add home Fragment in Deque
         integerDeque.push(R.id.home_nav);
+
+        gv = (GlobalVariable) getApplicationContext();
 
         // new Fragment
         home_fragment = new Fragment_Home_Home();

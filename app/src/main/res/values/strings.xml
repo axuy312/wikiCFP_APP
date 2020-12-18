@@ -91,5 +91,6 @@
     <string name="theme_demo" translatable="false">Theme Demo</string>
     <string name="please_select_a_theme">Please Select a Theme</string>
     <string name="settings_will_be_save_in_firebase">Settings will be save in Firebase</string>
+    <string name="guest_login">Guest Login</string>
 
 </resources>

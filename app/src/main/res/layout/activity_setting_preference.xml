@@ -27,14 +27,14 @@
 
         <TextView
             android:id="@+id/preference_title"
+            style="@style/PageTitle"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
             android:paddingStart="20sp"
             android:paddingEnd="20sp"
             android:text="@string/preference"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            style="@style/PageTitle" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
     </LinearLayout>
 
@@ -58,27 +58,29 @@
             android:background="@android:color/transparent"
             android:drawableStart="@drawable/ic_theme"
             android:drawablePadding="24sp"
+            android:enabled="false"
             android:paddingVertical="20sp"
             android:text="@string/theme"
             android:textAlignment="textStart"
             android:textAllCaps="false"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            style="@style/PageTitle" />
+            android:textColor="@color/light_gray" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/prefernce_language_btn"
+            style="@style/PageTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="30sp"
             android:background="@android:color/transparent"
             android:drawableStart="@drawable/ic_language"
             android:drawablePadding="24sp"
+            android:enabled="false"
             android:paddingVertical="20sp"
             android:text="@string/prefer_language"
             android:textAlignment="textStart"
             android:textAllCaps="false"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            style="@style/PageTitle" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/preference_density_btn"

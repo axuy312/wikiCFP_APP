@@ -18,7 +18,7 @@
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/app_bar"
             android:layout_width="match_parent"
-            android:layout_height="270dp"
+            android:layout_height="270sp"
             android:background="@color/white"
             android:fitsSystemWindows="true"
             android:theme="@style/Base.CardView">
@@ -33,14 +33,13 @@
                 app:statusBarScrim="@android:color/transparent"
                 app:titleEnabled="false">
 
-
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:layout_marginTop="70dp"
+                    android:layout_height="150sp"
+                    android:layout_marginTop="70sp"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:paddingTop="10dp"
+                    android:paddingTop="10sp"
                     app:layout_collapseMode="parallax"
                     app:layout_collapseParallaxMultiplier="0.7">
 
@@ -58,20 +57,21 @@
                     android:gravity="top"
                     android:minHeight="?attr/actionBarSize"
                     app:layout_collapseMode="pin"
-                    app:titleMarginTop="15dp" />
+                    app:titleMarginTop="15sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="70dp"
+                    android:layout_height="70sp"
                     android:orientation="horizontal"
                     app:layout_collapseMode="pin"
                     app:layout_collapseParallaxMultiplier="1">
 
                     <at.markushi.ui.CircleButton
                         android:id="@+id/article_back_btn"
-                        android:layout_width="50dp"
-                        android:layout_height="70dp"
+                        android:layout_width="50sp"
+                        android:layout_height="70sp"
                         android:layout_gravity="center_vertical"
+                        android:layout_marginStart="10sp"
                         android:src="@drawable/ic_back"
                         app:cb_color="@color/white_gray" />
 
@@ -90,8 +90,8 @@
                         android:textColor="@color/light_gray" />
 
                     <LinearLayout
-                        android:layout_width="50dp"
-                        android:layout_height="70dp"
+                        android:layout_width="50sp"
+                        android:layout_height="70sp"
                         android:gravity="center">
 
                         <ImageButton

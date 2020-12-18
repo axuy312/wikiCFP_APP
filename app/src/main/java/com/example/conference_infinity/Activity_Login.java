@@ -20,7 +20,7 @@ import java.util.Locale;
 import java.util.Map;
 
 public class Activity_Login extends AppCompatActivity {
-    Button login_btn, phone_login_btn, register_btn;
+    Button login_btn, guest_login_btn, register_btn;
     GlobalVariable user;
     FirebaseFirestore db;
 
@@ -33,7 +33,7 @@ public class Activity_Login extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
 
         login_btn = findViewById(R.id.login_btn);
-        phone_login_btn = findViewById(R.id.phone_login_btn);
+        guest_login_btn = findViewById(R.id.guest_login_btn);
         register_btn = findViewById(R.id.register_btn);
 
         login_btn.setOnClickListener(new View.OnClickListener() {
@@ -43,12 +43,13 @@ public class Activity_Login extends AppCompatActivity {
             }
         });
 
-        phone_login_btn.setOnClickListener(new View.OnClickListener() {
+        guest_login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Activity_Login.this, Activity_Login_Phone.class);
-                startActivity(intent);
-                finish();
+//                Intent intent = new Intent(Activity_Login.this, Activity_Login_Phone.class);
+//                startActivity(intent);
+//                finish();
+                Login("guest", "guest");
             }
         });
 
@@ -62,15 +63,15 @@ public class Activity_Login extends AppCompatActivity {
         });
 
         // determine user theme
-        if (!user.preferThemeCode.equals("N/A") && user.preferThemeCode != null) {
-            if (user.preferThemeCode.equals(user.Theme[0])) {
-                // light theme
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            } else {
-                // dark theme
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            }
-        }
+//        if (!user.preferThemeCode.equals("N/A") && user.preferThemeCode != null) {
+//            if (user.preferThemeCode.equals(user.Theme[0])) {
+//                // light theme
+//                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+//            } else {
+//                // dark theme
+//                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+//            }
+//        }
     }
 
     void Login(String email, String password) {

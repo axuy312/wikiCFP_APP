@@ -31,9 +31,9 @@
         android:id="@+id/login_mail_edittext"
         android:layout_width="match_parent"
         android:layout_height="0sp"
-        android:layout_marginStart="42sp"
-        android:layout_marginTop="50sp"
-        android:layout_marginEnd="42sp"
+        android:layout_marginStart="24sp"
+        android:layout_marginTop="24sp"
+        android:layout_marginEnd="24sp"
         android:layout_weight="1"
         android:autofillHints="@string/email_address"
         android:background="@drawable/login_text_bg"
@@ -47,8 +47,8 @@
         android:id="@+id/login_password_edittext"
         android:layout_width="match_parent"
         android:layout_height="0sp"
-        android:layout_marginStart="42sp"
-        android:layout_marginEnd="42sp"
+        android:layout_marginHorizontal="24sp"
+        android:layout_marginTop="12sp"
         android:layout_weight="1"
         android:autofillHints="@string/password"
         android:background="@drawable/login_text_bg"
@@ -78,35 +78,34 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:contentDescription="@string/seperate_line"
-
             android:src="@drawable/ic_seperate_line" />
 
         <TextView
+            style="@style/TextviewColor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="monospace"
             android:gravity="center"
             android:text="@string/or"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="@android:color/black" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
     </FrameLayout>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/phone_login_btn"
+        android:id="@+id/guest_login_btn"
         android:layout_width="wrap_content"
         android:layout_height="0sp"
         android:layout_gravity="center"
         android:layout_margin="20sp"
         android:layout_weight="1"
         android:background="@drawable/custom_register_btn"
-        android:drawableStart="@drawable/ic_phone"
+        android:drawableStart="@drawable/ic_headphoto_default"
         android:drawablePadding="12sp"
         android:fontFamily="monospace"
         android:paddingStart="22sp"
         android:paddingEnd="22sp"
-        android:text="@string/phone_login"
+        android:text="@string/guest_login"
         android:textAllCaps="false" />
 
     <View
@@ -116,6 +115,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/register_btn"
+        style="@style/TextviewColor"
         android:layout_width="match_parent"
         android:layout_height="0sp"
         android:layout_weight="1"
@@ -123,7 +123,6 @@
         android:fontFamily="sans-serif-light"
         android:text="@string/don_t_have_an_account_signup"
         android:textAllCaps="false"
-        android:textColor="@android:color/black"
         app:icon="@drawable/ic_arrow_right"
         app:iconGravity="textEnd"
         app:iconTint="@color/black" />
