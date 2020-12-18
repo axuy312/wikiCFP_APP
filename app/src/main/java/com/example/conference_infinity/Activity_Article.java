@@ -1,16 +1,6 @@
 package com.example.conference_infinity;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
-
 import android.graphics.Color;
-import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -20,6 +10,15 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import com.baoyachi.stepview.VerticalStepView;
 import com.google.android.material.tabs.TabLayout;
@@ -32,7 +31,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -56,7 +54,7 @@ public class Activity_Article extends AppCompatActivity {
     public String url = "";
     private String topic, abbreviation, Abstract_Registration_Due, when, where, Submission_Deadline, Notification_Due, Final_Version_Due;
     private GlobalVariable db;
-    private HashMap<String, String>conference;
+    private HashMap<String, String> conference;
 
 
     @Override
@@ -86,13 +84,13 @@ public class Activity_Article extends AppCompatActivity {
         Final_Version_Due = conference.get("Final Version Due");
 
 
-        if (topic != null){
+        if (topic != null) {
             topicView.setText(topic);
         }
-        if (when != null){
+        if (when != null) {
 
         }
-        if (where != null){
+        if (where != null) {
 
         }
 
@@ -105,24 +103,26 @@ public class Activity_Article extends AppCompatActivity {
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), 0);
         viewPagerAdapter.addFragment(fragment_article_content, "Content");
         viewPagerAdapter.addFragment(fragment_article_discuss, "Discuss");
-        viewPagerAdapter.addFragment(fragment_article_arrangement, "Location");
+        viewPagerAdapter.addFragment(fragment_article_arrangement, "Arrangement");
         viewPager.setAdapter(viewPagerAdapter);
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
 
             @Override
             public void onPageSelected(int position) {
                 if (position == 1)
-                    ((LinearLayout)findViewById(R.id.discuss_input_layout)).setVisibility(View.VISIBLE);
+                    ((LinearLayout) findViewById(R.id.discuss_input_layout)).setVisibility(View.VISIBLE);
                 else
-                    ((LinearLayout)findViewById(R.id.discuss_input_layout)).setVisibility(View.GONE);
+                    ((LinearLayout) findViewById(R.id.discuss_input_layout)).setVisibility(View.GONE);
             }
 
             @Override
-            public void onPageScrollStateChanged(int state) { }
+            public void onPageScrollStateChanged(int state) {
+            }
         });
 
 
@@ -145,27 +145,27 @@ public class Activity_Article extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String text = input_editText.getText().toString();
-                if (text != null && !text.isEmpty()){
+                if (text != null && !text.isEmpty()) {
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    DatabaseReference myRef = database.getReference("Discuss/"+abbreviation);
+                    DatabaseReference myRef = database.getReference("Discuss/" + abbreviation);
 
                     myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (snapshot == null){
+                            if (snapshot == null) {
                                 Log.d("----data---", "NULL");
-                            }
-                            else {
+                            } else {
                                 long i = snapshot.getChildrenCount();
-                                Log.d("----data---", "Count: "+String.valueOf(i)+ " ---> "+snapshot.toString());
-                                DatabaseReference myRefChild = database.getReference("Discuss/"+abbreviation+"/"+String.valueOf(i+1));
-                                HashMap<String, Object> data = new HashMap();
+                                Log.d("----data---", "Count: " + String.valueOf(i) + " ---> " + snapshot.toString());
+                                DatabaseReference myRefChild = database.getReference("Discuss/" + abbreviation + "/" + String.valueOf(i + 1));
+                                HashMap<String, Object> data = new Hash
                                 data.put("Email",db.userEmail);
                                 data.put("Name",db.userName);
                                 data.put("Content",text);
                                 data.put("Time",ServerValue.TIMESTAMP);
+                              
                                 myRefChild.setValue(data);
-                                db.UpdateDiscussCnt(abbreviation, i+1);
+                                db.UpdateDiscussCnt(abbreviation, i + 1);
                             }
                         }
 
@@ -182,23 +182,19 @@ public class Activity_Article extends AppCompatActivity {
         attend_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (db.pendingConference.get(abbreviation) != null && ((HashMap)db.pendingConference.get(abbreviation)).get("Attend") != null && (Boolean)((HashMap)db.pendingConference.get(abbreviation)).get("Attend"))
-                {
+                if (db.pendingConference.get(abbreviation) != null && ((HashMap) db.pendingConference.get(abbreviation)).get("Attend") != null && (Boolean) ((HashMap) db.pendingConference.get(abbreviation)).get("Attend")) {
                     attend_img.setImageDrawable(getResources().getDrawable(R.drawable.ic_unattended));
                     db.UpdateAttendConferencesValue(abbreviation, false, null, false);
-                }
-                else {
+                } else {
                     attend_img.setImageDrawable(getResources().getDrawable(R.drawable.ic_attended));
                     db.UpdateAttendConferencesValue(abbreviation, true, null, false);
                 }
             }
         });
 
-        if (db.pendingConference.get(abbreviation) != null && ((HashMap)db.pendingConference.get(abbreviation)).get("Attend") != null && (Boolean)((HashMap)db.pendingConference.get(abbreviation)).get("Attend"))
-        {
+        if (db.pendingConference.get(abbreviation) != null && ((HashMap) db.pendingConference.get(abbreviation)).get("Attend") != null && (Boolean) ((HashMap) db.pendingConference.get(abbreviation)).get("Attend")) {
             attend_img.setImageDrawable(getResources().getDrawable(R.drawable.ic_attended));
-        }
-        else {
+        } else {
             attend_img.setImageDrawable(getResources().getDrawable(R.drawable.ic_unattended));
         }
 
@@ -213,16 +209,15 @@ public class Activity_Article extends AppCompatActivity {
 
         List<String> list = new ArrayList<>();
 
-        if (Abstract_Registration_Due != null){
+        if (Abstract_Registration_Due != null) {
             list.add(Abstract_Registration_Due + " - Abstract Registration Due");
-            if (!gettime){
+            if (!gettime) {
                 try {
                     Date d = f.parse(Abstract_Registration_Due.replaceAll("[^0-9a-zA-Z ]", ""));
                     long milliseconds = d.getTime();
-                    if (milliseconds > current){
+                    if (milliseconds > current) {
                         gettime = true;
-                    }
-                    else {
+                    } else {
                         cnttime += 1;
                     }
                 } catch (ParseException e) {
@@ -230,16 +225,15 @@ public class Activity_Article extends AppCompatActivity {
                 }
             }
         }
-        if (Submission_Deadline != null){
+        if (Submission_Deadline != null) {
             list.add(Submission_Deadline + " - Submission Deadline");
-            if (!gettime){
+            if (!gettime) {
                 try {
                     Date d = f.parse(Submission_Deadline.replaceAll("[^0-9a-zA-Z ]", ""));
                     long milliseconds = d.getTime();
-                    if (milliseconds > current){
+                    if (milliseconds > current) {
                         gettime = true;
-                    }
-                    else {
+                    } else {
                         cnttime += 1;
                     }
                 } catch (ParseException e) {
@@ -247,16 +241,15 @@ public class Activity_Article extends AppCompatActivity {
                 }
             }
         }
-        if (Notification_Due != null){
+        if (Notification_Due != null) {
             list.add(Notification_Due + " - Notification Due");
-            if (!gettime){
+            if (!gettime) {
                 try {
                     Date d = f.parse(Notification_Due.replaceAll("[^0-9a-zA-Z ]", ""));
                     long milliseconds = d.getTime();
-                    if (milliseconds > current){
+                    if (milliseconds > current) {
                         gettime = true;
-                    }
-                    else {
+                    } else {
                         cnttime += 1;
                     }
                 } catch (ParseException e) {
@@ -264,16 +257,15 @@ public class Activity_Article extends AppCompatActivity {
                 }
             }
         }
-        if (Final_Version_Due != null){
+        if (Final_Version_Due != null) {
             list.add(Final_Version_Due + " - Final Version Due");
-            if (!gettime){
+            if (!gettime) {
                 try {
                     Date d = f.parse(Final_Version_Due.replaceAll("[^0-9a-zA-Z ]", ""));
                     long milliseconds = d.getTime();
-                    if (milliseconds > current){
+                    if (milliseconds > current) {
                         gettime = true;
-                    }
-                    else {
+                    } else {
                         cnttime += 1;
                     }
                 } catch (ParseException e) {
@@ -309,15 +301,15 @@ public class Activity_Article extends AppCompatActivity {
 
     private class ViewPagerAdapter extends FragmentPagerAdapter {
 
-        private List<Fragment>fragments = new ArrayList<>();
-        private List<String>fragmentTitle = new ArrayList<>();
+        private List<Fragment> fragments = new ArrayList<>();
+        private List<String> fragmentTitle = new ArrayList<>();
 
         public ViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {
             super(fm, behavior);
 
         }
 
-        public void addFragment(Fragment fragment, String title){
+        public void addFragment(Fragment fragment, String title) {
             fragments.add(fragment);
             fragmentTitle.add(title);
         }

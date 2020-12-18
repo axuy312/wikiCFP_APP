@@ -80,5 +80,10 @@
     <string name="image_preview">Image Preview</string>
     <string name="pick_a_photo">Pick a photo</string>
     <string name="no_pending_conference">No Pending Conference</string>
+    <string name="content">Content</string>
+    <string name="discuss">Discuss</string>
+    <string name="location">Location</string>
+    <string name="home">Home</string>
+    <string name="account">Account</string>
 
 </resources>

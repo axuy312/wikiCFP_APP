@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomnavigation.LabelVisibilityMode;
@@ -17,6 +18,7 @@ import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Locale;
+import java.util.Stack;
 
 public class Activity_Home_Home extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
@@ -24,6 +26,13 @@ public class Activity_Home_Home extends AppCompatActivity {
     Deque<Integer> integerDeque = new ArrayDeque<>(4);
     boolean doubleBackToExitPressedOnce = false;
     GlobalVariable gv;
+    Fragment home_fragment;
+    Fragment category_fragment;
+    Fragment pending_fragment;
+    Fragment account_fragment;
+    Fragment current_fragment;
+    Stack<Integer> fragment_stack = new Stack<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,32 +49,85 @@ public class Activity_Home_Home extends AppCompatActivity {
         // Add home Fragment in Deque
         integerDeque.push(R.id.home_nav);
 
-        //Load Home Fragment
-        loadFragment(new Fragment_Home_Home());
+        // new Fragment
+        home_fragment = new Fragment_Home_Home();
+        category_fragment = new Fragment_Home_Category();
+        pending_fragment = new Fragment_Home_Pending();
+        account_fragment = new Fragment_Home_Account();
 
         // Set home as default fragment
         bottomNavigationView.setSelectedItemId(R.id.home_nav);
+        bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                // Get Selected item id
-                int id = item.getItemId();
-
-                // only save home fragment in the first
-                if (integerDeque.size() > 1) {
-                    integerDeque.pop();
-                }
-                integerDeque.push(id);
-
-                //Log.d("integerDeque", integerDeque.toString());
-
-                //Load Fragment
-                loadFragment(getFragment(item.getItemId()));
-                return true;
-            }
-        });
+        // Initial Home Fragment
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment, home_fragment).commit();
+            fragment_stack.push(R.id.home_nav);
+            current_fragment = home_fragment;
+        }
     }
+
+    // bottom app bar onClickListener
+    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    Fragment selectedFragment = null;
+
+                    // switch item
+                    switch (item.getItemId()) {
+                        case R.id.home_nav:
+                            //Set Checked Home fragment
+                            bottomNavigationView.getMenu().getItem(0).setChecked(true);
+
+                            selectedFragment = home_fragment;
+                            break;
+                        case R.id.category_nav:
+                            //Set Checked Home fragment
+                            bottomNavigationView.getMenu().getItem(1).setChecked(true);
+
+                            selectedFragment = category_fragment;
+                            break;
+                        case R.id.pending_nav:
+                            //Set Checked Home fragment
+                            bottomNavigationView.getMenu().getItem(2).setChecked(true);
+
+                            selectedFragment = pending_fragment;
+                            break;
+                        case R.id.account_nav:
+                            //Set Checked Home fragment
+                            bottomNavigationView.getMenu().getItem(3).setChecked(true);
+
+                            selectedFragment = account_fragment;
+                            break;
+                    }
+
+                    // get the top stack
+                    if (fragment_stack != null && fragment_stack.size() > 1) {
+                        fragment_stack.pop();
+                    }
+                    fragment_stack.push(item.getItemId());
+
+                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                    if (!selectedFragment.isAdded()) {
+                        Log.d("fragment transaction", "add");
+                        fragmentTransaction.hide(current_fragment);
+                        fragmentTransaction.add(R.id.fragment, selectedFragment);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+                    } else {
+                        Log.d("fragment transaction", "show");
+                        fragmentTransaction.hide(current_fragment);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.show(selectedFragment);
+                        fragmentTransaction.commit();
+                    }
+
+                    current_fragment = selectedFragment;
+
+                    return true;
+                }
+            };
 
     private Fragment getFragment(int itemId) {
         switch (itemId) {
