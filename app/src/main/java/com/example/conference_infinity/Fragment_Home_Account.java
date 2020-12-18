@@ -120,7 +120,7 @@ public class Fragment_Home_Account extends Fragment {
         if (user.headPhoto != null) {
             user_photo.setImageBitmap(user.headPhoto);
         } else {
-            user_photo.setImageDrawable(getResources().getDrawable(R.drawable.ic_default_profile));
+            user_photo.setImageDrawable(getResources().getDrawable(R.drawable.ic_headphoto_default));
         }
 
         //FireStore init

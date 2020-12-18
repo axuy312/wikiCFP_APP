@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:backgroundTint="?attr/colorOnPrimary"
     tools:context=".Fragment_Home_Home">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white">
+        android:backgroundTint="?attr/colorOnPrimary">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
@@ -38,7 +39,7 @@
                         android:paddingHorizontal="20sp"
                         android:text="@string/Conference"
                         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                        android:textColor="@color/dark_gray" />
+                        style="@style/PageTitle" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"

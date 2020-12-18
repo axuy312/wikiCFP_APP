@@ -10,7 +10,6 @@ import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -24,7 +23,7 @@ public class Activity_Login extends AppCompatActivity {
     Button login_btn, guest_login_btn, register_btn;
     GlobalVariable user;
     FirebaseFirestore db;
-    EditText login_mail_edittext,login_password_edittext;
+    EditText login_mail_edittext, login_password_edittext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,22 +43,24 @@ public class Activity_Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if(login_mail_edittext.getText().toString().isEmpty())
-                {
+                if (login_mail_edittext.getText().toString().isEmpty()) {
                     login_mail_edittext.setError("Invalid Account");
                 }
 
-                if(login_password_edittext.getText().toString().isEmpty())
-                {
+                if (login_password_edittext.getText().toString().isEmpty()) {
                     login_password_edittext.setError("Invalid Password");
                 }
 
-                if(!login_mail_edittext.getText().toString().isEmpty() && !login_password_edittext.getText().toString().isEmpty())
-                {
+                if (!login_mail_edittext.getText().toString().isEmpty() && !login_password_edittext.getText().toString().isEmpty()
+                        && login_password_edittext.getText().toString().length() > 5) {
                     // account success or not
-                    Login(login_mail_edittext.getText().toString(),login_password_edittext.getText().toString());
+                    Login(login_mail_edittext.getText().toString(), login_password_edittext.getText().toString());
                 }
-                //Login("1073338@mail.com", "asdfghjjl");
+                else
+                {
+                    login_password_edittext.setError("Invalid Password");
+                }
+//                Login("1073338@mail.com", "asdfghjjl");
             }
         });
 
@@ -69,7 +70,7 @@ public class Activity_Login extends AppCompatActivity {
 //                Intent intent = new Intent(Activity_Login.this, Activity_Login_Phone.class);
 //                startActivity(intent);
 //                finish();
-                Login("guest", "guest");
+                Login("guest@guest.com", "guests");
             }
         });
 
@@ -95,6 +96,8 @@ public class Activity_Login extends AppCompatActivity {
     }
 
     void Login(String email, String password) {
+        Log.d("----User :",email);
+        Log.d("----Password :",password);
         db.collection("User")
                 .document(email)
                 .get()
@@ -112,6 +115,8 @@ public class Activity_Login extends AppCompatActivity {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.w("----TAG----", "Error getting documents : " + e.getMessage());
+                        login_mail_edittext.setError("Invalid Account");
+                        login_password_edittext.setError("Invalid Password");
                     }
                 });
     }
