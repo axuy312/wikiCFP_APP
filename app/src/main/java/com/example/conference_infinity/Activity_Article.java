@@ -158,12 +158,12 @@ public class Activity_Article extends AppCompatActivity {
                                 long i = snapshot.getChildrenCount();
                                 Log.d("----data---", "Count: " + String.valueOf(i) + " ---> " + snapshot.toString());
                                 DatabaseReference myRefChild = database.getReference("Discuss/" + abbreviation + "/" + String.valueOf(i + 1));
-                                HashMap<String, Object> data = new Hash
-                                data.put("Email",db.userEmail);
-                                data.put("Name",db.userName);
-                                data.put("Content",text);
-                                data.put("Time",ServerValue.TIMESTAMP);
-                              
+                                HashMap<String, Object> data = new HashMap<>();
+                                data.put("Email", db.userEmail);
+                                data.put("Name", db.userName);
+                                data.put("Content", text);
+                                data.put("Time", ServerValue.TIMESTAMP);
+
                                 myRefChild.setValue(data);
                                 db.UpdateDiscussCnt(abbreviation, i + 1);
                             }
@@ -183,19 +183,19 @@ public class Activity_Article extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (db.pendingConference.get(abbreviation) != null && ((HashMap) db.pendingConference.get(abbreviation)).get("Attend") != null && (Boolean) ((HashMap) db.pendingConference.get(abbreviation)).get("Attend")) {
-                    attend_img.setImageDrawable(getResources().getDrawable(R.drawable.ic_unattended));
+                    attend_img.setImageDrawable(getResources().getDrawable(R.drawable.ic_attended));
                     db.UpdateAttendConferencesValue(abbreviation, false, null, false);
                 } else {
-                    attend_img.setImageDrawable(getResources().getDrawable(R.drawable.ic_attended));
+                    attend_img.setImageDrawable(getResources().getDrawable(R.drawable.ic_unattended));
                     db.UpdateAttendConferencesValue(abbreviation, true, null, false);
                 }
             }
         });
 
         if (db.pendingConference.get(abbreviation) != null && ((HashMap) db.pendingConference.get(abbreviation)).get("Attend") != null && (Boolean) ((HashMap) db.pendingConference.get(abbreviation)).get("Attend")) {
-            attend_img.setImageDrawable(getResources().getDrawable(R.drawable.ic_attended));
-        } else {
             attend_img.setImageDrawable(getResources().getDrawable(R.drawable.ic_unattended));
+        } else {
+            attend_img.setImageDrawable(getResources().getDrawable(R.drawable.ic_attended));
         }
 
         verticalStepView = findViewById(R.id.test);

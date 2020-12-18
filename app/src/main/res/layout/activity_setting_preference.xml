@@ -23,7 +23,6 @@
             android:layout_height="match_parent"
             android:src="@drawable/ic_back"
             app:cb_color="@color/light_selected_gray"
-
             app:cb_pressedRingWidth="0sp" />
 
         <TextView
@@ -35,7 +34,7 @@
             android:paddingEnd="20sp"
             android:text="@string/preference"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            android:textColor="@color/dark_gray" />
+            style="@style/PageTitle" />
 
     </LinearLayout>
 
@@ -64,7 +63,7 @@
             android:textAlignment="textStart"
             android:textAllCaps="false"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="@color/dark_gray" />
+            style="@style/PageTitle" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/prefernce_language_btn"
@@ -79,7 +78,7 @@
             android:textAlignment="textStart"
             android:textAllCaps="false"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="@color/dark_gray" />
+            style="@style/PageTitle" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/preference_density_btn"

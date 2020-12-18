@@ -85,5 +85,11 @@
     <string name="location">Location</string>
     <string name="home">Home</string>
     <string name="account">Account</string>
+    <string name="attended">Attended</string>
+    <string name="discuss_send">Discuss Send</string>
+    <string name="something_to_say">Something to say...</string>
+    <string name="theme_demo" translatable="false">Theme Demo</string>
+    <string name="please_select_a_theme">Please Select a Theme</string>
+    <string name="settings_will_be_save_in_firebase">Settings will be save in Firebase</string>
 
 </resources>

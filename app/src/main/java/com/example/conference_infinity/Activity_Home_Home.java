@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -40,7 +41,17 @@ public class Activity_Home_Home extends AppCompatActivity {
         setContentView(R.layout.activity_home_home);
 
         gv = (GlobalVariable) getApplicationContext();
-        setLocale();
+        //setLocale();
+        // determine user theme
+        if (!gv.preferThemeCode.equals("N/A") && gv.preferThemeCode != null) {
+            if (gv.preferThemeCode.equals(gv.Theme[0])) {
+                // light theme
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            } else {
+                // dark theme
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            }
+        }
 
         // Connect to xml
         bottomNavigationView = findViewById(R.id.bottom_navigation);

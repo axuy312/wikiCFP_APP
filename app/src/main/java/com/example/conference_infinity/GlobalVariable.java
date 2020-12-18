@@ -205,8 +205,6 @@ public class GlobalVariable extends Application {
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         Map<String, Object> UserData = documentSnapshot.getData();
 
-                        Log.v("Following------", ((List<String>) UserData.get("Following Conference")).toString());
-
                         preferLangCode = UserData.get("Language").toString();
                         preferThemeCode = UserData.get("Theme").toString();
 

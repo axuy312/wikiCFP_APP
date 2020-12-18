@@ -2,6 +2,7 @@ package com.example.conference_infinity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.AppCompatRadioButton;
 
 import android.os.Bundle;
@@ -56,6 +57,7 @@ public class Activity_Setting_Theme extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.setting_theme_light_btn:
                 if (isSelected) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                     user.preferThemeCode = user.Theme[0];
 //                    light_btn.setTextColor(getColor(R.color.white));
 //                    dark_btn.setTextColor(getColor(R.color.dark_gray));
@@ -63,6 +65,7 @@ public class Activity_Setting_Theme extends AppCompatActivity {
                 break;
             case R.id.setting_theme_dark_btn:
                 if (isSelected) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                     user.preferThemeCode = user.Theme[1];
 //                    light_btn.setTextColor(getColor(R.color.dark_gray));
 //                    dark_btn.setTextColor(getColor(R.color.white));
