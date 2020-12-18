@@ -1,6 +1,7 @@
 package com.example.conference_infinity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,7 @@ public class Fragment_Home_Home extends Fragment {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     SearchView Conference_search;
+    GlobalVariable gv;
 
 
     public Fragment_Home_Home() {
@@ -84,6 +86,7 @@ public class Fragment_Home_Home extends Fragment {
         tabLayout = getActivity().findViewById(R.id.hom_tablayout);
         viewPager = getActivity().findViewById(R.id.home_viewpager);
         Conference_search = getActivity().findViewById(R.id.home_searchview);
+        gv = (GlobalVariable) getActivity().getApplicationContext();
 
         //Add Fragment
         fragment_home_latest = new Fragment_Home_Latest();
@@ -94,8 +97,14 @@ public class Fragment_Home_Home extends Fragment {
         Fragment_Home_Home.ViewPagerAdapter viewPagerAdapter = new Fragment_Home_Home.ViewPagerAdapter(getActivity().getSupportFragmentManager(), 0);
         viewPagerAdapter.addFragment(fragment_home_latest, getText(R.string.trend).toString());
         viewPagerAdapter.addFragment(fragment_home_following, getText(R.string.following).toString());
-        viewPager.setAdapter(viewPagerAdapter);
+        //viewPager.setAdapter(null);
 
+        if (viewPager.getAdapter() != null) {
+            viewPager.getAdapter().notifyDataSetChanged();
+            //viewPager.invalidate();
+        } else {
+            viewPager.setAdapter(viewPagerAdapter);
+        }
 
         Conference_search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -144,6 +153,18 @@ public class Fragment_Home_Home extends Fragment {
         public CharSequence getPageTitle(int position) {
             return fragmentTitle.get(position);
         }
+
+        @Override
+        public int getItemPosition(Object object) {
+            return POSITION_NONE;
+        }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        Log.d("--fragment onresume--", "home_home");
+
+    }
 }

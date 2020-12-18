@@ -83,5 +83,7 @@
     <string name="content">Content</string>
     <string name="discuss">Discuss</string>
     <string name="location">Location</string>
+    <string name="home">Home</string>
+    <string name="account">Account</string>
 
 </resources>
