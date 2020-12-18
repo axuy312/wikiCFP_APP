@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +24,7 @@ public class Activity_Login extends AppCompatActivity {
     Button login_btn, guest_login_btn, register_btn;
     GlobalVariable user;
     FirebaseFirestore db;
+    EditText login_mail_edittext,login_password_edittext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +37,29 @@ public class Activity_Login extends AppCompatActivity {
         login_btn = findViewById(R.id.login_btn);
         guest_login_btn = findViewById(R.id.guest_login_btn);
         register_btn = findViewById(R.id.register_btn);
+        login_mail_edittext = findViewById(R.id.login_mail_edittext);
+        login_password_edittext = findViewById(R.id.login_password_edittext);
 
         login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Login("1073338@mail.com", "asdfghjjl");
+
+                if(login_mail_edittext.getText().toString().isEmpty())
+                {
+                    login_mail_edittext.setError("Invalid Account");
+                }
+
+                if(login_password_edittext.getText().toString().isEmpty())
+                {
+                    login_password_edittext.setError("Invalid Password");
+                }
+
+                if(!login_mail_edittext.getText().toString().isEmpty() && !login_password_edittext.getText().toString().isEmpty())
+                {
+                    // account success or not
+                    Login(login_mail_edittext.getText().toString(),login_password_edittext.getText().toString());
+                }
+                //Login("1073338@mail.com", "asdfghjjl");
             }
         });
 
