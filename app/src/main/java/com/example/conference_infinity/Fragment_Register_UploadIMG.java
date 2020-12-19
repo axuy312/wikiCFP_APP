@@ -47,7 +47,6 @@ public class Fragment_Register_UploadIMG extends Fragment {
         // Connect the button in xml, must add "view.findView" in Fragment
         CircleButton back_btn = view.findViewById(R.id.density_back_btn);
         Button next_btn = view.findViewById(R.id.density_next_btn);
-        Button add_img_btn = view.findViewById(R.id.add_img_btn);
         circleButton = view.findViewById(R.id.register_head_img);
         gb = (GlobalVariable) getActivity().getApplicationContext();
 
@@ -72,7 +71,7 @@ public class Fragment_Register_UploadIMG extends Fragment {
             }
         });
 
-        add_img_btn.setOnClickListener(new View.OnClickListener() {
+        circleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //          // 測試版本
@@ -92,9 +91,8 @@ public class Fragment_Register_UploadIMG extends Fragment {
                     requestPermissions(
                             new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                             2000);
-                } else {
-                    startGallery();
                 }
+                startGallery();
 //                Intent intent = new Intent();
 //                intent.setType("image/*");
 //                intent.setAction(Intent.ACTION_GET_CONTENT);
