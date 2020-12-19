@@ -53,7 +53,7 @@
                             android:layout_alignParentEnd="true"
                             android:iconifiedByDefault="true"
                             android:inputType="textFilter"
-                            android:queryHint="@string/user_name"
+                            android:queryHint="@string/conference_name"
                             android:scrollbarSize="40sp" />
 
                     </RelativeLayout>
