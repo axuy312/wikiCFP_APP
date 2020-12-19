@@ -92,7 +92,9 @@ public class Fragment_Register_UploadIMG extends Fragment {
                             new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                             2000);
                 }
-                startGallery();
+                else {
+                    startGallery();
+                }
 //                Intent intent = new Intent();
 //                intent.setType("image/*");
 //                intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -113,6 +115,18 @@ public class Fragment_Register_UploadIMG extends Fragment {
         Intent cameraIntent = new Intent(Intent.ACTION_GET_CONTENT);
         cameraIntent.setType("image/*");
         startActivityForResult(cameraIntent, 1);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults)
+    {
+        switch (requestCode) {
+            case 2000:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    startGallery();
+                }
+                break;
+        }
     }
 
     @Override
