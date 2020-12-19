@@ -96,7 +96,8 @@
             android:textAlignment="textStart"
             android:textAllCaps="false"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="@color/light_gray" />
+            android:textColor="@color/light_gray"
+            android:visibility="gone" />
 
 
     </LinearLayout>

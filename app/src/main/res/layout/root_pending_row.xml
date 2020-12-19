@@ -26,10 +26,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20sp"
-                android:textColor="@color/dark_gray"
                 android:layout_marginVertical="20sp"
                 android:text="@string/conference_name"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="@color/dark_gray" />
 
         </LinearLayout>
 
@@ -40,39 +40,21 @@
             android:background="@color/black"
             tools:ignore="SmallSp" />
 
-        <LinearLayout
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/pending_conference_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30sp"
-            android:layout_marginEnd="0sp"
-            android:orientation="horizontal"
-            android:weightSum="8">
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/pending_conference_time"
-                android:layout_width="0sp"
-                android:layout_height="wrap_content"
-                android:layout_weight="7"
-                android:background="@android:color/transparent"
-                android:drawableStart="@drawable/ic_conference_date"
-                android:drawablePadding="24sp"
-                android:paddingVertical="20sp"
-                android:text="2020/11/02 PM 1:10 (GTC+8)"
-                android:textAlignment="textStart"
-                android:textAllCaps="false"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-
-            <ImageView
-                android:id="@+id/alert_reminder"
-                android:layout_width="0sp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_marginHorizontal="10sp"
-                android:layout_weight="1"
-                android:contentDescription="@string/reminder_alert"
-                android:paddingVertical="18sp"
-                android:src="@drawable/ic_conference_alert" />
-        </LinearLayout>
+            android:layout_marginHorizontal="30sp"
+            android:background="@android:color/transparent"
+            android:drawableStart="@drawable/ic_conference_date"
+            android:drawablePadding="24sp"
+            android:paddingVertical="20sp"
+            android:text="2020/11/02 PM 1:10 (GTC+8)"
+            android:textAlignment="textStart"
+            android:textAllCaps="false"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" >
+        </androidx.appcompat.widget.AppCompatButton>
 
 
         <androidx.appcompat.widget.AppCompatButton
@@ -89,27 +71,29 @@
             android:textAllCaps="false"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20sp"
-            android:layout_marginVertical="5sp"
-            android:layout_marginTop="10sp"
-            android:text="@string/prepare_things" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1sp"
-            android:layout_marginHorizontal="5sp"
-            android:background="@color/black"
-            tools:ignore="SmallSp" />
 
         <LinearLayout
             android:id="@+id/prepare_things_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:layout_marginHorizontal="24sp"
             android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20sp"
+                android:layout_marginVertical="5sp"
+                android:layout_marginTop="10sp"
+                android:text="@string/prepare_things" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1sp"
+                android:layout_marginHorizontal="5sp"
+                android:background="@color/black"
+                tools:ignore="SmallSp" />
 
         </LinearLayout>
 

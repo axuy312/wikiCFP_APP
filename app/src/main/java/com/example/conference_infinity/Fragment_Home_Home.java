@@ -1,5 +1,7 @@
 package com.example.conference_infinity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -142,6 +144,14 @@ public class Fragment_Home_Home extends Fragment {
                 return false;
             }
         });
+
+        // save user preference
+        SharedPreferences sharedPreferences1 =getActivity().getSharedPreferences("Account", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor1 = sharedPreferences1.edit();
+
+        editor1.putString("Account",gv.userEmail);
+        editor1.putString("Password",gv.userPassword);
+        editor1.apply();
 
     }
 

@@ -92,5 +92,10 @@
     <string name="please_select_a_theme">Please Select a Theme</string>
     <string name="settings_will_be_save_in_firebase">Settings will be save in Firebase</string>
     <string name="guest_login">Guest Login</string>
+    <string name="abstract_registration_due">- Abstract Registration Due</string>
+    <string name="submit_deadline">- Submission Deadline</string>
+    <string name="notification_due">- Notification Due</string>
+    <string name="final_version_due">\" - Final Version Due\"</string>
+    <string name="pending_submit_deadline">Submit Deadline :</string>
 
 </resources>

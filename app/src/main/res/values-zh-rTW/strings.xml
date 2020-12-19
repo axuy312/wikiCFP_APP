@@ -73,4 +73,10 @@
     <string name="something_to_say">說點東西...</string>
     <string name="please_select_a_theme">請選擇一個主題</string>
     <string name="settings_will_be_save_in_firebase">所有設定將會被存在Firebase</string>
+    <string name="abstract_registration_due">" - 論文摘要通過與否通知日期"</string>
+    <string name="guest_login">遊客登入</string>
+    <string name="submit_deadline">" - 繳交截止日"</string>
+    <string name="notification_due">" - 中稿通知日"</string>
+    <string name="final_version_due">" - 最終修訂繳交日"</string>
+    <string name="pending_submit_deadline">"繳交截止日 : "</string>
 </resources>
