@@ -6,12 +6,15 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,7 +23,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
+import java.util.Objects;
 
 import at.markushi.ui.CircleButton;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -32,28 +37,6 @@ public class Fragment_Register_UploadIMG extends Fragment {
     private static final String TAG = "Upload Img Fragment";
     private CircleImageView circleButton;
     private GlobalVariable gb;
-    private static final int PICK_FROM_GALLERY = 2000;
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        Log.d("PermissionsResult","inside");
-
-        switch (requestCode) {
-            case PICK_FROM_GALLERY:
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Log.d("PermissionsResult","start");
-//                    Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//                    startActivityForResult(galleryIntent, PICK_FROM_GALLERY);
-
-                    startGallery();
-                }
-
-                break;
-        }
-    }
 
     @Nullable
     @Override
@@ -105,22 +88,19 @@ public class Fragment_Register_UploadIMG extends Fragment {
                 // 確定使用者有打開權限
                 if (ActivityCompat.checkSelfPermission(requireActivity(),
                         Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                    getActivity().requestPermissions(
+                    requestPermissions(
                             new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                             2000);
-                    //int[] bo = {0, 1};
-                    //onRequestPermissionsResult(2000, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, bo);
-                } else {
+                }
+                else {
                     startGallery();
                 }
-                //startGallery();
 //                Intent intent = new Intent();
 //                intent.setType("image/*");
 //                intent.setAction(Intent.ACTION_GET_CONTENT);
 //                getActivity().startActivityForResult(Intent.createChooser(intent,"Pick a Image"),1);
             }
         });
-
 
         //circleButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_done));
 
@@ -135,6 +115,18 @@ public class Fragment_Register_UploadIMG extends Fragment {
         Intent cameraIntent = new Intent(Intent.ACTION_GET_CONTENT);
         cameraIntent.setType("image/*");
         startActivityForResult(cameraIntent, 1);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults)
+    {
+        switch (requestCode) {
+            case 2000:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    startGallery();
+                }
+                break;
+        }
     }
 
     @Override
