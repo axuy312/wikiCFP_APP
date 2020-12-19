@@ -92,7 +92,6 @@ public class Activity_Home_Home extends AppCompatActivity {
                         case R.id.home_nav:
                             //Set Checked Home fragment
                             bottomNavigationView.getMenu().getItem(0).setChecked(true);
-
                             selectedFragment = home_fragment;
                             break;
                         case R.id.category_nav:
@@ -130,6 +129,9 @@ public class Activity_Home_Home extends AppCompatActivity {
                         fragmentTransaction.commit();
                     } else {
                         Log.d("fragment transaction", "show");
+                        if (selectedFragment == home_fragment && selectedFragment == current_fragment){
+                            ((Fragment_Home_Home)home_fragment).ScrollTop();
+                        }
                         fragmentTransaction.hide(current_fragment);
                         fragmentTransaction.addToBackStack(null);
                         fragmentTransaction.show(selectedFragment);

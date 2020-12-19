@@ -103,9 +103,11 @@ public class Fragment_Home_Home extends Fragment {
             public void onPageSelected(int position) {
                 if (position == 0){
                     fragment_home_latest.refreshData();
+                    fragment_home_latest.RefreshListView(Conference_search.getQuery().toString());
                 }
                 else {
                     fragment_home_following.refreshData();
+                    fragment_home_following.RefreshListView(Conference_search.getQuery().toString());
                 }
             }
 
@@ -128,6 +130,8 @@ public class Fragment_Home_Home extends Fragment {
         Conference_search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                fragment_home_latest.ScrollTop();
+                fragment_home_following.ScrollTop();
                 return false;
             }
 
@@ -139,6 +143,11 @@ public class Fragment_Home_Home extends Fragment {
             }
         });
 
+    }
+
+    public void ScrollTop(){
+        fragment_home_latest.ScrollTop();
+        fragment_home_following.ScrollTop();
     }
 
 

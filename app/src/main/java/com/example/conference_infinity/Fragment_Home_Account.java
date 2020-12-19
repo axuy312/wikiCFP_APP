@@ -152,7 +152,7 @@ public class Fragment_Home_Account extends Fragment {
             public void onClick(View v) {
                 // clear user data
 
-
+                user.clearUserData();
                 Intent intent = new Intent(getActivity(), Activity_Login.class);
                 startActivity(intent);
                 requireActivity().finish();

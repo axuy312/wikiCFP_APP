@@ -176,7 +176,6 @@ public class MyListAdapter_Conference extends BaseAdapter implements Filterable 
         }
         else {
             holder.tag.setImageResource(R.drawable.ic_bookmark_on);
-            Log.d("----TagOn----", ((HashMap<String,String>)user.conferences.get(abbr)).get("Topic"));
         }
 
         return convertView;

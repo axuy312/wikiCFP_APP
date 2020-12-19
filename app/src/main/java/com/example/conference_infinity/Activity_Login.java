@@ -120,13 +120,7 @@ public class Activity_Login extends AppCompatActivity {
                     }
                 });
     }
-
-
-    void nextPage() {
-        Intent intent = new Intent(Activity_Login.this, Activity_Home_Home.class);
-        startActivity(intent);
-        finish();
-    }
+    
 
     private void setLocale() {
         Locale locale = Locale.getDefault();

@@ -100,6 +100,12 @@ public class Fragment_Home_Following extends Fragment {
         refreshData();
     }
 
+    void ScrollTop(){
+        if (Conference_List != null){
+            Conference_List.setSelection(0);
+        }
+    }
+
     void RefreshListView(String newText){
         if (Conference_List_Adapter != null){
             Conference_List_Adapter.getFilter().filter(newText);

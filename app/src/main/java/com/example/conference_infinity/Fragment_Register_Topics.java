@@ -145,6 +145,12 @@ public class Fragment_Register_Topics extends Fragment {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.d(TAG, "DocumentSnapshot successfully written!");
+                        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("UserRegisterDone", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        // get data from device
+                        editor.putString("Mail", email);
+                        editor.putString("Password", password);
+                        editor.apply();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

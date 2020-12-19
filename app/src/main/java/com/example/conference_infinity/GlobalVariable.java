@@ -58,7 +58,6 @@ public class GlobalVariable extends Application {
 
 
     //User data-------------------------------------------------------------------------------------
-    boolean finishLoadBitmap = false;
     String userName = "N/A";
     String userPassword = "N/A";
     String userEmail = "N/A";
@@ -71,7 +70,6 @@ public class GlobalVariable extends Application {
 
     //Pending Conference----------------------------------------------------------------------------
     ArrayList<Model> models = new ArrayList<>();
-    boolean create = false;
     //----------------------------------------------------------------------------------------------
 
     //firebase--------------------------------------------------------------------------------------
@@ -172,6 +170,16 @@ public class GlobalVariable extends Application {
     }
 
     void loadUser(String Email, Activity activity) {
+        SharedPreferences sharedPreferences = getSharedPreferences("UserRegisterDone", Context.MODE_PRIVATE);
+        if (sharedPreferences != null){
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            // delete part of data
+            editor.remove("Password");
+            editor.remove("Mail");
+            editor.apply();
+        }
+
+
         if (db == null) {
             db = FirebaseFirestore.getInstance();
         }
@@ -237,7 +245,14 @@ public class GlobalVariable extends Application {
             preferCategory.clear();
             preferCategory = null;
         }
-        followingConference = null;
+        if (followingConference != null){
+            followingConference.clear();
+            followingConference = null;
+        }
+        if (pendingConference != null){
+            pendingConference.clear();
+            pendingConference = null;
+        }
         userName = "N/A";
         userPassword = "N/A";
         userEmail = "N/A";
