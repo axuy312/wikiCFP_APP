@@ -100,8 +100,6 @@ public class Fragment_Home_Account extends Fragment {
         user_photo = view.findViewById(R.id.profile_image);
         user_nickname = view.findViewById(R.id.user_name);
         preference_btn = view.findViewById(R.id.preference_btn);
-        history_btn = view.findViewById(R.id.history_conference_btn);
-        account_management_btn = view.findViewById(R.id.account_management_btn);
         logout_btn = view.findViewById(R.id.logout_btn);
         about_btn = view.findViewById(R.id.about_btn);
         loadingImg = view.findViewById(R.id.load_Img);
@@ -132,18 +130,6 @@ public class Fragment_Home_Account extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), Activity_Setting_Preference.class);
                 startActivity(intent);
-            }
-        });
-        history_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        account_management_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
             }
         });
 

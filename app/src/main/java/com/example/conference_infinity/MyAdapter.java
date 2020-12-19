@@ -49,7 +49,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyHolder> {
         // 設定要顯示的東西
         holder.mTitle.setText(models.get(position).getConference_name());
         holder.mLocation.setText(models.get(position).getConference_location());
-        holder.mTime.setText(models.get(position).getConference_time());
+        holder.mTime.setText(context.getText(R.string.pending_submit_deadline).toString() + models.get(position).getConference_time());
         holder.mAddItem.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -82,6 +82,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyHolder> {
                         });
 
                         holder.prepareItem.addView(checkBox);
+                        holder.prepareItem.setVisibility(View.VISIBLE);
                         holder.mAddItem.getText().clear();
 
                         // add item to global variable
@@ -145,6 +146,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyHolder> {
                 });
 
                 holder.prepareItem.addView(checkBox);
+                holder.prepareItem.setVisibility(View.VISIBLE);
                 boolIndex++;
             }
 

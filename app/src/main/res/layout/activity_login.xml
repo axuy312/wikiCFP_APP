@@ -81,7 +81,7 @@
             android:src="@drawable/ic_seperate_line" />
 
         <TextView
-            style="@style/TextviewColor"
+            android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -115,7 +115,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/register_btn"
-        style="@style/TextviewColor"
+        android:textColor="@color/black"
         android:layout_width="match_parent"
         android:layout_height="0sp"
         android:layout_weight="1"

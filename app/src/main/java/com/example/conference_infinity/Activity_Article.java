@@ -101,9 +101,9 @@ public class Activity_Article extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
 
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), 0);
-        viewPagerAdapter.addFragment(fragment_article_content, "Content");
-        viewPagerAdapter.addFragment(fragment_article_discuss, "Discuss");
-        viewPagerAdapter.addFragment(fragment_article_arrangement, "Arrangement");
+        viewPagerAdapter.addFragment(fragment_article_content, getText(R.string.content).toString());
+        viewPagerAdapter.addFragment(fragment_article_discuss, getText(R.string.discuss).toString());
+        viewPagerAdapter.addFragment(fragment_article_arrangement, getText(R.string.location).toString());
         viewPager.setAdapter(viewPagerAdapter);
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -210,7 +210,7 @@ public class Activity_Article extends AppCompatActivity {
         List<String> list = new ArrayList<>();
 
         if (Abstract_Registration_Due != null) {
-            list.add(Abstract_Registration_Due + " - Abstract Registration Due");
+            list.add(Abstract_Registration_Due + getText(R.string.abstract_registration_due).toString());
             if (!gettime) {
                 try {
                     Date d = f.parse(Abstract_Registration_Due.replaceAll("[^0-9a-zA-Z ]", ""));
@@ -226,7 +226,7 @@ public class Activity_Article extends AppCompatActivity {
             }
         }
         if (Submission_Deadline != null) {
-            list.add(Submission_Deadline + " - Submission Deadline");
+            list.add(Submission_Deadline + getText(R.string.submit_deadline).toString());
             if (!gettime) {
                 try {
                     Date d = f.parse(Submission_Deadline.replaceAll("[^0-9a-zA-Z ]", ""));
@@ -242,7 +242,7 @@ public class Activity_Article extends AppCompatActivity {
             }
         }
         if (Notification_Due != null) {
-            list.add(Notification_Due + " - Notification Due");
+            list.add(Notification_Due + getText(R.string.notification_due).toString());
             if (!gettime) {
                 try {
                     Date d = f.parse(Notification_Due.replaceAll("[^0-9a-zA-Z ]", ""));
@@ -258,7 +258,7 @@ public class Activity_Article extends AppCompatActivity {
             }
         }
         if (Final_Version_Due != null) {
-            list.add(Final_Version_Due + " - Final Version Due");
+            list.add(Final_Version_Due + getText(R.string.final_version_due).toString());
             if (!gettime) {
                 try {
                     Date d = f.parse(Final_Version_Due.replaceAll("[^0-9a-zA-Z ]", ""));

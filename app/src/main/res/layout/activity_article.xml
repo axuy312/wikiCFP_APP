@@ -18,8 +18,8 @@
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/app_bar"
             android:layout_width="match_parent"
-            android:layout_height="270sp"
-            android:background="@color/white"
+            android:layout_height="290sp"
+            android:backgroundTint="?attr/colorOnPrimary"
             android:fitsSystemWindows="true"
             android:theme="@style/Base.CardView">
 
@@ -35,7 +35,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="150sp"
+                    android:layout_height="170sp"
                     android:layout_marginTop="70sp"
                     android:gravity="center"
                     android:orientation="vertical"
@@ -73,7 +73,8 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="10sp"
                         android:src="@drawable/ic_back"
-                        app:cb_color="@color/white_gray" />
+                        app:cb_pressedRingWidth="0sp"
+                        app:cb_color="@color/light_selected_gray" />
 
                     <TextView
                         android:id="@+id/Conference_topic"
@@ -98,7 +99,7 @@
                             android:id="@+id/attend_imgbtn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@color/white"
+                            android:background="@android:color/transparent"
                             android:contentDescription="@string/attended"
                             android:scaleType="centerCrop"
                             android:src="@drawable/ic_unattended" />
@@ -146,6 +147,7 @@
             android:layout_weight="1"
             android:background="@drawable/discuss_input_radius_border_background"
             android:hint="@string/something_to_say"
+            android:importantForAutofill="no"
             android:inputType="textCapSentences|textMultiLine"
             android:minHeight="50sp"
             android:paddingStart="25sp"
@@ -154,7 +156,8 @@
         <ImageButton
             android:id="@+id/discuss_send_img"
             android:layout_width="50sp"
-            android:layout_height="50sp"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
             android:contentDescription="@string/discuss_send"
             android:scaleType="centerInside"
             android:src="@drawable/ic_discuss_send" />

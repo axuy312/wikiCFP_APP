@@ -1,18 +1,10 @@
 package com.example.conference_infinity;
 
-import android.content.Context;
-import android.graphics.Paint;
-import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
@@ -38,21 +30,26 @@ public class MyHolder extends RecyclerView.ViewHolder {
         this.mTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "title " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(v.getContext(), "title " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
             }
         });
 
         this.mTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "time " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(v.getContext(), "time " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
             }
         });
 
         this.mLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "location " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(v.getContext(), "location " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
+
+//                String uri = "http://maps.google.com/maps?saddr=" + "9982878" + "," + "76285774" + "&daddr=" + "9992084" + "," + "76286455";
+//                Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(uri));
+//                intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
+//                mLocation.getContext().startActivity(intent);
             }
         });
 
