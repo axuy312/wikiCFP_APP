@@ -112,7 +112,7 @@ public class MyListAdapter_Category extends BaseAdapter implements Filterable {
     }
 
     static class ViewHolder{
-        public ImageView icon, tag;
+        public ImageView tag;
         public TextView title;
         public LinearLayout layout_title;
     }
@@ -123,7 +123,6 @@ public class MyListAdapter_Category extends BaseAdapter implements Filterable {
         if (convertView == null){
             convertView = mLayoutInflater.inflate(R.layout.category_list_item, null);
             holder = new ViewHolder();
-            holder.icon = convertView.findViewById(R.id.category_item_icon);
             holder.title = convertView.findViewById(R.id.category_item_title);
             holder.tag = convertView.findViewById(R.id.category_item_tag);
             holder.layout_title = convertView.findViewById(R.id.category_item_title_layout);
@@ -134,7 +133,6 @@ public class MyListAdapter_Category extends BaseAdapter implements Filterable {
         }
         holder.tag.setTag(String.valueOf(position));
         holder.title.setText(titles.get(position));
-        holder.icon.setImageResource(R.drawable.img);
         holder.layout_title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

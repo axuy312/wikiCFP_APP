@@ -93,8 +93,8 @@
 
         <ImageView
             android:id="@+id/conference_bookmark"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:contentDescription="@string/bookmarked"
             android:scaleType="centerInside"
             android:src="@drawable/ic_bookmark_off" />

@@ -2,9 +2,11 @@ package com.example.conference_infinity;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.drawable.Animatable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,12 +15,14 @@ import java.util.Locale;
 public class Activity_Main extends AppCompatActivity {
 
     GlobalVariable gv;
+    ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        imageView = findViewById(R.id.app_logo_gif);
         gv = (GlobalVariable) getApplicationContext();
         gv.initBitmapFromSharedPreferences();
         gv.setRealtime();
@@ -36,6 +40,8 @@ public class Activity_Main extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 } else {
+                    Animatable animatable = (Animatable) imageView.getDrawable();
+                    animatable.start();
                     handler.postDelayed(this, 1000);
                 }
             }

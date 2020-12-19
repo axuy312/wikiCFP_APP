@@ -12,15 +12,6 @@
         android:layout_height="50dp"
         android:layout_weight="1">
 
-        <ImageView
-            android:id="@+id/category_item_icon"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:scaleType="centerInside"
-            android:background="@color/teal_200"
-            android:contentDescription="@string/topics_icon"
-            android:src="@drawable/img"/>
-
         <TextView
             android:id="@+id/category_item_title"
             android:layout_width="0dp"
@@ -37,7 +28,7 @@
 
     <ImageView
         android:id="@+id/category_item_tag"
-        android:layout_width="20dp"
+        android:layout_width="50dp"
         android:layout_height="50dp"
         android:src="@drawable/ic_bookmark_off"
         android:scaleType="centerInside"/>

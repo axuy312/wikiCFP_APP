@@ -94,6 +94,25 @@ public class Fragment_Home_Home extends Fragment {
 
         tabLayout.setupWithViewPager(viewPager);
 
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 0){
+                    fragment_home_latest.refreshData();
+                }
+                else {
+                    fragment_home_following.refreshData();
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {}
+        });
+
         Fragment_Home_Home.ViewPagerAdapter viewPagerAdapter = new Fragment_Home_Home.ViewPagerAdapter(getActivity().getSupportFragmentManager(), 0);
         viewPagerAdapter.addFragment(fragment_home_latest, getText(R.string.trend).toString());
         viewPagerAdapter.addFragment(fragment_home_following, getText(R.string.following).toString());

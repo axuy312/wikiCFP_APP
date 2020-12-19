@@ -35,7 +35,7 @@ public class Fragment_Home_Following extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    MyListAdapter_Conference Conference_List_Adapter;
+    public MyListAdapter_Conference Conference_List_Adapter;
 
     GlobalVariable db;
     HashMap<String,String>[] Conference_List_Data;
@@ -67,7 +67,7 @@ public class Fragment_Home_Following extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        refreshData();
+        Log.d("---Resume---", "---");
     }
 
     @Override
@@ -97,26 +97,7 @@ public class Fragment_Home_Following extends Fragment {
         Conference_List = view.findViewById(R.id.Home_Following_Conference_List);
         //Update List
 
-        if (db.conferences != null && getActivity() != null){
-
-            List<HashMap<String,String>>tmpList = new ArrayList<>();
-
-            if (db.followingConference != null){
-                for (String abbr : db.followingConference.keySet().toArray(new String[0])){
-                    if (db.followingConference.get(abbr))
-                    {
-                        tmpList.add((HashMap<String, String>) db.conferences.get(abbr));
-                    }
-                }
-            }
-
-            Conference_List_Data = tmpList.toArray(new HashMap[0]);
-
-
-
-            Conference_List_Adapter = new MyListAdapter_Conference(getActivity(), Conference_List_Data);
-            Conference_List.setAdapter(Conference_List_Adapter);
-        }
+        refreshData();
     }
 
     void RefreshListView(String newText){
@@ -126,14 +107,12 @@ public class Fragment_Home_Following extends Fragment {
     }
 
     public void refreshData(){
-        Log.d("Onresume-------","-----");
 
         if (db.conferences != null && getActivity() != null){
 
             List<HashMap<String,String>>tmpList = new ArrayList<>();
 
             if (db.followingConference != null){
-                Log.d("Onresume-------",db.followingConference.toString());
                 for (String abbr : db.followingConference.keySet().toArray(new String[0])){
                     if (db.followingConference.get(abbr))
                     {
@@ -144,7 +123,16 @@ public class Fragment_Home_Following extends Fragment {
 
             Conference_List_Data = tmpList.toArray(new HashMap[0]);
 
-            Conference_List_Adapter.refresh(Conference_List_Data);
+
+            if (Conference_List_Adapter == null) {
+                Conference_List_Adapter = new MyListAdapter_Conference(getActivity(), Conference_List_Data);
+                Conference_List.setAdapter(Conference_List_Adapter);
+            }
+            else {
+                Log.d("---newData----",String.valueOf(Conference_List_Data.length));
+                Conference_List_Adapter.refresh(Conference_List_Data, true);
+                Conference_List_Adapter.notifyDataSetChanged();
+            }
         }
     }
 }

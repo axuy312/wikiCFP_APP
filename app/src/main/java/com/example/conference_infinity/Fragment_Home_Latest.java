@@ -41,7 +41,7 @@ public class Fragment_Home_Latest extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    MyListAdapter_Conference Conference_List_Adapter;
+    public MyListAdapter_Conference Conference_List_Adapter;
 
     GlobalVariable db;
     HashMap<String,String>[] Conference_List_Data;
@@ -96,6 +96,16 @@ public class Fragment_Home_Latest extends Fragment {
         Conference_List = view.findViewById(R.id.Home_Latest_Conference_List);
         //Update List
 
+        refreshData();
+    }
+
+    void RefreshListView(String newText){
+        if (Conference_List_Adapter != null){
+            Conference_List_Adapter.getFilter().filter(newText);
+        }
+    }
+
+    public void refreshData(){
         if (db.conferences != null && getActivity() != null){
             HashMap[] tmpHashmaps = db.conferences.values().toArray(new HashMap[0]);
 
@@ -109,18 +119,16 @@ public class Fragment_Home_Latest extends Fragment {
 
             Conference_List_Data = tmp.toArray(new HashMap[0]);
 
-            Conference_List_Adapter = new MyListAdapter_Conference(getActivity(), Conference_List_Data);
-            Conference_List.setAdapter(Conference_List_Adapter);
+            if (Conference_List_Adapter == null){
+                Conference_List_Adapter = new MyListAdapter_Conference(getActivity(), Conference_List_Data);
+                Conference_List.setAdapter(Conference_List_Adapter);
+            }
+            else {
+                Conference_List_Adapter.refresh(Conference_List_Data, false);
+                Conference_List_Adapter.notifyDataSetChanged();
+            }
         }
     }
-
-    void RefreshListView(String newText){
-        if (Conference_List_Adapter != null){
-            Conference_List_Adapter.getFilter().filter(newText);
-        }
-    }
-
-
 
     class sortByDiscussCnt implements Comparator<HashMap<String, String>>
     {
