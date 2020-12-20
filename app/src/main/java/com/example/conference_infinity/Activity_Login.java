@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -55,9 +56,7 @@ public class Activity_Login extends AppCompatActivity {
                         && login_password_edittext.getText().toString().length() > 5) {
                     // account success or not
                     Login(login_mail_edittext.getText().toString(), login_password_edittext.getText().toString());
-                }
-                else
-                {
+                } else {
                     login_password_edittext.setError("Invalid Password");
                 }
 //                Login("1073338@mail.com", "asdfghjjl");
@@ -96,8 +95,8 @@ public class Activity_Login extends AppCompatActivity {
     }
 
     void Login(String email, String password) {
-        Log.d("----User :",email);
-        Log.d("----Password :",password);
+        Log.d("---User--- ", email);
+        Log.d("---Password--- ", password);
         db.collection("User")
                 .document(email)
                 .get()
@@ -117,10 +116,11 @@ public class Activity_Login extends AppCompatActivity {
                         Log.w("----TAG----", "Error getting documents : " + e.getMessage());
                         login_mail_edittext.setError("Invalid Account");
                         login_password_edittext.setError("Invalid Password");
+                        Toast.makeText(Activity_Login.this, "Wrong Account or Password", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
-    
+
 
     private void setLocale() {
         Locale locale = Locale.getDefault();

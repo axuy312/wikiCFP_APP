@@ -75,7 +75,6 @@
             android:background="@android:color/transparent"
             android:drawableStart="@drawable/ic_language"
             android:drawablePadding="24sp"
-            android:enabled="false"
             android:paddingVertical="20sp"
             android:text="@string/prefer_language"
             android:textAlignment="textStart"

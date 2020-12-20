@@ -68,7 +68,6 @@ public class Activity_Setting_Preference extends AppCompatActivity {
             //setContentView(R.layout.activity_setting_preference);
             themeBtn.setText(getText(R.string.theme));
             preferLanguageBtn.setText(getText(R.string.prefer_language));
-            densityBtn.setText(getText(R.string.density));
             title.setText(getText(R.string.preference));
         }
     }

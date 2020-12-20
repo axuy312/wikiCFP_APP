@@ -9,7 +9,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -34,14 +33,11 @@ public class Activity_Home_Home extends AppCompatActivity {
     Fragment current_fragment;
     Stack<Integer> fragment_stack = new Stack<>();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_home);
 
-
-        //setLocale();
         // determine user theme
 //        if (!gv.preferThemeCode.equals("N/A") && gv.preferThemeCode != null) {
 //            if (gv.preferThemeCode.equals(gv.Theme[0])) {
@@ -61,6 +57,8 @@ public class Activity_Home_Home extends AppCompatActivity {
         integerDeque.push(R.id.home_nav);
 
         gv = (GlobalVariable) getApplicationContext();
+
+        setLocale();
 
         // new Fragment
         home_fragment = new Fragment_Home_Home();
@@ -129,8 +127,8 @@ public class Activity_Home_Home extends AppCompatActivity {
                         fragmentTransaction.commit();
                     } else {
                         Log.d("fragment transaction", "show");
-                        if (selectedFragment == home_fragment && selectedFragment == current_fragment){
-                            ((Fragment_Home_Home)home_fragment).ScrollTop();
+                        if (selectedFragment == home_fragment && selectedFragment == current_fragment) {
+                            ((Fragment_Home_Home) home_fragment).ScrollTop();
                         }
                         fragmentTransaction.hide(current_fragment);
                         fragmentTransaction.addToBackStack(null);
@@ -226,13 +224,16 @@ public class Activity_Home_Home extends AppCompatActivity {
     private void setLocale() {
         Locale locale = Locale.getDefault();
 
-        if (!gv.preferLangCode.equals("N/A")) {
-            if (gv.preferLangCode.equals(gv.Language[0])) {
-                locale = Locale.TRADITIONAL_CHINESE;
-            } else if (gv.preferLangCode.equals(gv.Language[1])) {
-                locale = Locale.US;
+        if (gv.preferThemeCode != null) {
+            if (!gv.preferLangCode.equals("N/A")) {
+                if (gv.preferLangCode.equals(gv.Language[0])) {
+                    locale = Locale.TRADITIONAL_CHINESE;
+                } else if (gv.preferLangCode.equals(gv.Language[1])) {
+                    locale = Locale.US;
+                }
             }
         }
+
         Log.d("----locale-----", locale.toString());
         Locale.setDefault(locale);
         Configuration config = getBaseContext().getResources().getConfiguration();
