@@ -1,7 +1,6 @@
 package com.example.conference_infinity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -95,21 +94,21 @@ public class Fragment_Home_Pending extends Fragment {
         }
     }
 
-    public void refresh(){
-        if (user != null && recyclerView != null){
+    public void refresh() {
+        if (user != null && recyclerView != null) {
             // 資料由getMyList產生，再由adapter產生
             myAdapter = new MyAdapter(getActivity(), (ArrayList<Model>) user.getPendingConference().clone());
             // 設定recycleView的adapter
             recyclerView.setAdapter(myAdapter);
 
-        // 判斷是否為空的 提示文字
-        if (user.getPendingConference().size() == 0) {
-            recyclerView.setVisibility(View.GONE);
-            TextView empty_conference_tag = view.findViewById(R.id.empty_conference_tag);
-            empty_conference_tag.setVisibility(View.VISIBLE);
-        } else {
-            recyclerView.setVisibility(View.VISIBLE);
+            // 判斷是否為空的 提示文字
+            if (user.getPendingConference().size() == 0) {
+                recyclerView.setVisibility(View.GONE);
+                TextView empty_conference_tag = getActivity().findViewById(R.id.empty_conference_tag);
+                empty_conference_tag.setVisibility(View.VISIBLE);
+            } else {
+                recyclerView.setVisibility(View.VISIBLE);
+            }
         }
     }
-
 }
