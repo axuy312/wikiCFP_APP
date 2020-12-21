@@ -290,10 +290,13 @@ public class Fragment_Home_Account extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        Log.d("ac lang", lang.toString());
+        Log.d("ac preferLang", user.preferLangCode);
         if (!lang.equals(user.preferLangCode)) {
             preference_btn.setText(getText(R.string.preference));
             logout_btn.setText(getText(R.string.logout));
             about_btn.setText(getText(R.string.about));
+            lang = user.preferLangCode;
         }
     }
 }

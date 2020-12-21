@@ -207,6 +207,7 @@ public class Fragment_Home_Home extends Fragment {
         super.onResume();
         if (!lang.equals(gv.preferLangCode)) {
             home_home_title.setText(getText(R.string.Conference));
+            lang = gv.preferLangCode;
         }
 
     }

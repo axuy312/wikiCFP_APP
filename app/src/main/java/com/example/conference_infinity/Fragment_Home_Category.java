@@ -122,6 +122,7 @@ public class Fragment_Home_Category extends Fragment {
 
         if (!lang.equals(user.preferLangCode)) {
             Category_Title.setText(getText(R.string.Category));
+            lang = user.preferLangCode;
         }
     }
 }
