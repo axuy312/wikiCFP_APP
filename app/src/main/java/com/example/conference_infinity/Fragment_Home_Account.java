@@ -287,8 +287,6 @@ public class Fragment_Home_Account extends Fragment {
         super.onResume();
         if (!lang.equals(user.preferLangCode)) {
             preference_btn.setText(getText(R.string.preference));
-            history_btn.setText(getText(R.string.history_conference));
-            account_management_btn.setText(getText(R.string.account_management));
             logout_btn.setText(getText(R.string.logout));
             about_btn.setText(getText(R.string.about));
         }

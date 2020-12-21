@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -63,7 +64,7 @@ public class GlobalVariable extends Application {
     String userEmail = "N/A";
     Bitmap headPhoto;
     String headPhotoURL = "N/A";
-    HashMap<String,Bitmap>EmailToBitmap;
+    HashMap<String, Bitmap> EmailToBitmap;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     //----------------------------------------------------------------------------------------------
@@ -77,17 +78,17 @@ public class GlobalVariable extends Application {
     FirebaseFirestore db;
     //----------------------------------------------------------------------------------------------
 
-    void initBitmapFromSharedPreferences(){
-        if (EmailToBitmap == null){
+    void initBitmapFromSharedPreferences() {
+        if (EmailToBitmap == null) {
             EmailToBitmap = new HashMap<>();
         }
         sharedPreferences = getSharedPreferences("BitmapLoad", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         String dataStr = sharedPreferences.getString("Email", "");
-        Log.d("----TAG----", "Share : "+ dataStr);
+        Log.d("----TAG----", "Share : " + dataStr);
         editor.remove("Email");
         editor.apply();
-        HashMap<String,Boolean>tmp = new HashMap<>();
+        HashMap<String, Boolean> tmp = new HashMap<>();
         for (String mail : dataStr.split(",")) {
             if (mail != null && !mail.isEmpty()) {
                 tmp.put(mail, true);
@@ -171,14 +172,13 @@ public class GlobalVariable extends Application {
 
     void loadUser(String Email, Activity activity) {
         SharedPreferences sharedPreferences = getSharedPreferences("UserRegisterDone", Context.MODE_PRIVATE);
-        if (sharedPreferences != null){
+        if (sharedPreferences != null) {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             // delete part of data
             editor.remove("Password");
             editor.remove("Mail");
             editor.apply();
         }
-
 
         if (db == null) {
             db = FirebaseFirestore.getInstance();
@@ -216,6 +216,16 @@ public class GlobalVariable extends Application {
                         preferLangCode = UserData.get("Language").toString();
                         preferThemeCode = UserData.get("Theme").toString();
 
+                        // set theme
+                        if (!preferThemeCode.equals("N/A")) {
+                            if (preferThemeCode.equals(Theme[0])) {
+                                // light theme
+                                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                            } else if (preferThemeCode.equals(Theme[1])) {
+                                // dark theme
+                                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                            }
+                        }
 
                         UpdatePreferCategorys((List<String>) UserData.get("Category"), (List<String>) UserData.get("Following Conference"), (HashMap<String, Object>) UserData.get("Pending Conference"));
                         UpdataFollowCategory();
@@ -245,11 +255,11 @@ public class GlobalVariable extends Application {
             preferCategory.clear();
             preferCategory = null;
         }
-        if (followingConference != null){
+        if (followingConference != null) {
             followingConference.clear();
             followingConference = null;
         }
-        if (pendingConference != null){
+        if (pendingConference != null) {
             pendingConference.clear();
             pendingConference = null;
         }
@@ -259,6 +269,14 @@ public class GlobalVariable extends Application {
         headPhoto = null;
         headPhotoURL = "N/A";
         following_categoryPreview = null;
+
+        // clear user sharedPreference
+        SharedPreferences sharedPreferences1 = getSharedPreferences("Account", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor1 = sharedPreferences1.edit();
+
+        editor1.remove("Account");
+        editor1.remove("Password");
+        editor1.apply();
     }
 
 
@@ -458,7 +476,7 @@ public class GlobalVariable extends Application {
         return true;
     }
 
-    void storeBitmap(String email){
+    void storeBitmap(String email) {
         if (email != null && (EmailToBitmap == null || EmailToBitmap.get(email) == null)) {
             if (db == null) {
                 db = FirebaseFirestore.getInstance();
@@ -472,11 +490,11 @@ public class GlobalVariable extends Application {
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                             Map<String, Object> UserData = documentSnapshot.getData();
                             String url = UserData.get("HeadPhoto").toString();
-                            if (url != null && !url.equals("N/A") && EmailToBitmap.get(email) == null){
-                                Log.d("----TAG----", "Exist : "+ url);
+                            if (url != null && !url.equals("N/A") && EmailToBitmap.get(email) == null) {
+                                Log.d("----TAG----", "Exist : " + url);
                                 new GetBitmap().execute(url, email);
                             }
-                            Log.d("----TAG----", "here : "+ url);
+                            Log.d("----TAG----", "here : " + url);
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -541,10 +559,9 @@ public class GlobalVariable extends Application {
             //執行中
 
             urlStr = params[0];
-            if (params.length == 1 || params[1] == null || params[1].equals("")){
+            if (params.length == 1 || params[1] == null || params[1].equals("")) {
                 mail = null;
-            }
-            else {
+            } else {
                 mail = params[1];
             }
             try {
@@ -568,28 +585,26 @@ public class GlobalVariable extends Application {
         protected void onPostExecute(Bitmap bitmap) {
             //執行後
             super.onPostExecute(bitmap);
-            if (mail == null || mail.isEmpty()){
+            if (mail == null || mail.isEmpty()) {
                 Log.d("----TAG----", "Fun1");
                 headPhoto = bitmap;
                 headPhotoURL = urlStr;
-                if (EmailToBitmap == null){
+                if (EmailToBitmap == null) {
                     EmailToBitmap = new HashMap<>();
                 }
-                if (bitmap != null){
+                if (bitmap != null) {
                     EmailToBitmap.put(userEmail, bitmap);
                     Log.d("----TAG----", "new img");
-                }
-                else {
+                } else {
                     EmailToBitmap.put(userEmail, null);
                     Log.d("----TAG----", "failed img");
                 }
-            }
-            else {
+            } else {
                 Log.d("----TAG2----", "Fun2");
-                if (EmailToBitmap == null){
+                if (EmailToBitmap == null) {
                     EmailToBitmap = new HashMap<>();
                 }
-                if (bitmap != null){
+                if (bitmap != null) {
                     EmailToBitmap.put(mail, bitmap);
 
                     sharedPreferences = getSharedPreferences("BitmapLoad", Context.MODE_PRIVATE);
@@ -597,17 +612,15 @@ public class GlobalVariable extends Application {
 
                     String data = sharedPreferences.getString("Email", "");
                     Log.d("----TAG2----", "Data add" + mail);
-                    if (data == null || data.isEmpty()){
+                    if (data == null || data.isEmpty()) {
                         data = mail;
-                    }
-                    else {
+                    } else {
                         data = data + "," + mail;
                     }
                     editor.putString("Email", data);
                     editor.apply();
                     Log.d("----TAG2----", "Result: " + sharedPreferences.getString("Email", ""));
-                }
-                else {
+                } else {
                     EmailToBitmap.put(userEmail, null);
                 }
             }

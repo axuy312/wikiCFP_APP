@@ -34,6 +34,8 @@ public class Fragment_Home_Pending extends Fragment {
     RecyclerView recyclerView;
     MyAdapter myAdapter;
     GlobalVariable user;
+    String lang;
+    TextView home_pending_title;
 
     public Fragment_Home_Pending() {
         // Required empty public constructor
@@ -80,6 +82,8 @@ public class Fragment_Home_Pending extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         user = (GlobalVariable) getActivity().getApplicationContext();
+        lang = user.preferLangCode;
+        home_pending_title = view.findViewById(R.id.home_pending_title);
 
         // 資料由getMyList產生，再由adapter產生
         myAdapter = new MyAdapter(getActivity(), (ArrayList<Model>) user.getPendingConference().clone());
@@ -97,4 +101,11 @@ public class Fragment_Home_Pending extends Fragment {
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (!lang.equals(user.preferLangCode)) {
+            home_pending_title.setText(getText(R.string.pending_conference));
+        }
+    }
 }

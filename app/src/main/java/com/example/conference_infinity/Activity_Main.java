@@ -1,6 +1,8 @@
 package com.example.conference_infinity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.drawable.Animatable;
 import android.os.Bundle;
@@ -8,14 +10,22 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.Locale;
+import java.util.Map;
 
 public class Activity_Main extends AppCompatActivity {
 
     GlobalVariable gv;
     ImageView imageView;
+    FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +36,9 @@ public class Activity_Main extends AppCompatActivity {
         gv = (GlobalVariable) getApplicationContext();
         gv.initBitmapFromSharedPreferences();
         gv.setRealtime();
+        db = FirebaseFirestore.getInstance();
 
-        setLocale();
+        //setLocale();
         //gv.loadUser("aa@af.aa", "aaaaaaaa");
 
         Handler handler = new Handler();
@@ -36,9 +47,7 @@ public class Activity_Main extends AppCompatActivity {
             @Override
             public void run() {
                 if (loadData()) {
-                    Intent intent = new Intent(Activity_Main.this, Activity_Login.class);
-                    startActivity(intent);
-                    finish();
+                    loadUser();
                 } else {
                     Animatable animatable = (Animatable) imageView.getDrawable();
                     animatable.start();
@@ -55,6 +64,31 @@ public class Activity_Main extends AppCompatActivity {
         if (gv == null || gv.categorys == null || gv.conferences == null || gv.categoryPreview == null)
             return false;
         return true;
+    }
+
+    void loadUser() {
+        String ac, pw;
+        // clear user sharedPreference
+        SharedPreferences sharedPreferences1 = getSharedPreferences("Account", Context.MODE_PRIVATE);
+        ac = sharedPreferences1.getString("Account", null);
+        if (ac != null) {
+            if (!ac.equals("guest@guest.com")) {
+                pw = sharedPreferences1.getString("Password", null);
+                if (pw != null) {
+                    if (!ac.equals("N/A") && !pw.equals("N/A")) {
+                        Login(ac, pw);
+                    } else {
+                        startLogin();
+                    }
+                } else {
+                    startLogin();
+                }
+            } else {
+                startLogin();
+            }
+        } else {
+            startLogin();
+        }
     }
 
     public void setLocale() {
@@ -79,4 +113,36 @@ public class Activity_Main extends AppCompatActivity {
                 .updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
     }
 
+    void Login(String email, String password) {
+        Log.d("---User--- ", email);
+        Log.d("---Password--- ", password);
+        db.collection("User")
+                .document(email)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        Map<String, Object> UserData = documentSnapshot.getData();
+                        if (UserData != null && UserData.get("Password") != null && UserData.get("Password").equals(password)) {
+
+                            gv.loadUser(email, Activity_Main.this);
+                            //setLocale();
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("----TAG----", "Error getting documents : " + e.getMessage());
+                        startLogin();
+                        //Toast.makeText(Activity_Main.this, "Wrong Account or Password", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    void startLogin() {
+        Intent intent = new Intent(Activity_Main.this, Activity_Login.class);
+        startActivity(intent);
+        finish();
+    }
 }
