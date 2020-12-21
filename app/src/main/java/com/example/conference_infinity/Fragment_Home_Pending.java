@@ -82,14 +82,25 @@ public class Fragment_Home_Pending extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         user = (GlobalVariable) getActivity().getApplicationContext();
-        lang = user.preferLangCode;
         home_pending_title = view.findViewById(R.id.home_pending_title);
+        lang = user.preferLangCode;
+        refresh();
+    }
 
-        // 資料由getMyList產生，再由adapter產生
-        myAdapter = new MyAdapter(getActivity(), (ArrayList<Model>) user.getPendingConference().clone());
-        Log.d("pending size-----------", String.valueOf(user.getPendingConference().size()));
-        // 設定recycleView的adapter
-        recyclerView.setAdapter(myAdapter);
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (!lang.equals(user.preferLangCode)) {
+            home_pending_title.setText(getText(R.string.pending_conference));
+        }
+    }
+
+    public void refresh(){
+        if (user != null && recyclerView != null){
+            // 資料由getMyList產生，再由adapter產生
+            myAdapter = new MyAdapter(getActivity(), (ArrayList<Model>) user.getPendingConference().clone());
+            // 設定recycleView的adapter
+            recyclerView.setAdapter(myAdapter);
 
         // 判斷是否為空的 提示文字
         if (user.getPendingConference().size() == 0) {
@@ -101,11 +112,4 @@ public class Fragment_Home_Pending extends Fragment {
         }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (!lang.equals(user.preferLangCode)) {
-            home_pending_title.setText(getText(R.string.pending_conference));
-        }
-    }
 }

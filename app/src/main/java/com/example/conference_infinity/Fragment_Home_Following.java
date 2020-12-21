@@ -114,7 +114,7 @@ public class Fragment_Home_Following extends Fragment {
 
     public void refreshData(){
 
-        if (db.conferences != null && getActivity() != null){
+        if (db != null && db.conferences != null && getActivity() != null){
 
             List<HashMap<String,String>>tmpList = new ArrayList<>();
 

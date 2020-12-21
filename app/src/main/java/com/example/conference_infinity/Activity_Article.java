@@ -184,9 +184,11 @@ public class Activity_Article extends AppCompatActivity {
                 if (db.pendingConference.get(abbreviation) != null && ((HashMap) db.pendingConference.get(abbreviation)).get("Attend") != null && (Boolean) ((HashMap) db.pendingConference.get(abbreviation)).get("Attend")) {
                     attend_img.setImageDrawable(getResources().getDrawable(R.drawable.ic_attended));
                     db.UpdateAttendConferencesValue(abbreviation, false, null, false);
+                    db.pendingChange = true;
                 } else {
                     attend_img.setImageDrawable(getResources().getDrawable(R.drawable.ic_unattended));
                     db.UpdateAttendConferencesValue(abbreviation, true, null, false);
+                    db.pendingChange = true;
                 }
             }
         });
