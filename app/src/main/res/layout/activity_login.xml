@@ -16,7 +16,7 @@
         android:layout_marginBottom="10sp"
         android:layout_weight="2"
         android:contentDescription="@string/meet_conference_infinity"
-        android:padding="22sp"
+        android:padding="12sp"
         android:src="@drawable/conference_infinity_icon" />
 
     <TextView
@@ -79,14 +79,14 @@
             android:src="@drawable/ic_seperate_line" />
 
         <TextView
-            android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="monospace"
             android:gravity="center"
             android:text="@string/or"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/black" />
 
     </FrameLayout>
 
@@ -101,8 +101,7 @@
         android:drawableStart="@drawable/ic_headphoto_default"
         android:drawablePadding="12sp"
         android:fontFamily="monospace"
-        android:paddingStart="22sp"
-        android:paddingEnd="22sp"
+        android:paddingHorizontal="22sp"
         android:text="@string/guest_login"
         android:textAllCaps="false" />
 
@@ -113,7 +112,6 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/register_btn"
-        android:textColor="@color/black"
         android:layout_width="match_parent"
         android:layout_height="0sp"
         android:layout_weight="1"
@@ -121,6 +119,7 @@
         android:fontFamily="sans-serif-light"
         android:text="@string/don_t_have_an_account_signup"
         android:textAllCaps="false"
+        android:textColor="@color/black"
         app:icon="@drawable/ic_arrow_right"
         app:iconGravity="textEnd"
         app:iconTint="@color/black" />

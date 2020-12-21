@@ -91,6 +91,7 @@ public class Fragment_Home_Pending extends Fragment {
         super.onResume();
         if (!lang.equals(user.preferLangCode)) {
             home_pending_title.setText(getText(R.string.pending_conference));
+            lang = user.preferLangCode;
         }
     }
 
