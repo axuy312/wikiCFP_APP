@@ -101,7 +101,10 @@ public class Activity_Home_Home extends AppCompatActivity {
                         case R.id.pending_nav:
                             //Set Checked Home fragment
                             bottomNavigationView.getMenu().getItem(2).setChecked(true);
-
+                            if (gv != null && gv.pendingChange){
+                                ((Fragment_Home_Pending)pending_fragment).refresh();
+                                gv.pendingChange = false;
+                            }
                             selectedFragment = pending_fragment;
                             break;
                         case R.id.account_nav:

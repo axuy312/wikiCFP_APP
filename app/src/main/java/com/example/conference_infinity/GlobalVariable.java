@@ -46,6 +46,7 @@ public class GlobalVariable extends Application {
     HashMap<String, Boolean> preferCategory = null;
     HashMap<String, Boolean> followingConference = null;
     HashMap<String, Object> pendingConference = null;
+    boolean pendingChange = false;
     String[] following_categoryPreview;
     String[] Language = {
             "Traditional",
@@ -263,6 +264,7 @@ public class GlobalVariable extends Application {
             pendingConference.clear();
             pendingConference = null;
         }
+        pendingChange = false;
         userName = "N/A";
         userPassword = "N/A";
         userEmail = "N/A";

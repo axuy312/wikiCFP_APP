@@ -2,7 +2,7 @@
 This is a final project of Embedded System course.
 
 
-12/19 20:51(axuy312)
+12/21 21:26(axuy312)
 
 12/21 18:42(adsf)
 
