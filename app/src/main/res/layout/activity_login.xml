@@ -31,9 +31,7 @@
         android:id="@+id/login_mail_edittext"
         android:layout_width="match_parent"
         android:layout_height="0sp"
-        android:layout_marginStart="24sp"
-        android:layout_marginTop="24sp"
-        android:layout_marginEnd="24sp"
+        android:layout_marginHorizontal="24sp"
         android:layout_weight="1"
         android:autofillHints="@string/email_address"
         android:background="@drawable/login_text_bg"
@@ -41,7 +39,7 @@
         android:drawablePadding="20sp"
         android:hint="@string/email_address"
         android:inputType="textEmailAddress"
-        android:padding="12sp" />
+        android:paddingHorizontal="12sp" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/login_password_edittext"
@@ -56,7 +54,7 @@
         android:drawablePadding="20sp"
         android:hint="@string/password"
         android:inputType="textPassword"
-        android:padding="12sp" />
+        android:paddingHorizontal="12sp" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/login_btn"
