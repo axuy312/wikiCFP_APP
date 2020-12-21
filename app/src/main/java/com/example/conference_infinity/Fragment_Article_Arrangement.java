@@ -3,15 +3,13 @@ package com.example.conference_infinity;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -48,7 +46,8 @@ public class Fragment_Article_Arrangement extends Fragment implements OnMapReady
         location = where;
     }
 
-    public Fragment_Article_Arrangement() { }
+    public Fragment_Article_Arrangement() {
+    }
 
     /**
      * Use this factory method to create a new instance of
@@ -75,13 +74,13 @@ public class Fragment_Article_Arrangement extends Fragment implements OnMapReady
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        //Log.d("TAG--------", "onCreate");
+        ////Log.d("TAG--------", "onCreate");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.d("TAG--------", "onCreateView");
+        //Log.d("TAG--------", "onCreateView");
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_article_arrangement, container, false);
     }
@@ -89,23 +88,23 @@ public class Fragment_Article_Arrangement extends Fragment implements OnMapReady
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //Log.d("TAG--------", "onViewCreate");
-        SupportMapFragment mapFragment = (SupportMapFragment)getChildFragmentManager().findFragmentById(R.id.map);
+        ////Log.d("TAG--------", "onViewCreate");
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        Log.d("TAG--------", "onMapReady");
+        //Log.d("TAG--------", "onMapReady");
         mMap = googleMap;
-        LatLng latLng = new LatLng(23.4696236,117.8357665);
+        LatLng latLng = new LatLng(23.4696236, 117.8357665);
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
 
 
         Geocoder geocoder;
         List<Address> addressList = null;
 
-        if (location != null && !location.equals("virtual")){
+        if (location != null && !location.equals("virtual")) {
             geocoder = new Geocoder(getActivity());
             try {
                 addressList = geocoder.getFromLocationName(location, 1);
@@ -118,9 +117,8 @@ public class Fragment_Article_Arrangement extends Fragment implements OnMapReady
             Address address = addressList.get(0);
             latLng = new LatLng(address.getLatitude(), address.getLongitude());
             mMap.addMarker(new MarkerOptions().position(latLng).title(location));
-            Log.d("TAG------", latLng.toString());
-        }
-        else {
+            //Log.d("TAG------", latLng.toString());
+        } else {
             mMap.addMarker(new MarkerOptions().position(latLng).title("Here is Taiwan!"));
         }
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15.0f));

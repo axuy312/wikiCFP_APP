@@ -71,7 +71,7 @@ public class Fragment_Register_Topics extends Fragment {
         topics = new ArrayList<>();
 
 
-        Log.d(TAG, "onCreateView: Started.");
+        //Log.d(TAG, "onCreateView: Started.");
 
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,7 +97,7 @@ public class Fragment_Register_Topics extends Fragment {
                     }
                 }
 
-                Log.d("Topics: ", topics.toString());
+                //Log.d("Topics: ", topics.toString());
 
                 getData();
                 sendData();
@@ -125,7 +125,7 @@ public class Fragment_Register_Topics extends Fragment {
             chipGroup.addView(chip);
         }
 
-        //Log.d("user: ", Category_List_Data.toString());
+        ////Log.d("user: ", Category_List_Data.toString());
     }
 
     void register(String name, String email, String password, String imgURL) {
@@ -144,7 +144,7 @@ public class Fragment_Register_Topics extends Fragment {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                        //Log.d(TAG, "DocumentSnapshot successfully written!");
                         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("UserRegisterDone", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         // get data from device
@@ -179,7 +179,7 @@ public class Fragment_Register_Topics extends Fragment {
             uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                 @Override
                 public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                    Log.d("---Debug---", "then");
+                    //Log.d("---Debug---", "then");
                     if (!task.isSuccessful()) {
                         throw task.getException();
                     }
@@ -189,7 +189,7 @@ public class Fragment_Register_Topics extends Fragment {
                 @Override
                 public void onComplete(@NonNull Task<Uri> task) {
                     if (task.isSuccessful()) {
-                        Log.d("---Debug---", "success");
+                        //Log.d("---Debug---", "success");
                         Uri downloadUri = task.getResult();
                         headPhotoUrl = downloadUri.toString();
 
@@ -198,7 +198,7 @@ public class Fragment_Register_Topics extends Fragment {
 
                         progressDialog.dismiss();
                     } else {
-                        Log.d("---Debug---", "fail");
+                        //Log.d("---Debug---", "fail");
                         Toast.makeText(getActivity(), "Failed!", Toast.LENGTH_LONG).show();
                         progressDialog.dismiss();
                     }
@@ -207,7 +207,7 @@ public class Fragment_Register_Topics extends Fragment {
                 @Override
                 public void onFailure(@NonNull Exception e) {
 
-                    Log.d("---Debug---", "onfail");
+                    //Log.d("---Debug---", "onfail");
                     Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
                     progressDialog.dismiss();
                 }
@@ -233,7 +233,7 @@ public class Fragment_Register_Topics extends Fragment {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                        //Log.d(TAG, "DocumentSnapshot successfully written!");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -268,7 +268,7 @@ public class Fragment_Register_Topics extends Fragment {
 
     private void setLocale() {
         Locale locale = Locale.getDefault();
-        //Log.d("----locale-----", locale.toString());
+        ////Log.d("----locale-----", locale.toString());
         if (!user.preferLangCode.equals("N/A")) {
             if (user.preferLangCode.equals(user.Language[1])) {
                 locale = Locale.TRADITIONAL_CHINESE;

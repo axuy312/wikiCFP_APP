@@ -2,7 +2,6 @@ package com.example.conference_infinity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -25,7 +24,7 @@ public class Activity_Register_Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_register);
 
-        Log.d(TAG, "MainActivity onCreate");
+        //Log.d(TAG, "MainActivity onCreate");
 
         mFragmentRegisterSectionsStatePagerAdapter = new Root_Register_SectionsStatePagerAdapter(getSupportFragmentManager());
 
@@ -70,7 +69,7 @@ public class Activity_Register_Register extends AppCompatActivity {
             pageStack.push(fragmentNumber);
         }
 
-        Log.d("pageStack", pageStack.toString());
+        //Log.d("pageStack", pageStack.toString());
 
         // Navigate to the assign Fragment
         mViewPager.setCurrentItem(fragmentNumber);
@@ -79,7 +78,7 @@ public class Activity_Register_Register extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        Log.d("activity backpress", pageStack.toString());
+        //Log.d("activity backpress", pageStack.toString());
 
         if (pageStack.isEmpty()) {
 
@@ -90,8 +89,7 @@ public class Activity_Register_Register extends AppCompatActivity {
 
         } else {
 
-            if(pageStack.peek()<0)
-            {
+            if (pageStack.peek() < 0) {
                 // Go to login Activity
                 Intent intent = new Intent(Activity_Register_Register.this, Activity_Login.class);
                 startActivity(intent);

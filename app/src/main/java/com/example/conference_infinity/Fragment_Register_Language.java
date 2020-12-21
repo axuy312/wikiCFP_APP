@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +36,7 @@ public class Fragment_Register_Language extends Fragment {
 
         loadData();
 
-        Log.d(TAG, "onCreateView: Started.");
+        //Log.d(TAG, "onCreateView: Started.");
 
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,14 +53,11 @@ public class Fragment_Register_Language extends Fragment {
             public void onClick(View v) {
                 //Toast.makeText(getActivity(), "Going to theme", Toast.LENGTH_SHORT).show();
                 // Check if user has input
-                if(lang_index!=-1)
-                {
+                if (lang_index != -1) {
                     // navigate to the other fragment method
                     ((Activity_Register_Register) getActivity()).setViewPager(new Root_Register_States().getFragmentNum(Root_Register_States.STATE_THEME));
-                }
-                else
-                {
-                    Toast.makeText(getActivity(),"Select one to choose Language.",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), "Select one to choose Language.", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -97,8 +93,7 @@ public class Fragment_Register_Language extends Fragment {
 
         lang_index = sharedPreferences.getInt("Language", -1);
 
-        if(lang_index!=-1)
-        {
+        if (lang_index != -1) {
             setLanguage();
         }
     }
@@ -111,15 +106,11 @@ public class Fragment_Register_Language extends Fragment {
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
-    private void setLanguage()
-    {
-        if(lang_index == 1)
-        {
+    private void setLanguage() {
+        if (lang_index == 1) {
             Language_EN.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_en_us), null, getResources().getDrawable(R.drawable.ic_done), null);
             Language_ZH.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_zh_tw), null, null, null);
-        }
-        else if(lang_index == 0)
-        {
+        } else if (lang_index == 0) {
             Language_EN.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_en_us), null, null, null);
             Language_ZH.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_zh_tw), null, getResources().getDrawable(R.drawable.ic_done), null);
         }

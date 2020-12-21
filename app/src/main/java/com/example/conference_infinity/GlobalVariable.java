@@ -71,7 +71,7 @@ public class GlobalVariable extends Application {
     //----------------------------------------------------------------------------------------------
 
     //Pending Conference----------------------------------------------------------------------------
-    ArrayList<Model> models = new ArrayList<>();
+    ArrayList<Model_Pending> modelPendings = new ArrayList<>();
     //----------------------------------------------------------------------------------------------
 
     //firebase--------------------------------------------------------------------------------------
@@ -86,7 +86,7 @@ public class GlobalVariable extends Application {
         sharedPreferences = getSharedPreferences("BitmapLoad", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         String dataStr = sharedPreferences.getString("Email", "");
-        Log.d("----TAG----", "Share : " + dataStr);
+        //Log.d("----TAG----", "Share : " + dataStr);
         editor.remove("Email");
         editor.apply();
         HashMap<String, Boolean> tmp = new HashMap<>();
@@ -99,7 +99,7 @@ public class GlobalVariable extends Application {
             String[] tmparr = tmp.keySet().toArray(new String[0]);
             for (String mail : tmparr) {
                 if (mail != null && !mail.isEmpty()) {
-                    Log.d("----TAG----", "Share : " + dataStr);
+                    //Log.d("----TAG----", "Share : " + dataStr);
                     storeBitmap(mail);
                 }
             }
@@ -361,7 +361,7 @@ public class GlobalVariable extends Application {
                 }
                 ((HashMap<String, Object>) pendingConference.get(abbr)).put("Prepare", tmpPrepare);
             }
-            Log.d("---Pend---", pendingConference.toString());
+            //Log.d("---Pend---", pendingConference.toString());
         }
     }
 
@@ -371,7 +371,7 @@ public class GlobalVariable extends Application {
             preferCategory = new HashMap<>();
         }
         preferCategory.put(title, bool);
-        Log.d("---TAG---", title + " : " + bool.toString());
+        //Log.d("---TAG---", title + " : " + bool.toString());
 
         List<String> data = new ArrayList<>();
         for (String key : preferCategory.keySet().toArray(new String[0])) {
@@ -389,7 +389,7 @@ public class GlobalVariable extends Application {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d("TAG", "Len: " + String.valueOf(data.size()));
+                        //Log.d("TAG", "Len: " + String.valueOf(data.size()));
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -409,7 +409,7 @@ public class GlobalVariable extends Application {
 
 
         followingConference.put(title, bool);
-        Log.d("---TAG---", title + " : " + bool.toString());
+        //Log.d("---TAG---", title + " : " + bool.toString());
 
         List<String> data = new ArrayList<>();
         for (String key : followingConference.keySet().toArray(new String[0])) {
@@ -425,7 +425,7 @@ public class GlobalVariable extends Application {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d("TAG", "Len: " + String.valueOf(data.size()));
+                        //Log.d("TAG", "Len: " + String.valueOf(data.size()));
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -466,7 +466,7 @@ public class GlobalVariable extends Application {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d("TAG", "Len: " + String.valueOf(pendingConference.size()));
+                        //Log.d("TAG", "Len: " + String.valueOf(pendingConference.size()));
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -493,16 +493,16 @@ public class GlobalVariable extends Application {
                             Map<String, Object> UserData = documentSnapshot.getData();
                             String url = UserData.get("HeadPhoto").toString();
                             if (url != null && !url.equals("N/A") && EmailToBitmap.get(email) == null) {
-                                Log.d("----TAG----", "Exist : " + url);
+                                //Log.d("----TAG----", "Exist : " + url);
                                 new GetBitmap().execute(url, email);
                             }
-                            Log.d("----TAG----", "here : " + url);
+                            //Log.d("----TAG----", "here : " + url);
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Log.d("----TAG----", "Error getting documents : " + e.getMessage());
+                            //Log.d("----TAG----", "Error getting documents : " + e.getMessage());
                         }
                     });
 
@@ -588,21 +588,17 @@ public class GlobalVariable extends Application {
             //執行後
             super.onPostExecute(bitmap);
             if (mail == null || mail.isEmpty()) {
-                Log.d("----TAG----", "Fun1");
+                //Log.d("----TAG----", "Fun1");
                 headPhoto = bitmap;
                 headPhotoURL = urlStr;
                 if (EmailToBitmap == null) {
                     EmailToBitmap = new HashMap<>();
                 }
-                if (bitmap != null) {
-                    EmailToBitmap.put(userEmail, bitmap);
-                    Log.d("----TAG----", "new img");
-                } else {
-                    EmailToBitmap.put(userEmail, null);
-                    Log.d("----TAG----", "failed img");
-                }
+                //Log.d("----TAG----", "new img");
+                //Log.d("----TAG----", "failed img");
+                EmailToBitmap.put(userEmail, bitmap);
             } else {
-                Log.d("----TAG2----", "Fun2");
+                //Log.d("----TAG2----", "Fun2");
                 if (EmailToBitmap == null) {
                     EmailToBitmap = new HashMap<>();
                 }
@@ -613,7 +609,7 @@ public class GlobalVariable extends Application {
                     editor = sharedPreferences.edit();
 
                     String data = sharedPreferences.getString("Email", "");
-                    Log.d("----TAG2----", "Data add" + mail);
+                    //Log.d("----TAG2----", "Data add" + mail);
                     if (data == null || data.isEmpty()) {
                         data = mail;
                     } else {
@@ -621,7 +617,7 @@ public class GlobalVariable extends Application {
                     }
                     editor.putString("Email", data);
                     editor.apply();
-                    Log.d("----TAG2----", "Result: " + sharedPreferences.getString("Email", ""));
+                    //Log.d("----TAG2----", "Result: " + sharedPreferences.getString("Email", ""));
                 } else {
                     EmailToBitmap.put(userEmail, null);
                 }
@@ -630,38 +626,38 @@ public class GlobalVariable extends Application {
     }
 
     // TODO: 取得 firebase 的 pending conference :Attend == false -> no display
-    public ArrayList<Model> getPendingConference() {
+    public ArrayList<Model_Pending> getPendingConference() {
         if (pendingConference == null) {
             pendingConference = new HashMap<>();
         }
         String[] abbrconf = pendingConference.keySet().toArray(new String[0]);
-        if (models == null) {
-            models = new ArrayList<>();
+        if (modelPendings == null) {
+            modelPendings = new ArrayList<>();
         } else {
-            models.clear();
+            modelPendings.clear();
         }
-        Model model;
+        Model_Pending modelPending;
 
         for (String abbr : abbrconf) {
             if (!(Boolean) ((HashMap<String, Object>) pendingConference.get(abbr)).get("Attend")) {
                 continue;
             }
             HashMap<String, String> conference = (HashMap<String, String>) conferences.get(abbr);
-            model = new Model();
-            model.setConference_name(conference.get("Topic"));
-            model.setAbbr(abbr);
-            model.setConference_location(conference.get("Where"));
-            model.setConference_time(conference.get("Submission Deadline"));
+            modelPending = new Model_Pending();
+            modelPending.setConference_name(conference.get("Topic"));
+            modelPending.setAbbr(abbr);
+            modelPending.setConference_location(conference.get("Where"));
+            modelPending.setConference_time(conference.get("Submission Deadline"));
 
             HashMap<String, Object> tmpConf = (HashMap<String, Object>) pendingConference.get(abbr);
             HashMap<String, Boolean> tmpPrepare = (HashMap<String, Boolean>) tmpConf.get("Prepare");
-            model.setAttend((Boolean) tmpConf.get("Attend"));
-            model.setPrepareThings(tmpPrepare);
-            models.add(model);
+            modelPending.setAttend((Boolean) tmpConf.get("Attend"));
+            modelPending.setPrepareThings(tmpPrepare);
+            modelPendings.add(modelPending);
 
         }
 
-        return models;
+        return modelPendings;
     }
 
 

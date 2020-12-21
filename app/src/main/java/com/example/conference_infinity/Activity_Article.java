@@ -1,7 +1,6 @@
 package com.example.conference_infinity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -71,7 +70,7 @@ public class Activity_Article extends AppCompatActivity {
         topic = getIntent().getExtras().getString("Topic", "N/A");
         abbreviation = getIntent().getExtras().getString("Abbreviation", "N/A");
 
-        Log.d("---abbreviation----", abbreviation);
+        //Log.d("---abbreviation----", abbreviation);
         conference = (HashMap<String, String>) db.conferences.get(abbreviation);
 
         url = conference.get("Link");
@@ -114,9 +113,9 @@ public class Activity_Article extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 if (position == 1)
-                    ((LinearLayout) findViewById(R.id.discuss_input_layout)).setVisibility(View.VISIBLE);
+                    findViewById(R.id.discuss_input_layout).setVisibility(View.VISIBLE);
                 else
-                    ((LinearLayout) findViewById(R.id.discuss_input_layout)).setVisibility(View.GONE);
+                    findViewById(R.id.discuss_input_layout).setVisibility(View.GONE);
             }
 
             @Override
@@ -152,11 +151,11 @@ public class Activity_Article extends AppCompatActivity {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if (snapshot == null) {
-                                Log.d("----data---", "NULL");
+                                //Log.d("----data---", "NULL");
                             } else {
                                 long i = snapshot.getChildrenCount();
-                                Log.d("----data---", "Count: " + String.valueOf(i) + " ---> " + snapshot.toString());
-                                DatabaseReference myRefChild = database.getReference("Discuss/" + abbreviation + "/" + String.valueOf(i + 1));
+                                //Log.d("----data---", "Count: " + String.valueOf(i) + " ---> " + snapshot.toString());
+                                DatabaseReference myRefChild = database.getReference("Discuss/" + abbreviation + "/" + (i + 1));
                                 HashMap<String, Object> data = new HashMap<>();
                                 data.put("Email", db.userEmail);
                                 data.put("Name", db.userName);
@@ -274,9 +273,9 @@ public class Activity_Article extends AppCompatActivity {
                 }
             }
         }
-        Log.d("time----", Submission_Deadline);
-        Log.d("time----", Submission_Deadline.replaceAll("[^0-9a-zA-Z ]", ""));
-        Log.d("time----", String.valueOf(cnttime) + " / " + String.valueOf(list.size()));
+        //Log.d("time----", Submission_Deadline);
+        //Log.d("time----", Submission_Deadline.replaceAll("[^0-9a-zA-Z ]", ""));
+        //Log.d("time----", String.valueOf(cnttime) + " / " + String.valueOf(list.size()));
 
 
         verticalStepView.setStepsViewIndicatorComplectingPosition(cnttime)
@@ -284,10 +283,10 @@ public class Activity_Article extends AppCompatActivity {
                 .setTextSize(15)
                 .setStepViewTexts(list)
                 .setLinePaddingProportion(0.2f)
-                .setStepsViewIndicatorCompletedLineColor(getResources().getColor(R.color.black,getTheme()))
-                .setStepViewComplectedTextColor(getResources().getColor(R.color.black,getTheme()))
-                .setStepViewUnComplectedTextColor(getResources().getColor(R.color.black,getTheme()))
-                .setStepsViewIndicatorUnCompletedLineColor(getResources().getColor(R.color.black,getTheme()))
+                .setStepsViewIndicatorCompletedLineColor(getResources().getColor(R.color.black, getTheme()))
+                .setStepViewComplectedTextColor(getResources().getColor(R.color.black, getTheme()))
+                .setStepViewUnComplectedTextColor(getResources().getColor(R.color.black, getTheme()))
+                .setStepsViewIndicatorUnCompletedLineColor(getResources().getColor(R.color.black, getTheme()))
                 .setStepsViewIndicatorCompleteIcon(ContextCompat.getDrawable(this, R.drawable.ic_timeline_on))
                 .setStepsViewIndicatorAttentionIcon(ContextCompat.getDrawable(this, R.drawable.ic_timeline_off))
                 .setStepsViewIndicatorDefaultIcon(ContextCompat.getDrawable(this, R.drawable.ic_timeline_off));
@@ -302,8 +301,8 @@ public class Activity_Article extends AppCompatActivity {
 
     private class ViewPagerAdapter extends FragmentPagerAdapter {
 
-        private List<Fragment> fragments = new ArrayList<>();
-        private List<String> fragmentTitle = new ArrayList<>();
+        private final List<Fragment> fragments = new ArrayList<>();
+        private final List<String> fragmentTitle = new ArrayList<>();
 
         public ViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {
             super(fm, behavior);

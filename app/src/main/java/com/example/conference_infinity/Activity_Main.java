@@ -38,7 +38,6 @@ public class Activity_Main extends AppCompatActivity {
         gv.setRealtime();
         db = FirebaseFirestore.getInstance();
 
-        //setLocale();
         //gv.loadUser("aa@af.aa", "aaaaaaaa");
 
         Handler handler = new Handler();
@@ -61,9 +60,7 @@ public class Activity_Main extends AppCompatActivity {
     }
 
     boolean loadData() {
-        if (gv == null || gv.categorys == null || gv.conferences == null || gv.categoryPreview == null)
-            return false;
-        return true;
+        return gv != null && gv.categorys != null && gv.conferences != null && gv.categoryPreview != null;
     }
 
     void loadUser() {
@@ -101,7 +98,7 @@ public class Activity_Main extends AppCompatActivity {
                 locale = Locale.US;
             }
         }
-        Log.d("----locale-----", locale.toString());
+        //Log.d("----locale-----", locale.toString());
         Locale.setDefault(locale);
         Configuration config = getBaseContext().getResources().getConfiguration();
         overwriteConfigurationLocale(config, locale);
@@ -114,8 +111,8 @@ public class Activity_Main extends AppCompatActivity {
     }
 
     void Login(String email, String password) {
-        Log.d("---User--- ", email);
-        Log.d("---Password--- ", password);
+        //Log.d("---User--- ", email);
+        //Log.d("---Password--- ", password);
         db.collection("User")
                 .document(email)
                 .get()

@@ -1,21 +1,16 @@
 package com.example.conference_infinity;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
-
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -38,7 +33,7 @@ public class Fragment_Home_Following extends Fragment {
     public MyListAdapter_Conference Conference_List_Adapter;
 
     GlobalVariable db;
-    HashMap<String,String>[] Conference_List_Data;
+    HashMap<String, String>[] Conference_List_Data;
 
     ListView Conference_List;
 
@@ -67,7 +62,7 @@ public class Fragment_Home_Following extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Log.d("---Resume---", "---");
+        //Log.d("---Resume---", "---");
     }
 
     @Override
@@ -90,8 +85,8 @@ public class Fragment_Home_Following extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Log.d("onViewCreated-------","-----");
-        db = (GlobalVariable)getActivity().getApplicationContext();
+        //Log.d("onViewCreated-------","-----");
+        db = (GlobalVariable) getActivity().getApplicationContext();
 
         //Create List
         Conference_List = view.findViewById(R.id.Home_Following_Conference_List);
@@ -100,28 +95,27 @@ public class Fragment_Home_Following extends Fragment {
         refreshData();
     }
 
-    void ScrollTop(){
-        if (Conference_List != null){
+    void ScrollTop() {
+        if (Conference_List != null) {
             Conference_List.setSelection(0);
         }
     }
 
-    void RefreshListView(String newText){
-        if (Conference_List_Adapter != null){
+    void RefreshListView(String newText) {
+        if (Conference_List_Adapter != null) {
             Conference_List_Adapter.getFilter().filter(newText);
         }
     }
 
-    public void refreshData(){
+    public void refreshData() {
 
-        if (db != null && db.conferences != null && getActivity() != null){
+        if (db != null && db.conferences != null && getActivity() != null) {
 
-            List<HashMap<String,String>>tmpList = new ArrayList<>();
+            List<HashMap<String, String>> tmpList = new ArrayList<>();
 
-            if (db.followingConference != null){
-                for (String abbr : db.followingConference.keySet().toArray(new String[0])){
-                    if (db.followingConference.get(abbr))
-                    {
+            if (db.followingConference != null) {
+                for (String abbr : db.followingConference.keySet().toArray(new String[0])) {
+                    if (db.followingConference.get(abbr)) {
                         tmpList.add((HashMap<String, String>) db.conferences.get(abbr));
                     }
                 }
@@ -133,9 +127,8 @@ public class Fragment_Home_Following extends Fragment {
             if (Conference_List_Adapter == null) {
                 Conference_List_Adapter = new MyListAdapter_Conference(getActivity(), Conference_List_Data);
                 Conference_List.setAdapter(Conference_List_Adapter);
-            }
-            else {
-                Log.d("---newData----",String.valueOf(Conference_List_Data.length));
+            } else {
+                //Log.d("---newData----",String.valueOf(Conference_List_Data.length));
                 Conference_List_Adapter.refresh(Conference_List_Data, true);
                 Conference_List_Adapter.notifyDataSetChanged();
             }

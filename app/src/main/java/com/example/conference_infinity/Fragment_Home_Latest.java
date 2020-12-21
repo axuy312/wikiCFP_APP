@@ -1,27 +1,18 @@
 package com.example.conference_infinity;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
-
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -44,7 +35,7 @@ public class Fragment_Home_Latest extends Fragment {
     public MyListAdapter_Conference Conference_List_Adapter;
 
     GlobalVariable db;
-    HashMap<String,String>[] Conference_List_Data;
+    HashMap<String, String>[] Conference_List_Data;
 
     ListView Conference_List;
 
@@ -90,7 +81,7 @@ public class Fragment_Home_Latest extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        db = (GlobalVariable)getActivity().getApplicationContext();
+        db = (GlobalVariable) getActivity().getApplicationContext();
 
         //Create List
         Conference_List = view.findViewById(R.id.Home_Latest_Conference_List);
@@ -99,25 +90,24 @@ public class Fragment_Home_Latest extends Fragment {
         refreshData();
     }
 
-    void ScrollTop(){
-        if (Conference_List != null){
+    void ScrollTop() {
+        if (Conference_List != null) {
             Conference_List.setSelection(0);
         }
     }
 
-    void RefreshListView(String newText){
-        if (Conference_List_Adapter != null){
+    void RefreshListView(String newText) {
+        if (Conference_List_Adapter != null) {
             Conference_List_Adapter.getFilter().filter(newText);
         }
     }
 
-    public void refreshData(){
-        if (db.conferences != null && getActivity() != null){
+    public void refreshData() {
+        if (db.conferences != null && getActivity() != null) {
             HashMap[] tmpHashmaps = db.conferences.values().toArray(new HashMap[0]);
 
-            List<HashMap<String, String>>tmp = new ArrayList<>();
-            for (HashMap hashMap : tmpHashmaps)
-            {
+            List<HashMap<String, String>> tmp = new ArrayList<>();
+            for (HashMap hashMap : tmpHashmaps) {
                 tmp.add(hashMap);
             }
             Collections.sort(tmp, new sortByDiscussCnt());
@@ -125,22 +115,19 @@ public class Fragment_Home_Latest extends Fragment {
 
             Conference_List_Data = tmp.toArray(new HashMap[0]);
 
-            if (Conference_List_Adapter == null){
+            if (Conference_List_Adapter == null) {
                 Conference_List_Adapter = new MyListAdapter_Conference(getActivity(), Conference_List_Data);
                 Conference_List.setAdapter(Conference_List_Adapter);
-            }
-            else {
+            } else {
                 Conference_List_Adapter.refresh(Conference_List_Data, false);
                 Conference_List_Adapter.notifyDataSetChanged();
             }
         }
     }
 
-    class sortByDiscussCnt implements Comparator<HashMap<String, String>>
-    {
+    class sortByDiscussCnt implements Comparator<HashMap<String, String>> {
         //以book的ID升序排列
-        public int compare(HashMap<String, String> a, HashMap<String, String> b)
-        {
+        public int compare(HashMap<String, String> a, HashMap<String, String> b) {
             if (db == null) {
                 db = (GlobalVariable) getActivity().getApplicationContext();
             }
@@ -152,10 +139,10 @@ public class Fragment_Home_Latest extends Fragment {
             aLong = db.discussCnt.get(abbrA);
             bLong = db.discussCnt.get(abbrB);
 
-            if (aLong == null){
+            if (aLong == null) {
                 aLong = Long.valueOf(0);
             }
-            if (bLong == null){
+            if (bLong == null) {
                 bLong = Long.valueOf(0);
             }
 

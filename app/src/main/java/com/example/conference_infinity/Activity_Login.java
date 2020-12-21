@@ -95,8 +95,8 @@ public class Activity_Login extends AppCompatActivity {
     }
 
     void Login(String email, String password) {
-        Log.d("---User--- ", email);
-        Log.d("---Password--- ", password);
+        //Log.d("---User--- ", email);
+        //Log.d("---Password--- ", password);
         db.collection("User")
                 .document(email)
                 .get()
@@ -134,7 +134,7 @@ public class Activity_Login extends AppCompatActivity {
                 locale = Locale.US;
             }
         }
-        Log.d("----locale-----", locale.toString());
+        //Log.d("----locale-----", locale.toString());
         Locale.setDefault(locale);
         Configuration config = getBaseContext().getResources().getConfiguration();
         overwriteConfigurationLocale(config, locale);

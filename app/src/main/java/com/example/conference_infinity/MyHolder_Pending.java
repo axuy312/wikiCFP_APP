@@ -10,14 +10,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class MyHolder extends RecyclerView.ViewHolder {
+public class MyHolder_Pending extends RecyclerView.ViewHolder {
 
     TextView mTitle;
     AppCompatButton mTime, mLocation;
     EditText mAddItem;
     LinearLayout prepareItem;
 
-    MyHolder(@NonNull View itemView) {
+    MyHolder_Pending(@NonNull View itemView) {
         super(itemView);
 
         // 取得一個cardview內的elements

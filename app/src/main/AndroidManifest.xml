@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Conference_Infinity"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity_Setting_Language"></activity>
+        <activity android:name=".Activity_Setting_Language" />
         <activity android:name=".Activity_Setting_Theme" />
 
         <meta-data
@@ -23,10 +23,10 @@
             android:value="@string/google_maps_key" />
 
         <activity android:name=".Activity_Setting_About" />
-        <activity android:name=".Activity_Article"
-            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".Activity_Article"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".Activity_Conferences" />
-        <activity android:name=".Activity_Login_Phone" />
         <activity android:name=".Activity_Setting_Preference" />
         <activity android:name=".Activity_Home_Home" />
         <activity android:name=".Activity_Register_Register" />
