@@ -1,14 +1,11 @@
 package com.example.conference_infinity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -25,7 +22,7 @@ public class Activity_Conferences extends AppCompatActivity {
     //
     private String title;
     private HashMap<String, String>[] Conference_List_Data;
-    private  GlobalVariable db;
+    private GlobalVariable db;
     //
 
     @Override
@@ -33,12 +30,12 @@ public class Activity_Conferences extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conferences);
 
-        db = (GlobalVariable)getApplicationContext();
+        db = (GlobalVariable) getApplicationContext();
         //db.refreshDiscussCnt();
 
         title_view = findViewById(R.id.Category_Title);
         title = getIntent().getExtras().getString("title");
-        if (title != null){
+        if (title != null) {
             title_view.setText(title);
         }
 
@@ -49,13 +46,13 @@ public class Activity_Conferences extends AppCompatActivity {
 
 
         //Update List
-        HashMap<String,Object>conferences = (HashMap<String, Object>) db.categorys.get(title);
-        HashMap<String,Object>[] listData =  new HashMap[0];
+        HashMap<String, Object> conferences = (HashMap<String, Object>) db.categorys.get(title);
+        HashMap<String, Object>[] listData = new HashMap[0];
         Object[] objectKeys = conferences.keySet().toArray();
         String[] keys = Arrays.copyOf(objectKeys, objectKeys.length, String[].class);
-        for (int i = 0; i < keys.length; i++){
+        for (int i = 0; i < keys.length; i++) {
             listData = Arrays.copyOf(listData, listData.length + 1);
-            listData[listData.length - 1] = (HashMap<String, Object>) (((HashMap<String,Object>) conferences.get(keys[i])).clone());
+            listData[listData.length - 1] = (HashMap<String, Object>) (((HashMap<String, Object>) conferences.get(keys[i])).clone());
         }
         UpdateConferenceData(listData);
         Conference_List_Adapter = new MyListAdapter_Conference(Activity_Conferences.this, Conference_List_Data);
@@ -78,16 +75,15 @@ public class Activity_Conferences extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (Conference_List_Adapter != null){
+        if (Conference_List_Adapter != null) {
             Conference_List_Adapter.notifyDataSetChanged();
         }
     }
 
-    public void UpdateConferenceData(HashMap[] dictionaries){
-        if (dictionaries != null){
+    public void UpdateConferenceData(HashMap[] dictionaries) {
+        if (dictionaries != null) {
             Conference_List_Data = dictionaries.clone();
-        }
-        else {
+        } else {
             Conference_List_Data = null;
         }
     }

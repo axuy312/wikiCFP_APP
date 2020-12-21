@@ -2,14 +2,14 @@ package com.example.conference_infinity;
 
 import java.util.HashMap;
 
-public class Model {
+public class Model_Pending {
 
     private String conference_name, conference_time, conference_location;
     private HashMap<String, Boolean> prepareThings;
     private String abbreviation = "N/A";
     private Boolean attend;
 
-    public Model() {
+    public Model_Pending() {
         this.conference_name = "";
         this.conference_time = "";
         this.conference_location = "";
@@ -17,7 +17,7 @@ public class Model {
 
     }
 
-    public Model(String conference_name, String conference_time, String conference_location, HashMap<String, Boolean> prepareThings) {
+    public Model_Pending(String conference_name, String conference_time, String conference_location, HashMap<String, Boolean> prepareThings) {
         this.conference_name = conference_name;
         this.conference_time = conference_time;
         this.conference_location = conference_location;

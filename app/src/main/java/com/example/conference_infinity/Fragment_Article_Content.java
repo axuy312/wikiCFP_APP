@@ -184,7 +184,7 @@ public class Fragment_Article_Content extends Fragment {
                 //view.loadUrl("javascript:showDetail();");
                 loadWeb.setVisibility(View.GONE);
                 view.setVisibility(View.VISIBLE);
-                Log.d("RUN-----------------", "url=" + url);
+                //Log.d("RUN-----------------", "url=" + url);
             }
 
             @Override

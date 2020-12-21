@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,14 +54,11 @@ public class Fragment_Register_Theme extends Fragment {
                 //Toast.makeText(getActivity(), "Going to density", Toast.LENGTH_SHORT).show();
 
                 // check if user has choose theme
-                if(theme!=-1)
-                {
+                if (theme != -1) {
                     // navigate to the other fragment method
                     ((Activity_Register_Register) getActivity()).setViewPager(new Root_Register_States().getFragmentNum(Root_Register_States.STATE_TOPIC));
-                }
-                else
-                {
-                    Toast.makeText(getActivity(),"Select one to choose theme.",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), "Select one to choose theme.", Toast.LENGTH_SHORT).show();
                 }
             }
         });

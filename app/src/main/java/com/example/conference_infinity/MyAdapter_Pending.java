@@ -2,7 +2,6 @@ package com.example.conference_infinity;
 
 import android.content.Context;
 import android.graphics.Paint;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -20,36 +19,36 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class MyAdapter extends RecyclerView.Adapter<MyHolder> {
+public class MyAdapter_Pending extends RecyclerView.Adapter<MyHolder_Pending> {
 
     Context context;
-    ArrayList<Model> models;    // this array list create a list of array which parameters define in our model class
+    ArrayList<Model_Pending> modelPendings;    // this array list create a list of array which parameters define in our model class
     GlobalVariable user;
 
-    public MyAdapter(Context context, ArrayList<Model> models) {
+    public MyAdapter_Pending(Context context, ArrayList<Model_Pending> modelPendings) {
         this.context = context;
-        this.models = models;
-        Log.d("---Size---", String.valueOf(models.size()) + " - " + String.valueOf(this.models.size()));
+        this.modelPendings = modelPendings;
+        //Log.d("---Size---", String.valueOf(models.size()) + " - " + String.valueOf(this.models.size()));
         user = (GlobalVariable) context.getApplicationContext();
     }
 
     @NonNull
     @Override
-    public MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MyHolder_Pending onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         // create row layout
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.root_pending_row, parent, false);
 
         // this will return our view to holder class
-        return new MyHolder(view);
+        return new MyHolder_Pending(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyHolder_Pending holder, int position) {
         // 設定要顯示的東西
-        holder.mTitle.setText(models.get(position).getConference_name());
-        holder.mLocation.setText(models.get(position).getConference_location());
-        holder.mTime.setText(context.getText(R.string.pending_submit_deadline).toString() + models.get(position).getConference_time());
+        holder.mTitle.setText(modelPendings.get(position).getConference_name());
+        holder.mLocation.setText(modelPendings.get(position).getConference_location());
+        holder.mTime.setText(context.getText(R.string.pending_submit_deadline).toString() + modelPendings.get(position).getConference_time());
         holder.mAddItem.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -87,8 +86,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyHolder> {
 
                         // add item to global variable
                         // how to do?
-                        models.get(position).setPrepareThingState(checkBox.getText().toString(), false);
-                        user.UpdateAttendConferencesValue(models.get(position).getAbbr(), models.get(position).getAttend(), checkBox.getText().toString(), false);
+                        modelPendings.get(position).setPrepareThingState(checkBox.getText().toString(), false);
+                        user.UpdateAttendConferencesValue(modelPendings.get(position).getAbbr(), modelPendings.get(position).getAttend(), checkBox.getText().toString(), false);
                     }
 
                     return true;
@@ -99,15 +98,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyHolder> {
 
         int boolIndex;
 
-        if (models.get(position).getPrepareThingCount() > 0) {
+        if (modelPendings.get(position).getPrepareThingCount() > 0) {
             boolIndex = 0;
-            for (String item : models.get(position).getPrepareThing()) {
+            for (String item : modelPendings.get(position).getPrepareThing()) {
                 // Create Checkbox Dynamically
                 CheckBox checkBox = new CheckBox(context);
                 checkBox.setText(item);
                 float scale = context.getResources().getDisplayMetrics().density;
                 checkBox.setPadding((int) (10 * scale), (int) (10 * scale), 0, (int) (10 * scale));
-                checkBox.setChecked(models.get(position).getPrepareThingState(item));
+                checkBox.setChecked(modelPendings.get(position).getPrepareThingState(item));
                 if (checkBox.isChecked()) {
                     checkBox.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
                     checkBox.setTextColor(context.getColor(R.color.light_gray));
@@ -132,8 +131,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyHolder> {
                             checkBox.setTextColor(v.getResources().getColor(R.color.light_gray));
                         }
 
-                        models.get(position).setPrepareThingState(checkBox.getText().toString(), checkBox.isChecked());
-                        user.UpdateAttendConferencesValue(models.get(position).getAbbr(), models.get(position).getAttend(), checkBox.getText().toString(), checkBox.isChecked());
+                        modelPendings.get(position).setPrepareThingState(checkBox.getText().toString(), checkBox.isChecked());
+                        user.UpdateAttendConferencesValue(modelPendings.get(position).getAbbr(), modelPendings.get(position).getAttend(), checkBox.getText().toString(), checkBox.isChecked());
                     }
                 });
 
@@ -141,7 +140,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyHolder> {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                         String msg = "You have " + (isChecked ? "checked" : "unchecked") + " this Check it Checkbox.";
-                        Log.d("checkbox debug", msg);
+                        //Log.d("checkbox debug", msg);
                     }
                 });
 
@@ -155,7 +154,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyHolder> {
 
     @Override
     public int getItemCount() {
-        return models.size();
+        return modelPendings.size();
     }
 
 }

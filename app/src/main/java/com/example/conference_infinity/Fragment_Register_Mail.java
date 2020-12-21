@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,7 +34,7 @@ public class Fragment_Register_Mail extends Fragment {
         Button next_btn = view.findViewById(R.id.mail_next_btn);
         mail = view.findViewById(R.id.input_mail);
 
-        Log.d(TAG, "onCreateView: Started.");
+        //Log.d(TAG, "onCreateView: Started.");
 
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -31,7 +31,7 @@ public class Fragment_Home_Pending extends Fragment {
     private String mParam2;
 
     RecyclerView recyclerView;
-    MyAdapter myAdapter;
+    MyAdapter_Pending myAdapterPending;
     GlobalVariable user;
     String lang;
     TextView home_pending_title;
@@ -98,9 +98,9 @@ public class Fragment_Home_Pending extends Fragment {
     public void refresh() {
         if (user != null && recyclerView != null) {
             // 資料由getMyList產生，再由adapter產生
-            myAdapter = new MyAdapter(getActivity(), (ArrayList<Model>) user.getPendingConference().clone());
+            myAdapterPending = new MyAdapter_Pending(getActivity(), (ArrayList<Model_Pending>) user.getPendingConference().clone());
             // 設定recycleView的adapter
-            recyclerView.setAdapter(myAdapter);
+            recyclerView.setAdapter(myAdapterPending);
 
             // 判斷是否為空的 提示文字
             if (user.getPendingConference().size() == 0) {

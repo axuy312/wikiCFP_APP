@@ -199,7 +199,7 @@ public class Fragment_Home_Account extends Fragment {
             uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                 @Override
                 public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                    Log.d("TH---------", "then");
+                    //Log.d("TH---------", "then");
                     if (!task.isSuccessful()) {
                         throw task.getException();
                     }
@@ -209,7 +209,7 @@ public class Fragment_Home_Account extends Fragment {
                 @Override
                 public void onComplete(@NonNull Task<Uri> task) {
                     if (task.isSuccessful()) {
-                        Log.d("TH---------", "success");
+                        //Log.d("TH---------", "success");
                         Uri downloadUri = task.getResult();
                         user.headPhotoURL = downloadUri.toString();
 
@@ -220,7 +220,7 @@ public class Fragment_Home_Account extends Fragment {
                     } else {
                         user.headPhoto = null;
                         user.headPhotoURL = "N/A";
-                        Log.d("TH---------", "fail");
+                        //Log.d("TH---------", "fail");
                         Toast.makeText(getActivity(), "Failed!", Toast.LENGTH_LONG).show();
 
                     }
@@ -234,7 +234,7 @@ public class Fragment_Home_Account extends Fragment {
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-                                    Log.d("TH---------", "DocumentSnapshot successfully written!");
+                                    //Log.d("TH---------", "DocumentSnapshot successfully written!");
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
@@ -249,7 +249,7 @@ public class Fragment_Home_Account extends Fragment {
                 @Override
                 public void onFailure(@NonNull Exception e) {
 
-                    Log.d("TH---------", "onfail");
+                    //Log.d("TH---------", "onfail");
                     user.headPhoto = null;
                     user.headPhotoURL = "N/A";
                     Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
@@ -290,8 +290,8 @@ public class Fragment_Home_Account extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Log.d("ac lang", lang.toString());
-        Log.d("ac preferLang", user.preferLangCode);
+        //Log.d("ac lang", lang.toString());
+        //Log.d("ac preferLang", user.preferLangCode);
         if (!lang.equals(user.preferLangCode)) {
             preference_btn.setText(getText(R.string.preference));
             logout_btn.setText(getText(R.string.logout));

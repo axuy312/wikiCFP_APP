@@ -136,7 +136,7 @@ public class Activity_Setting_Language extends AppCompatActivity {
                 locale = Locale.US;
             }
         }
-        Log.d("----locale-----", locale.toString());
+        //Log.d("----locale-----", locale.toString());
         Locale.setDefault(locale);
         Configuration config = getBaseContext().getResources().getConfiguration();
         overwriteConfigurationLocale(config, locale);

@@ -16,8 +16,7 @@
     <color name="light_selected_gray">#33B3B3B3</color>
     <color name="white_gray">#F2F2F2</color>
     <color name="light_blue">#00B0FF</color>
-    <color name="input_white">#33FFFFFF</color>
-
+    <color name="input_white">#33717171</color>
 
     <!-- For Dark Mode -->
     <color name="dark_bg">#2C2C2E</color>

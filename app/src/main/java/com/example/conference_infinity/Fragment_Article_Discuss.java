@@ -1,18 +1,15 @@
 package com.example.conference_infinity;
 
-import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -99,9 +96,9 @@ public class Fragment_Article_Discuss extends Fragment {
 
 
         database = FirebaseDatabase.getInstance();
-        myRef = database.getReference("Discuss/"+abbreviation);
+        myRef = database.getReference("Discuss/" + abbreviation);
 
-        myListAdapter_discuss = new MyListAdapter_Discuss(getActivity(), (List)(new ArrayList<HashMap>()));
+        myListAdapter_discuss = new MyListAdapter_Discuss(getActivity(), (List) (new ArrayList<HashMap>()));
         discussListView.setAdapter(myListAdapter_discuss);
 
         myRef.addValueEventListener(new ValueEventListener() {
@@ -110,9 +107,9 @@ public class Fragment_Article_Discuss extends Fragment {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 if (dataSnapshot != null) {
-                    List<HashMap<String,String>>discuss = new ArrayList<>();
-                    for (DataSnapshot childSnapshot: dataSnapshot.getChildren()) {
-                        HashMap<String,String>tmp = (HashMap<String, String>) childSnapshot.getValue();
+                    List<HashMap<String, String>> discuss = new ArrayList<>();
+                    for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+                        HashMap<String, String> tmp = (HashMap<String, String>) childSnapshot.getValue();
                         discuss.add(tmp);
                     }
 
@@ -120,7 +117,7 @@ public class Fragment_Article_Discuss extends Fragment {
                     myListAdapter_discuss.freshDiscuss(discuss);
                     myListAdapter_discuss.notifyDataSetChanged();
                     int tmp = myListAdapter_discuss.getCount();
-                    Log.d("---count---", String.valueOf(tmp));
+                    //Log.d("---count---", String.valueOf(tmp));
                     discussListView.setSelection(tmp);
                 }
             }

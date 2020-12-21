@@ -3,7 +3,6 @@ package com.example.conference_infinity;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -38,17 +37,6 @@ public class Activity_Home_Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_home);
 
-        // determine user theme
-//        if (!gv.preferThemeCode.equals("N/A") && gv.preferThemeCode != null) {
-//            if (gv.preferThemeCode.equals(gv.Theme[0])) {
-//                // light theme
-//                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-//            } else {
-//                // dark theme
-//                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-//            }
-//        }
-
         // Connect to xml
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_UNLABELED);
@@ -79,7 +67,7 @@ public class Activity_Home_Home extends AppCompatActivity {
     }
 
     // bottom app bar onClickListener
-    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
+    private final BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -101,8 +89,8 @@ public class Activity_Home_Home extends AppCompatActivity {
                         case R.id.pending_nav:
                             //Set Checked Home fragment
                             bottomNavigationView.getMenu().getItem(2).setChecked(true);
-                            if (gv != null && gv.pendingChange){
-                                ((Fragment_Home_Pending)pending_fragment).refresh();
+                            if (gv != null && gv.pendingChange) {
+                                ((Fragment_Home_Pending) pending_fragment).refresh();
                                 gv.pendingChange = false;
                             }
                             selectedFragment = pending_fragment;
@@ -123,13 +111,11 @@ public class Activity_Home_Home extends AppCompatActivity {
 
                     FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                     if (!selectedFragment.isAdded()) {
-                        Log.d("fragment transaction", "add");
                         fragmentTransaction.hide(current_fragment);
                         fragmentTransaction.add(R.id.fragment, selectedFragment);
                         fragmentTransaction.addToBackStack(null);
                         fragmentTransaction.commit();
                     } else {
-                        Log.d("fragment transaction", "show");
                         if (selectedFragment == home_fragment && selectedFragment == current_fragment) {
                             ((Fragment_Home_Home) home_fragment).ScrollTop();
                         }
@@ -220,8 +206,6 @@ public class Activity_Home_Home extends AppCompatActivity {
             Handler handler = new Handler();
             handler.postDelayed(runnable, 800);
         }
-
-        Log.d("integerDeque", integerDeque.toString());
     }
 
     private void setLocale() {
@@ -237,7 +221,6 @@ public class Activity_Home_Home extends AppCompatActivity {
             }
         }
 
-        Log.d("----locale-----", locale.toString());
         Locale.setDefault(locale);
         Configuration config = getBaseContext().getResources().getConfiguration();
         overwriteConfigurationLocale(config, locale);

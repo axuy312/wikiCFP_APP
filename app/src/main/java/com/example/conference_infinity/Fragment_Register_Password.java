@@ -3,7 +3,6 @@ package com.example.conference_infinity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +31,7 @@ public class Fragment_Register_Password extends Fragment {
         Button next_btn = view.findViewById(R.id.password_next_btn);
         password = view.findViewById(R.id.input_password);
 
-        Log.d(TAG, "onCreateView: Started.");
+        //Log.d(TAG, "onCreateView: Started.");
 
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
