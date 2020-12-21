@@ -172,6 +172,11 @@ public class Fragment_Register_Topics extends Fragment {
             final StorageReference fileReference = storageReference.child(nickname + "_HeadPhoto.png");
 
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            user.headPhoto = Bitmap.createScaledBitmap( user.headPhoto
+                    , 500
+                    , user.headPhoto.getHeight() * 500 / user.headPhoto.getWidth()
+                    , true
+            );
             user.headPhoto.compress(Bitmap.CompressFormat.PNG, 100, baos);
             byte[] data = baos.toByteArray();
 
