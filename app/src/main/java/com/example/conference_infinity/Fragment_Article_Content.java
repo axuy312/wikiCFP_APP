@@ -3,11 +3,6 @@ package com.example.conference_infinity;
 import android.graphics.Bitmap;
 import android.net.http.SslError;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +12,12 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.webkit.WebSettingsCompat;
+import androidx.webkit.WebViewFeature;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,13 +38,15 @@ public class Fragment_Article_Content extends Fragment {
 
     private WebView webView;
     private LinearLayout loadWeb;
+    GlobalVariable user;
 
     public Fragment_Article_Content(String url) {
         // Required empty public constructor
         this.url = url;
     }
 
-    public Fragment_Article_Content() {}
+    public Fragment_Article_Content() {
+    }
 
     /**
      * Use this factory method to create a new instance of
@@ -86,6 +89,7 @@ public class Fragment_Article_Content extends Fragment {
 
         webView = getActivity().findViewById(R.id.webView);
         loadWeb = getActivity().findViewById(R.id.load_web);
+        user = (GlobalVariable) getActivity().getApplicationContext();
         loadWebView();
     }
 
@@ -101,10 +105,10 @@ public class Fragment_Article_Content extends Fragment {
     }
 
     //Function--------------------------------------------------------------------------------------
-    void loadWebView(){
+    void loadWebView() {
         //webView.loadDataWithBaseURL(null, testStr, "text/html", "utf-8", null);
 
-        if (url == null || url.isEmpty() || url.equals("N/A")){
+        if (url == null || url.isEmpty() || url.equals("N/A")) {
             return;
         }
 
@@ -118,6 +122,14 @@ public class Fragment_Article_Content extends Fragment {
         //webSettings.setDisplayZoomControls(true);
         //webSettings.setSupportZoom(true);
         //webSettings.setDefaultTextEncodingName("utf-8");
+
+        if(user.preferThemeCode.equals(user.Theme[1]))
+        {
+            // determine android system webview is support dark theme
+            if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
+                WebSettingsCompat.setForceDark(webView.getSettings(), WebSettingsCompat.FORCE_DARK_ON);
+            }
+        }
 
         webView.setWebViewClient(new HelloWebViewClient() {
             @Override
@@ -136,24 +148,36 @@ public class Fragment_Article_Content extends Fragment {
 
             @Override
             public void onPageFinished(WebView view, String url) {
-                String fun="javascript:function getClass(parent,sClass) { var aEle=parent.getElementsByTagName('div'); var aResult=[]; var i=0; for(i<0;i<aEle.length;i++) { if(aEle[i].className==sClass) { aResult.push(aEle[i]); } }; return aResult; } ";
+                String fun = "javascript:function getClass(parent,sClass) { var aEle=parent.getElementsByTagName('div'); var aResult=[]; var i=0; for(i<0;i<aEle.length;i++) { if(aEle[i].className==sClass) { aResult.push(aEle[i]); } }; return aResult; } ";
 
                 //view.loadUrl(fun);
-                String javascript="javascript:function showDetail()\n" +
-                        "{\n" +
+                String javascript = "javascript:function showDetail() {\n" +
                         "\tvar table = document.getElementsByClassName(\"contsec\");\n" +
-                        "\tif(table.length > 0){\n" +
+                        "\tif (table.length > 0) {\n" +
                         "\t\tdocument.body.innerHTML = table[0].innerHTML;\n" +
                         "\t}\n" +
                         "\tvar form = document.getElementsByTagName(\"form\");\n" +
-                        "\t\twhile(form.length > 0){\n" +
-                        "\t\t\tform[0].parentNode.removeChild(form[0]);\n" +
-                        "\t\t}\n" +
-                        "\tvar gglu = document.getElementsByClassName(\"gglu\");\n" +
-                        "\tif (gglu.length > 0){\n" +
-                        "\tgglu[0].parentNode.removeChild(gglu[0]);\n" +
+                        "\twhile (form.length > 0) {\n" +
+                        "\t\tform[0].parentNode.removeChild(form[0]);\n" +
                         "\t}\n" +
-                        "\n" +
+                        "\tvar gglu = document.getElementsByClassName(\"gglu\");\n" +
+                        "\tif (gglu.length > 0) {\n" +
+                        "\t\tgglu[0].parentNode.removeChild(gglu[0]);\n" +
+                        "\t}\n" +
+                        "\tvar title = document.querySelectorAll('[typeof=\"v:Event\"]');\n" +
+                        "\tif (title.length > 0) {\n" +
+                        "\t\tvar titleTr = title[0].parentNode;\n" +
+                        "\t\twhile (titleTr.nodeName.toLowerCase() != undefined && titleTr.nodeName.toLowerCase() != \"tr\") {\n" +
+                        "\t\t\ttitleTr = titleTr.parentNode;\n" +
+                        "\t\t}\n" +
+                        "\t\tif (titleTr.nodeName.toLowerCase() != undefined) {\n" +
+                        "\t\t\ttitleTr.parentNode.removeChild(titleTr);\n" +
+                        "\t\t}\n" +
+                        "\t}\n" +
+                        "\tvar topView = document.querySelectorAll('[align=\"left\"]');\n" +
+                        "\tif (topView.length > 0) {\n" +
+                        "\t\ttopView[0].setAttribute(\"align\", \"center\");\n" +
+                        "\t}\n" +
                         "}\n" +
                         "showDetail();";
                 view.loadUrl(javascript);
