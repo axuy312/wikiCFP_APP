@@ -187,6 +187,11 @@ public class Fragment_Home_Account extends Fragment {
             final StorageReference fileReference = storageReference.child(user_nickname + "_HeadPhoto.png");
 
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap = Bitmap.createScaledBitmap( bitmap
+                    , 500
+                    , bitmap.getHeight() * 500 / bitmap.getWidth()
+                    , true
+            );
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
             byte[] data = baos.toByteArray();
 

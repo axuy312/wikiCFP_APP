@@ -280,7 +280,7 @@ public class Activity_Article extends AppCompatActivity {
 
         verticalStepView.setStepsViewIndicatorComplectingPosition(cnttime)
                 .reverseDraw(false)
-                .setTextSize(15)
+                .setTextSize(13)
                 .setStepViewTexts(list)
                 .setLinePaddingProportion(0.2f)
                 .setStepsViewIndicatorCompletedLineColor(getResources().getColor(R.color.black, getTheme()))
