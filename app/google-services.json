@@ -1,42 +1,34 @@
 {
   "project_info": {
-    "project_number": "34128474976",
-    "firebase_url": "https://wikicfp-114cd-default-rtdb.firebaseio.com",
-    "project_id": "wikicfp-114cd",
-    "storage_bucket": "wikicfp-114cd.appspot.com"
+    "project_number": "525205708986",
+    "firebase_url": "https://wikicfp-demo-default-rtdb.firebaseio.com",
+    "project_id": "wikicfp-demo",
+    "storage_bucket": "wikicfp-demo.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:34128474976:android:6051dfe5b2edd9fb796405",
+        "mobilesdk_app_id": "1:525205708986:android:782d2f876e2f1c9f392283",
         "android_client_info": {
           "package_name": "com.example.conference_infinity"
         }
       },
       "oauth_client": [
         {
-          "client_id": "34128474976-hoiu54v0sr69ucihkl9aj1rdhunp5b8t.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.conference_infinity",
-            "certificate_hash": "b86195bf4451b64254cf5d7a9522895318c3cb30"
-          }
-        },
-        {
-          "client_id": "34128474976-uab3617i6iv9qap3sn9cft8inbscr6eu.apps.googleusercontent.com",
+          "client_id": "525205708986-ieb4r5ogu6u3f3f85o01g92mcvju1qjj.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD425PxHCAnqojgkaLzCbjqAxS4SFDfrKE"
+          "current_key": "AIzaSyB_nxqCyrCQxGuGzEbTQKD5OMysDD9WiLc"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "34128474976-uab3617i6iv9qap3sn9cft8inbscr6eu.apps.googleusercontent.com",
+              "client_id": "525205708986-ieb4r5ogu6u3f3f85o01g92mcvju1qjj.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
