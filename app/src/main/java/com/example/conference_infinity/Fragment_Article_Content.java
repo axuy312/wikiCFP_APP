@@ -16,6 +16,8 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.webkit.WebSettingsCompat;
+import androidx.webkit.WebViewFeature;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,6 +38,7 @@ public class Fragment_Article_Content extends Fragment {
 
     private WebView webView;
     private LinearLayout loadWeb;
+    GlobalVariable user;
 
     public Fragment_Article_Content(String url) {
         // Required empty public constructor
@@ -86,6 +89,7 @@ public class Fragment_Article_Content extends Fragment {
 
         webView = getActivity().findViewById(R.id.webView);
         loadWeb = getActivity().findViewById(R.id.load_web);
+        user = (GlobalVariable) getActivity().getApplicationContext();
         loadWebView();
     }
 
@@ -118,6 +122,14 @@ public class Fragment_Article_Content extends Fragment {
         //webSettings.setDisplayZoomControls(true);
         //webSettings.setSupportZoom(true);
         //webSettings.setDefaultTextEncodingName("utf-8");
+
+        if(user.preferThemeCode.equals(user.Theme[1]))
+        {
+            // determine android system webview is support dark theme
+            if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
+                WebSettingsCompat.setForceDark(webView.getSettings(), WebSettingsCompat.FORCE_DARK_ON);
+            }
+        }
 
         webView.setWebViewClient(new HelloWebViewClient() {
             @Override
