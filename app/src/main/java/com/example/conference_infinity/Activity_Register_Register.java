@@ -1,13 +1,13 @@
 package com.example.conference_infinity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
 import java.util.Stack;
 
@@ -79,6 +79,8 @@ public class Activity_Register_Register extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
+        Log.d("activity backpress", pageStack.toString());
+
         if (pageStack.isEmpty()) {
 
             // Go to login Activity
@@ -88,8 +90,15 @@ public class Activity_Register_Register extends AppCompatActivity {
 
         } else {
 
+            if(pageStack.peek()<0)
+            {
+                // Go to login Activity
+                Intent intent = new Intent(Activity_Register_Register.this, Activity_Login.class);
+                startActivity(intent);
+                finish();
+            }
             // Go to last page
-            setViewPager(pageStack.peek());
+            setViewPager(pageStack.peek() - 1);
         }
     }
 }

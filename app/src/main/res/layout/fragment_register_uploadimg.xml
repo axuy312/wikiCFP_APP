@@ -75,8 +75,7 @@
             android:id="@+id/register_head_img"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_headphoto_default"/>
-
+            android:src="@drawable/ic_headphoto_default" />
 
     </LinearLayout>
 
@@ -85,6 +84,7 @@
         android:layout_height="0sp"
         android:layout_margin="40sp"
         android:layout_weight="1"
+        android:gravity="bottom"
         android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatButton

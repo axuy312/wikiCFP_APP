@@ -107,6 +107,8 @@ public class Activity_Login extends AppCompatActivity {
                         if (UserData != null && UserData.get("Password") != null && UserData.get("Password").equals(password)) {
                             user.loadUser(email, Activity_Login.this);
                             setLocale();
+                        } else {
+                            Toast.makeText(Activity_Login.this, "Wrong Account or Password", Toast.LENGTH_SHORT).show();
                         }
                     }
                 })

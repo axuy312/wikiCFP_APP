@@ -56,7 +56,7 @@ public class Fragment_Register_UploadIMG extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(getActivity(), "Going to theme", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "Going to theme", Toast.LENGTH_SHORT).show();
                 // navigate to the other fragment method
                 ((Activity_Register_Register) getActivity()).setViewPager(new Root_Register_States().getFragmentNum(Root_Register_States.STATE_PASSWORD));
             }
@@ -65,7 +65,7 @@ public class Fragment_Register_UploadIMG extends Fragment {
         next_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "Going to topics", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "Going to topics", Toast.LENGTH_SHORT).show();
                 // navigate to the other fragment method
                 ((Activity_Register_Register) getActivity()).setViewPager(new Root_Register_States().getFragmentNum(Root_Register_States.STATE_LANGUAGE));
             }
