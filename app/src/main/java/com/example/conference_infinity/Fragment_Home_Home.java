@@ -3,11 +3,11 @@ package com.example.conference_infinity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -46,7 +46,8 @@ public class Fragment_Home_Home extends Fragment {
     private ViewPager viewPager;
     SearchView Conference_search;
     GlobalVariable gv;
-
+    String lang;
+    TextView home_home_title;
 
     public Fragment_Home_Home() {
         // Required empty public constructor
@@ -89,7 +90,8 @@ public class Fragment_Home_Home extends Fragment {
         viewPager = getActivity().findViewById(R.id.home_viewpager);
         Conference_search = getActivity().findViewById(R.id.home_searchview);
         gv = (GlobalVariable) getActivity().getApplicationContext();
-
+        lang = gv.preferLangCode;
+        home_home_title = getActivity().findViewById(R.id.home_home_title);
         //Add Fragment
         fragment_home_latest = new Fragment_Home_Latest();
         fragment_home_following = new Fragment_Home_Following();
@@ -99,22 +101,23 @@ public class Fragment_Home_Home extends Fragment {
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
 
             @Override
             public void onPageSelected(int position) {
-                if (position == 0){
+                if (position == 0) {
                     fragment_home_latest.refreshData();
                     fragment_home_latest.RefreshListView(Conference_search.getQuery().toString());
-                }
-                else {
+                } else {
                     fragment_home_following.refreshData();
                     fragment_home_following.RefreshListView(Conference_search.getQuery().toString());
                 }
             }
 
             @Override
-            public void onPageScrollStateChanged(int state) {}
+            public void onPageScrollStateChanged(int state) {
+            }
         });
 
         Fragment_Home_Home.ViewPagerAdapter viewPagerAdapter = new Fragment_Home_Home.ViewPagerAdapter(getActivity().getSupportFragmentManager(), 0);
@@ -146,16 +149,16 @@ public class Fragment_Home_Home extends Fragment {
         });
 
         // save user preference
-        SharedPreferences sharedPreferences1 =getActivity().getSharedPreferences("Account", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences1 = getActivity().getSharedPreferences("Account", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor1 = sharedPreferences1.edit();
 
-        editor1.putString("Account",gv.userEmail);
-        editor1.putString("Password",gv.userPassword);
+        editor1.putString("Account", gv.userEmail);
+        editor1.putString("Password", gv.userPassword);
         editor1.apply();
 
     }
 
-    public void ScrollTop(){
+    public void ScrollTop() {
         fragment_home_latest.ScrollTop();
         fragment_home_following.ScrollTop();
     }
@@ -202,8 +205,9 @@ public class Fragment_Home_Home extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
-        Log.d("--fragment onresume--", "home_home");
+        if (!lang.equals(gv.preferLangCode)) {
+            home_home_title.setText(getText(R.string.Conference));
+        }
 
     }
 }

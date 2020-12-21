@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.AppCompatRadioButton;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -33,11 +34,11 @@ public class Activity_Setting_Theme extends AppCompatActivity {
         user = (GlobalVariable) getApplicationContext();
 
         // setting button
-        if (user.preferThemeCode.equals(user.Language[0])) {
+        if (user.preferThemeCode.equals(user.Theme[0])) {
             // light theme
             light_btn.setChecked(true);
             dark_btn.setChecked(false);
-        } else if (user.preferThemeCode.equals(user.Language[1])) {
+        } else if (user.preferThemeCode.equals(user.Theme[1])) {
             // dark theme
             light_btn.setChecked(false);
             dark_btn.setChecked(true);
@@ -57,7 +58,7 @@ public class Activity_Setting_Theme extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.setting_theme_light_btn:
                 if (isSelected) {
-                    //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                     user.preferThemeCode = user.Theme[0];
 //                    light_btn.setTextColor(getColor(R.color.white));
 //                    dark_btn.setTextColor(getColor(R.color.dark_gray));
@@ -65,13 +66,15 @@ public class Activity_Setting_Theme extends AppCompatActivity {
                 break;
             case R.id.setting_theme_dark_btn:
                 if (isSelected) {
-                    //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                     user.preferThemeCode = user.Theme[1];
 //                    light_btn.setTextColor(getColor(R.color.dark_gray));
 //                    dark_btn.setTextColor(getColor(R.color.white));
                 }
                 break;
         }
+
+        restartApp();
     }
 
     void UploadPrefer(boolean theme, boolean lang) {
@@ -113,6 +116,15 @@ public class Activity_Setting_Theme extends AppCompatActivity {
                     });
         }
     }
+
+    public void restartApp()
+    {
+        Intent intent = new Intent(getApplicationContext(),Activity_Home_Home.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
+
 
     @Override
     protected void onPause() {

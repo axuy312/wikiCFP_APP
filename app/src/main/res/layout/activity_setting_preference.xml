@@ -52,19 +52,18 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/preference_theme_btn"
+            style="@style/PageTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="30sp"
             android:background="@android:color/transparent"
             android:drawableStart="@drawable/ic_theme"
             android:drawablePadding="24sp"
-            android:enabled="false"
             android:paddingVertical="20sp"
             android:text="@string/theme"
             android:textAlignment="textStart"
             android:textAllCaps="false"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="@color/light_gray" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/prefernce_language_btn"

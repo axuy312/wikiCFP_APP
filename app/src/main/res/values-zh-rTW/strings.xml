@@ -78,5 +78,5 @@
     <string name="submit_deadline">" - 繳交截止日"</string>
     <string name="notification_due">" - 中稿通知日"</string>
     <string name="final_version_due">" - 最終修訂繳交日"</string>
-    <string name="pending_submit_deadline">"繳交截止日 : "</string>
+    <string name="pending_submit_deadline">"繳交截止 : "</string>
 </resources>

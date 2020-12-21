@@ -1,6 +1,5 @@
 package com.example.conference_infinity;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -283,10 +282,10 @@ public class Activity_Article extends AppCompatActivity {
                 .setTextSize(15)
                 .setStepViewTexts(list)
                 .setLinePaddingProportion(0.2f)
-                .setStepsViewIndicatorCompletedLineColor(Color.parseColor("#000000"))
-                .setStepViewComplectedTextColor(Color.parseColor("#000000"))
-                .setStepViewUnComplectedTextColor(Color.parseColor("#000000"))
-                .setStepsViewIndicatorUnCompletedLineColor(Color.parseColor("#000000"))
+                .setStepsViewIndicatorCompletedLineColor(getResources().getColor(R.color.black,getTheme()))
+                .setStepViewComplectedTextColor(getResources().getColor(R.color.black,getTheme()))
+                .setStepViewUnComplectedTextColor(getResources().getColor(R.color.black,getTheme()))
+                .setStepsViewIndicatorUnCompletedLineColor(getResources().getColor(R.color.black,getTheme()))
                 .setStepsViewIndicatorCompleteIcon(ContextCompat.getDrawable(this, R.drawable.ic_timeline_on))
                 .setStepsViewIndicatorAttentionIcon(ContextCompat.getDrawable(this, R.drawable.ic_timeline_off))
                 .setStepsViewIndicatorDefaultIcon(ContextCompat.getDrawable(this, R.drawable.ic_timeline_off));

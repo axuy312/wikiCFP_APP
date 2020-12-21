@@ -1,16 +1,16 @@
 package com.example.conference_infinity;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -20,14 +20,16 @@ import android.widget.SearchView;
 public class Fragment_Home_Category extends Fragment {
 
     //View
-     ListView Category_List;
-     SearchView Category_search;
-     MyListAdapter_Category Category_List_Adapter;
+    ListView Category_List;
+    SearchView Category_search;
+    MyListAdapter_Category Category_List_Adapter;
     //end View
 
     //
     String[] Category_List_Data;
     GlobalVariable user;
+    String lang;
+    TextView Category_Title;
     //
 
     // TODO: Rename parameter arguments, choose names that match
@@ -75,9 +77,11 @@ public class Fragment_Home_Category extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        user = (GlobalVariable)getActivity().getApplicationContext();
+        user = (GlobalVariable) getActivity().getApplicationContext();
 
+        Category_Title = view.findViewById(R.id.Category_Title);
         Category_search = view.findViewById(R.id.Search_Category);
+        lang = user.preferLangCode;
 
         //Create List
         Category_List = view.findViewById(R.id.Category_List);
@@ -91,7 +95,7 @@ public class Fragment_Home_Category extends Fragment {
             }
         });*/
 
-        if (user.categoryPreview != null && getActivity() != null){
+        if (user.categoryPreview != null && getActivity() != null) {
             Category_List_Adapter = new MyListAdapter_Category(getActivity(), user.following_categoryPreview, user.preferCategory.size());
             Category_List.setAdapter(Category_List_Adapter);
         }
@@ -104,12 +108,20 @@ public class Fragment_Home_Category extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if (Category_List_Adapter != null)
-                {
+                if (Category_List_Adapter != null) {
                     Category_List_Adapter.getFilter().filter(newText);
                 }
                 return false;
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (!lang.equals(user.preferLangCode)) {
+            Category_Title.setText(getText(R.string.Category));
+        }
     }
 }
