@@ -1,7 +1,6 @@
 package com.example.conference_infinity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,8 +81,8 @@ public class Fragment_Home_Pending extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         user = (GlobalVariable) getActivity().getApplicationContext();
-        lang = user.preferLangCode;
         home_pending_title = view.findViewById(R.id.home_pending_title);
+        lang = user.preferLangCode;
         refresh();
     }
 
@@ -95,8 +94,8 @@ public class Fragment_Home_Pending extends Fragment {
         }
     }
 
-    public void refresh(){
-        if (user != null && recyclerView != null){
+    public void refresh() {
+        if (user != null && recyclerView != null) {
             // 資料由getMyList產生，再由adapter產生
             myAdapter = new MyAdapter(getActivity(), (ArrayList<Model>) user.getPendingConference().clone());
             // 設定recycleView的adapter
@@ -112,5 +111,4 @@ public class Fragment_Home_Pending extends Fragment {
             }
         }
     }
-
 }

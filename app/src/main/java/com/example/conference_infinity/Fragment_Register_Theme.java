@@ -37,7 +37,7 @@ public class Fragment_Register_Theme extends Fragment {
 
         loadData();
 
-        Log.d(TAG, "onCreateView: Started.");
+        //Log.d(TAG, "onCreateView: Started.");
 
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override

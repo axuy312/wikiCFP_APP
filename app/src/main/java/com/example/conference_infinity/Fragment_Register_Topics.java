@@ -118,7 +118,7 @@ public class Fragment_Register_Topics extends Fragment {
             chip.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getActivity(), "Chip clicked", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), "Chip clicked", Toast.LENGTH_SHORT).show();
                 }
             });
             chip.setText(genre);
@@ -227,7 +227,6 @@ public class Fragment_Register_Topics extends Fragment {
         user.put("Theme", theme);
         user.put("Category", categorys);
 
-
         db.collection("Preference")
                 .document(email)
                 .set(user)
@@ -257,10 +256,9 @@ public class Fragment_Register_Topics extends Fragment {
         theme = sharedPreferences.getInt("Theme", 0);
 
         // delete part of data
-        editor.remove("Password");
-        //editor.remove("Language");
+        editor.remove("NickName");
+        editor.remove("Language");
         editor.remove("Theme");
-        editor.remove("Density");
         editor.apply();
     }
 
@@ -270,7 +268,7 @@ public class Fragment_Register_Topics extends Fragment {
 
     private void setLocale() {
         Locale locale = Locale.getDefault();
-        Log.d("----locale-----", locale.toString());
+        //Log.d("----locale-----", locale.toString());
         if (!user.preferLangCode.equals("N/A")) {
             if (user.preferLangCode.equals(user.Language[1])) {
                 locale = Locale.TRADITIONAL_CHINESE;
