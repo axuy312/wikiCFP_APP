@@ -115,7 +115,7 @@ public class Fragment_Article_Discuss extends Fragment {
 
                     //myListAdapter_discuss.freshDiscuss(discuss);
                     myListAdapter_discuss.freshDiscuss(discuss);
-                    myListAdapter_discuss.notifyDataSetChanged();
+                    //myListAdapter_discuss.notifyDataSetChanged();
                     int tmp = myListAdapter_discuss.getCount();
                     //Log.d("---count---", String.valueOf(tmp));
                     discussListView.setSelection(tmp);

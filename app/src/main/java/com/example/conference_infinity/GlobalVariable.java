@@ -619,7 +619,7 @@ public class GlobalVariable extends Application {
                     editor.apply();
                     //Log.d("----TAG2----", "Result: " + sharedPreferences.getString("Email", ""));
                 } else {
-                    EmailToBitmap.put(userEmail, null);
+                    EmailToBitmap.put(mail, null);
                 }
             }
         }
