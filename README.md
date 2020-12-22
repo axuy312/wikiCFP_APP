@@ -2,12 +2,11 @@
 This is a final project of Embedded System course.
 
 
-12/22 14:00 ----- 最終Demo版
-
 
 <h2> Info </h2>
 
 <h2> Conference Infinity Feature </h2>
+
 ## Installation
 
 <h2> Usage Example </h2>
